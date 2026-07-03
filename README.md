@@ -1,43 +1,27 @@
 # Portfolio
 
-Portfolio profissional construido com Next.js, App Router, TypeScript, Tailwind CSS e shadcn/ui.
+Portfolio profissional desenvolvido como um produto digital: limpo, performatico, acessivel e orientado a conteudo.
+
+O projeto apresenta experiencias, projetos, escrita tecnica e experimentos com foco em desenvolvimento de software, arquitetura de sistemas e design de interfaces.
 
 ## Stack
 
 - Next.js com App Router
 - React
 - TypeScript
-- Tailwind CSS v4
-- shadcn/ui com Radix e preset Nova
+- Tailwind CSS
+- shadcn/ui
 - Framer Motion
 - Lucide React
 
-## Desenvolvimento
+## Principios
 
-Instale as dependencias:
-
-```bash
-npm install
-```
-
-Rode o servidor local:
-
-```bash
-npm run dev
-```
-
-Acesse:
-
-```txt
-http://127.0.0.1:3000
-```
-
-## Qualidade
-
-```bash
-npm run lint
-npm run build
-```
+- Interface minimalista e responsiva
+- Componentes reutilizaveis
+- Acessibilidade desde a base
+- SEO e performance como requisitos
+- Conteudo estruturado para projetos e artigos
+- Arquitetura simples, escalavel e facil de manter
 
 ## Estrutura
 
@@ -66,14 +50,40 @@ src/
   assets/
 ```
 
-## GitHub
+## Desenvolvimento
 
-Depois de criar um repositorio vazio no GitHub:
+Instale as dependencias:
 
 ```bash
-git add .
-git commit -m "chore: initialize portfolio"
-git branch -M main
-git remote add origin https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
-git push -u origin main
+npm install
+```
+
+Inicie o ambiente local:
+
+```bash
+npm run dev
+```
+
+A aplicacao ficara disponivel em:
+
+```txt
+http://127.0.0.1:3000
+```
+
+## Scripts
+
+```bash
+npm run dev
+npm run lint
+npm run build
+npm run start
+```
+
+## Qualidade
+
+Antes de publicar alteracoes, valide:
+
+```bash
+npm run lint
+npm run build
 ```
