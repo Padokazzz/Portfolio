@@ -5,7 +5,7 @@ import { NAV_LINKS } from "@/constants/routes"
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/85 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-background/85 backdrop-blur">
       <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="text-sm font-semibold tracking-tight">
           Portfolio
