@@ -27,6 +27,7 @@
 AGENTS.md
 CLAUDE.md
 PORTFOLIO_GUIDE.md
+.external/
 
 # debug
 npm-debug.log*
