@@ -12,12 +12,6 @@ export function TechStack() {
             Experiencia em mobile, backend e tecnologias modernas para
             desenvolvimento full stack.
           </h2>
-          <p className="text-base leading-7 text-muted-foreground">
-            Atuo com Flutter e .NET no desenvolvimento de aplicacoes e APIs, com
-            forte afinidade por React e TypeScript. Meu foco e evoluir como full
-            stack, conectando interfaces bem cuidadas, servicos confiaveis e
-            dados modelados com clareza.
-          </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
