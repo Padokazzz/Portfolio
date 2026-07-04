@@ -2,7 +2,7 @@ import { TECHNOLOGY_GROUPS } from "@/constants/technologies"
 
 export function TechStack() {
   return (
-    <section className="border-t border-white/10">
+    <section id="stack" className="scroll-mt-20 border-t border-white/10">
       <div className="mx-auto w-full max-w-7xl px-6 py-14">
         <div className="mb-8 max-w-2xl space-y-3">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
