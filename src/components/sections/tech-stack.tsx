@@ -9,7 +9,8 @@ export function TechStack() {
             Stack e tecnologias
           </p>
           <h2 className="text-2xl font-semibold leading-tight sm:text-3xl">
-            Experiência em mobile, backend e tecnologias modernas para desenvolvimento Full Stack.
+            Experiencia em mobile, backend e tecnologias modernas para
+            desenvolvimento full stack.
           </h2>
           <p className="text-base leading-7 text-muted-foreground">
             Atuo com Flutter e .NET no desenvolvimento de aplicacoes e APIs, com
