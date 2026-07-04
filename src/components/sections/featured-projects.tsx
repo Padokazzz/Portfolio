@@ -24,7 +24,7 @@ export function FeaturedProjects() {
   }
 
   return (
-    <section className="border-t border-white/10">
+    <section id="projetos" className="scroll-mt-20 border-t border-white/10">
       <div className="mx-auto w-full max-w-7xl px-6 py-14">
         <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl space-y-3">

@@ -1,3 +1,4 @@
+import { ContactCta } from "@/components/sections/contact-cta"
 import { FeaturedProjects } from "@/components/sections/featured-projects"
 import { ExperienceSummary } from "@/components/sections/experience-summary"
 import { HomeHero } from "@/components/sections/home-hero"
@@ -10,6 +11,7 @@ export default function Home() {
       <TechStack />
       <ExperienceSummary />
       <FeaturedProjects />
+      <ContactCta />
     </>
   )
 }
