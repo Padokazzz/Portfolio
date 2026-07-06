@@ -1,4 +1,10 @@
-import { Download, GitBranch, Mail, UserRound } from "lucide-react"
+import {
+  Camera,
+  Download,
+  GitBranch,
+  Mail,
+  UserRound,
+} from "lucide-react"
 
 export const CONTACT_LINKS = [
   {
@@ -20,6 +26,13 @@ export const CONTACT_LINKS = [
     value: "Projetos e codigo",
     href: "https://github.com/padokazzz",
     icon: GitBranch,
+    external: true,
+  },
+  {
+    label: "Instagram",
+    value: "Processo criativo",
+    href: "https://www.instagram.com/padoka_oficial",
+    icon: Camera,
     external: true,
   },
   {
