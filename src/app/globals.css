@@ -215,3 +215,20 @@
     }
   }
 }
+
+/* music wave – outside layers to avoid tw-animate-css @property conflicts */
+@keyframes music-wave {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+    opacity: 0.38;
+  }
+  35% {
+    transform: scaleY(1);
+    opacity: 0.82;
+  }
+  62% {
+    transform: scaleY(0.65);
+    opacity: 0.58;
+  }
+}
