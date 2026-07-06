@@ -94,10 +94,10 @@ export function ListeningIndicator() {
                 height: `${height}%`,
                 transformOrigin: "bottom",
                 animationName: "music-wave",
-                animationDuration: `${1.6 + index * 0.15}s`,
+                animationDuration: `${2.4 + index * 0.2}s`,
                 animationTimingFunction: "ease-in-out",
                 animationIterationCount: "infinite",
-                animationDelay: `${index * 0.25}s`,
+                animationDelay: `${index * 0.35}s`,
               }}
             />
           ))}
