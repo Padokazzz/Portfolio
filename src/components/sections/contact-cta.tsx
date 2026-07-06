@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 
+import { Reveal } from "@/components/motion/reveal"
 import { CONTACT_LINKS } from "@/constants/contact"
 
 type ContactCtaProps = {
@@ -18,27 +19,29 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
       <div
         className={
           isPage
-            ? "mx-auto grid min-h-[calc(100svh-9rem)] w-full max-w-7xl items-center gap-10 px-6 py-14 lg:grid-cols-[0.92fr_1.08fr]"
-            : "mx-auto grid w-full max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-end"
+            ? "mx-auto grid min-h-[calc(100svh-3.75rem)] w-full max-w-7xl items-center gap-8 px-6 py-8 lg:grid-cols-[0.92fr_1.08fr]"
+            : "mx-auto grid min-h-[calc(100svh-3.75rem)] w-full max-w-7xl gap-8 px-6 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center"
         }
       >
-        <div className="max-w-2xl">
-          <div className="border-l border-white/10 pl-5">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+        <Reveal className="max-w-2xl">
+          <div>
+            <div className="mb-4 h-1 w-20 rounded-full accent-line" />
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted-foreground">
               Contato
             </p>
 
-            <h2 className="mt-4 text-2xl font-semibold leading-tight text-balance sm:text-3xl">
-              Vamos conversar sobre produto, desenvolvimento ou oportunidades.
+            <h2 className="mt-4 text-2xl font-semibold leading-tight text-balance sm:text-[1.7rem]">
+              Vamos conversar sobre produto, desenvolvimento ou boas ideias.
             </h2>
 
-            <p className="mt-4 text-sm leading-6 text-muted-foreground sm:text-base">
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">
               Estou aberto a conversas sobre desenvolvimento full stack, mobile,
-              frontend, backend e produtos digitais com foco em entrega real.
+              frontend, backend e produtos digitais com foco em entrega real,
+              boa experiencia e identidade.
             </p>
           </div>
 
-          <div className="mt-8 max-w-md rounded-md border border-white/10 bg-white/[0.02] p-4 font-mono text-xs text-muted-foreground">
+          <div className="surface mt-6 max-w-md rounded-md border p-4 font-mono text-xs text-muted-foreground">
             <div className="flex items-center justify-between gap-4">
               <span>status</span>
               <span className="text-foreground">disponivel</span>
@@ -48,9 +51,12 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
               <span className="text-foreground">ate 24h</span>
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="border-y border-white/10">
+        <Reveal
+          delay={0.08}
+          className="surface overflow-hidden rounded-lg border"
+        >
           {CONTACT_LINKS.map((link) => {
             const Icon = link.icon
 
@@ -60,10 +66,10 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noreferrer" : undefined}
-                className="group flex items-center justify-between gap-5 border-b border-white/10 py-4 transition-colors last:border-b-0 hover:bg-white/[0.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="group flex items-center justify-between gap-5 border-b border-white/10 px-4 py-3.5 transition duration-300 last:border-b-0 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <span className="flex min-w-0 items-center gap-4 px-1">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-white/[0.035] text-muted-foreground">
+                <span className="flex min-w-0 items-center gap-4">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-[#e7c78f]/10 text-[#f0dfbd] transition-colors group-hover:bg-[#e7c78f]/18">
                     <Icon aria-hidden="true" className="size-3.5" />
                   </span>
 
@@ -77,7 +83,7 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
                   </span>
                 </span>
 
-                <span className="flex shrink-0 items-center gap-3 px-1 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                <span className="flex shrink-0 items-center gap-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                   Abrir
                   <ArrowUpRight
                     aria-hidden="true"
@@ -87,7 +93,7 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
               </Link>
             )
           })}
-        </div>
+        </Reveal>
       </div>
     </section>
   )
