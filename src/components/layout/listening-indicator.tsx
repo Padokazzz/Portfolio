@@ -1,7 +1,7 @@
 "use client"
 
 import { Music2 } from "lucide-react"
-import { useEffect, useId, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { SECTION_SOUNDTRACKS } from "@/constants/soundtrack"
 
@@ -13,7 +13,6 @@ const WAVE_HEIGHTS = [45, 72, 38, 64, 52] as const
 export function ListeningIndicator() {
   const [activeSection, setActiveSection] =
     useState<SectionId>(DEFAULT_SECTION)
-  const uid = useId().replace(/:/g, "")
 
   useEffect(() => {
     const updateFromHash = () => {
@@ -61,19 +60,11 @@ export function ListeningIndicator() {
     SECTION_SOUNDTRACKS.find((item) => item.sectionId === activeSection) ??
     SECTION_SOUNDTRACKS[0]
 
-  const kfName = `wave-${uid}`
-
   return (
     <aside
       aria-label={`Ouvindo ${soundtrack.track}`}
       className="fixed bottom-4 right-4 z-40 hidden w-[14.5rem] rounded-md border border-white/[0.07] bg-[#151310]/70 px-3 py-2.5 text-muted-foreground shadow-[0_12px_36px_rgb(0_0_0/0.16)] backdrop-blur-md md:block"
     >
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `@keyframes ${kfName}{0%,100%{transform:scaleY(.3);opacity:.38}35%{transform:scaleY(1);opacity:.82}62%{transform:scaleY(.65);opacity:.58}}`,
-        }}
-      />
-
       <div className="flex items-center gap-2.5">
         <span className="flex size-5 shrink-0 items-center justify-center text-[#e7c78f]/70">
           <Music2 aria-hidden="true" className="size-3.5" />
@@ -98,11 +89,11 @@ export function ListeningIndicator() {
           {WAVE_HEIGHTS.map((height, index) => (
             <span
               key={`${height}-${index}`}
-              className="w-0.5 rounded-full bg-[#e7c78f]/55"
+              className="music-wave-bar w-0.5 rounded-full bg-[#e7c78f]/55"
               style={{
                 height: `${height}%`,
-                transformOrigin: "bottom",
-                animation: `${kfName} ${1.6 + index * 0.15}s ease-in-out ${index * 0.25}s infinite`,
+                animationDuration: `${1.6 + index * 0.15}s`,
+                animationDelay: `${index * 0.25}s`,
               }}
             />
           ))}

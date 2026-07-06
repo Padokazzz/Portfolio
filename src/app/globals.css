@@ -215,3 +215,33 @@
     }
   }
 }
+
+/* music wave – outside layers to avoid tw-animate-css @property conflicts */
+@keyframes music-wave {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+    opacity: 0.38;
+  }
+  35% {
+    transform: scaleY(1);
+    opacity: 0.82;
+  }
+  62% {
+    transform: scaleY(0.65);
+    opacity: 0.58;
+  }
+}
+
+.music-wave-bar {
+  transform-origin: bottom;
+  animation-name: music-wave;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-wave-bar {
+    animation: none;
+  }
+}
