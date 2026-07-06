@@ -232,16 +232,3 @@
     opacity: 0.58;
   }
 }
-
-.music-wave-bar {
-  transform-origin: bottom;
-  animation-name: music-wave;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .music-wave-bar {
-    animation: none;
-  }
-}

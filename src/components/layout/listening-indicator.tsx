@@ -89,10 +89,14 @@ export function ListeningIndicator() {
           {WAVE_HEIGHTS.map((height, index) => (
             <span
               key={`${height}-${index}`}
-              className="music-wave-bar w-0.5 rounded-full bg-[#e7c78f]/55"
+              className="w-0.5 rounded-full bg-[#e7c78f]/55"
               style={{
                 height: `${height}%`,
+                transformOrigin: "bottom",
+                animationName: "music-wave",
                 animationDuration: `${1.6 + index * 0.15}s`,
+                animationTimingFunction: "ease-in-out",
+                animationIterationCount: "infinite",
                 animationDelay: `${index * 0.25}s`,
               }}
             />
