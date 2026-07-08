@@ -2,21 +2,20 @@
 
 import {
   ArrowLeft,
+  BatteryFull,
   Bell,
-  Bookmark,
-  CheckCircle2,
+  Camera,
   Eye,
   Heart,
   Home,
   MessageCircle,
-  MoreHorizontal,
-  PlayCircle,
+  MoreVertical,
   PlusSquare,
   Search,
-  Send,
   Share2,
   Star,
   Tv,
+  Wifi,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -24,177 +23,136 @@ import { useMemo, useState } from "react"
 
 import { cn } from "@/lib/utils"
 
+type Story = {
+  name: string
+  image?: string
+  create?: boolean
+}
+
 type FeedPost = {
   id: string
   author: string
-  handle: string
   avatar: string
-  verified?: boolean
   time: string
-  mediaType: "image" | "video" | "carousel"
   image: string
   imageAlt: string
-  caption: string
   likes: number
-  comments: number
   views: number
-  location: string
 }
 
-const flashdares = [
+const stories: Story[] = [
+  { name: "Criar", create: true },
   {
-    name: "Voce",
+    name: "Ana",
     image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=160&q=80",
-    active: false,
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=180&q=80",
   },
   {
-    name: "Ludare",
+    name: "Carlos",
     image:
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=160&q=80",
-    active: true,
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=180&q=80",
   },
   {
-    name: "Eventos",
+    name: "Maria",
     image:
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=160&q=80",
-    active: true,
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=180&q=80",
   },
   {
-    name: "Praia",
+    name: "Joao",
     image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=160&q=80",
-    active: true,
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=180&q=80",
   },
   {
-    name: "Role",
+    name: "Fer",
     image:
-      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=160&q=80",
-    active: true,
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=180&q=80",
   },
 ]
 
 const feedPosts: FeedPost[] = [
   {
     id: "post-1",
-    author: "Ana Clara",
-    handle: "@anacl",
+    author: "Ana Silva",
     avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80",
-    verified: true,
-    time: "agora",
-    mediaType: "carousel",
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=160&q=80",
+    time: "ha 5 min",
     image:
-      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=900&q=85",
-    imageAlt: "Pessoas em uma festa com luzes coloridas",
-    caption:
-      "Fim de tarde com a galera. Marcando o pessoal que sempre aparece nas melhores resenhas.",
-    likes: 1284,
-    comments: 86,
-    views: 8420,
-    location: "Sao Paulo, BR",
+      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=90",
+    imageAlt: "Pizza fatiada em uma tabua de madeira",
+    likes: 15,
+    views: 45,
   },
   {
     id: "post-2",
-    author: "Bruno Lima",
-    handle: "@brunolimadev",
+    author: "Carlos Mendes",
     avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80",
-    time: "12 min",
-    mediaType: "video",
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=160&q=80",
+    time: "ha 18 min",
     image:
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=900&q=85",
-    imageAlt: "Show com instrumentos musicais e luzes no palco",
-    caption:
-      "Trecho da TV Resenha de hoje. Video curto, curtidas em tempo real e comentarios sem sair do feed.",
-    likes: 932,
-    comments: 41,
-    views: 12600,
-    location: "Curitiba, BR",
-  },
-  {
-    id: "post-3",
-    author: "Marina Souza",
-    handle: "@marisouza",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80",
-    verified: true,
-    time: "34 min",
-    mediaType: "image",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85",
-    imageAlt: "Casa iluminada ao ar livre durante um evento",
-    caption:
-      "Evento salvo, convite enviado e feed atualizado. Tudo no mesmo fluxo mobile.",
-    likes: 2176,
-    comments: 153,
-    views: 18400,
-    location: "Florianopolis, BR",
+      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=900&q=90",
+    imageAlt: "Pessoas em uma festa com luzes coloridas",
+    likes: 128,
+    views: 320,
   },
 ]
 
 const navItems = [
-  { id: "home", label: "Home", icon: Home },
+  { id: "home", label: "Inicio", icon: Home },
   { id: "events", label: "Eventos", icon: Star },
   { id: "publish", label: "Publicar", icon: PlusSquare },
-  { id: "review", label: "Resenha", icon: MessageCircle, badge: 3 },
-  { id: "tv", label: "TV", icon: Tv },
+  { id: "review", label: "Resenha", icon: MessageCircle },
+  { id: "tv", label: "TV Resenha", icon: Tv },
 ]
 
-function formatCompact(value: number) {
-  return new Intl.NumberFormat("pt-BR", {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value)
-}
-
-function StatPill({
-  icon: Icon,
-  label,
-}: {
-  icon: typeof Heart
-  label: string
-}) {
+function StatusBar() {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-zinc-100 px-2 py-1 text-[11px] font-medium text-zinc-600">
-      <Icon aria-hidden="true" className="size-3.5" />
-      {label}
-    </span>
+    <div className="flex items-center justify-between px-3 pt-3 text-[15px] font-semibold text-[#f4f0f5]">
+      <div className="flex items-center gap-2">
+        <span>14:43</span>
+        <span className="size-2 rounded-full bg-[#f4f0f5]" />
+        <span className="size-2 rounded-full border border-[#f4f0f5]" />
+        <span className="size-2 rounded-full bg-[#f4f0f5]" />
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Wifi aria-hidden="true" className="size-4" />
+        <span className="text-[11px] leading-none">5G</span>
+        <BatteryFull aria-hidden="true" className="size-5" />
+        <span>100%</span>
+      </div>
+    </div>
   )
 }
 
-function FlashdareStrip() {
+function StoryStrip() {
   return (
-    <section className="border-b border-zinc-100 bg-white px-4 py-3">
-      <div className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {flashdares.map((item) => (
+    <section className="px-4 pt-6">
+      <div className="flex gap-5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {stories.map((story) => (
           <button
-            key={item.name}
+            key={story.name}
             type="button"
-            className="flex w-16 shrink-0 flex-col items-center gap-1.5"
+            className="flex w-[66px] shrink-0 flex-col items-center gap-2"
           >
-            <span
-              className={cn(
-                "rounded-full p-0.5",
-                item.active
-                ? "bg-gradient-to-tr from-[#ff3158] via-[#9b5cff] to-[#19d3ff]"
-                  : "bg-zinc-200"
-              )}
-            >
-              <span className="block rounded-full bg-white p-0.5">
-                <span className="relative block size-12 overflow-hidden rounded-full">
+            <span className="grid size-[66px] place-items-center rounded-[22px] border-2 border-[#c8cbff] bg-[#202020] p-1">
+              {story.create ? (
+                <span className="grid size-full place-items-center rounded-[17px] text-[#c8cbff]">
+                  <Camera aria-hidden="true" className="size-8" />
+                </span>
+              ) : (
+                <span className="relative block size-full overflow-hidden rounded-[17px]">
                   <Image
-                    src={item.image}
-                    alt={`Flashdare de ${item.name}`}
+                    src={story.image ?? ""}
+                    alt={`Story de ${story.name}`}
                     fill
-                    sizes="48px"
+                    sizes="66px"
                     className="object-cover"
                   />
                 </span>
-              </span>
+              )}
             </span>
-            <span className="max-w-full truncate text-[11px] text-zinc-700">
-              {item.name}
+            <span className="max-w-full truncate text-[13px] font-semibold text-[#d8d4dc]">
+              {story.name}
             </span>
           </button>
         ))}
@@ -213,135 +171,87 @@ function FeedCard({
   onToggleLike: () => void
 }) {
   return (
-    <article className="border-b border-zinc-100 bg-white">
-      <header className="flex items-center gap-3 px-4 py-3">
-        <span className="relative block size-10 shrink-0 overflow-hidden rounded-full">
+    <article className="pt-8 text-[#d8d4dc]">
+      <header className="flex items-center gap-3 px-4 pb-5">
+        <span className="relative block size-12 shrink-0 overflow-hidden rounded-full">
           <Image
             src={post.avatar}
             alt={`Avatar de ${post.author}`}
             fill
-            sizes="40px"
+            sizes="48px"
             className="object-cover"
           />
         </span>
 
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5">
-            <h2 className="truncate text-sm font-semibold text-zinc-950">
-              {post.author}
-            </h2>
-            {post.verified && (
-              <CheckCircle2
-                aria-label="Perfil verificado"
-                className="size-4 text-sky-500"
-              />
-            )}
-          </div>
-          <p className="truncate text-xs text-zinc-500">
-            {post.handle} - {post.location} - {post.time}
+          <h2 className="truncate text-base font-bold leading-tight">
+            {post.author}
+          </h2>
+          <p className="mt-1 text-sm leading-none text-[#b8b4bd]">
+            {post.time}
           </p>
         </div>
 
         <button
           type="button"
-          className="rounded-full p-2 text-zinc-500 hover:bg-zinc-100"
+          className="rounded-full p-2 text-[#c9c5ce]"
           aria-label="Mais opcoes"
         >
-          <MoreHorizontal aria-hidden="true" className="size-5" />
+          <MoreVertical aria-hidden="true" className="size-6" />
         </button>
       </header>
 
-      <div className="relative bg-zinc-950">
-        <div className="relative aspect-square w-full">
-          <Image
-            src={post.image}
-            alt={post.imageAlt}
-            fill
-            sizes="430px"
-            className="object-cover"
-          />
-        </div>
-
-        {post.mediaType === "video" && (
-          <div className="absolute inset-0 grid place-items-center bg-black/10">
-            <span className="rounded-full bg-black/45 p-3 text-white backdrop-blur">
-              <PlayCircle aria-hidden="true" className="size-10" />
-            </span>
-          </div>
-        )}
-
-        {post.mediaType === "carousel" && (
-          <div className="absolute right-3 top-3 rounded-full bg-black/55 px-2 py-1 text-[11px] font-medium text-white">
-            1/4
-          </div>
-        )}
+      <div className="relative aspect-[4/5] w-full bg-zinc-950">
+        <Image
+          src={post.image}
+          alt={post.imageAlt}
+          fill
+          sizes="430px"
+          className="object-cover"
+        />
       </div>
 
-      <div className="space-y-3 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <button
-              type="button"
-              onClick={onToggleLike}
-              className={cn(
-                "rounded-full p-2 transition",
-                liked ? "text-red-500" : "text-zinc-800 hover:bg-zinc-100"
-              )}
-              aria-label={liked ? "Remover curtida" : "Curtir"}
-            >
-              <Heart
-                aria-hidden="true"
-                className={cn("size-5", liked && "fill-current")}
-              />
-            </button>
-            <button
-              type="button"
-              className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100"
-              aria-label="Comentar"
-            >
-              <MessageCircle aria-hidden="true" className="size-5" />
-            </button>
-            <button
-              type="button"
-              className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100"
-              aria-label="Compartilhar"
-            >
-              <Share2 aria-hidden="true" className="size-5" />
-            </button>
-          </div>
+      <div className="px-7 pb-5 pt-5">
+        <div className="flex items-center gap-7">
+          <button
+            type="button"
+            onClick={onToggleLike}
+            className={cn(
+              "text-[#d8d4dc] transition",
+              liked && "text-[#ff5a65]"
+            )}
+            aria-label={liked ? "Remover curtida" : "Curtir"}
+          >
+            <Heart
+              aria-hidden="true"
+              className={cn("size-7", liked && "fill-current")}
+            />
+          </button>
 
           <button
             type="button"
-            className="rounded-full p-2 text-zinc-800 hover:bg-zinc-100"
-            aria-label="Salvar"
+            className="text-[#d8d4dc]"
+            aria-label="Comentar"
           >
-            <Bookmark aria-hidden="true" className="size-5" />
+            <MessageCircle aria-hidden="true" className="size-7" />
+          </button>
+
+          <button
+            type="button"
+            className="text-[#d8d4dc]"
+            aria-label="Compartilhar"
+          >
+            <Share2 aria-hidden="true" className="size-7" />
           </button>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          <StatPill
-            icon={Heart}
-            label={`${formatCompact(post.likes + (liked ? 1 : 0))} curtidas`}
-          />
-          <StatPill
-            icon={MessageCircle}
-            label={`${formatCompact(post.comments)} comentarios`}
-          />
-          <StatPill
-            icon={Eye}
-            label={`${formatCompact(post.views)} views`}
-          />
-        </div>
-
-        <p className="text-sm leading-5 text-zinc-700">
-          <span className="font-semibold text-zinc-950">{post.handle}</span>{" "}
-          {post.caption}
+        <p className="mt-5 flex items-center gap-4 text-sm font-semibold text-[#bcb8c1]">
+          <span>{post.likes + (liked ? 1 : 0)} curtidas</span>
+          <span className="inline-flex items-center gap-1.5">
+            <Eye aria-hidden="true" className="size-4" />
+            {post.views}
+          </span>
         </p>
-
-        <button type="button" className="text-xs font-medium text-zinc-500">
-          Ver todos os comentarios
-        </button>
       </div>
     </article>
   )
@@ -349,12 +259,10 @@ function FeedCard({
 
 export function LudareDemo() {
   const [activeNav, setActiveNav] = useState("home")
-  const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({
-    "post-1": true,
-  })
+  const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({})
 
   const selectedTabLabel = useMemo(
-    () => navItems.find((item) => item.id === activeNav)?.label ?? "Home",
+    () => navItems.find((item) => item.id === activeNav)?.label ?? "Inicio",
     [activeNav]
   )
 
@@ -378,24 +286,23 @@ export function LudareDemo() {
           </Link>
 
           <div className="max-w-md space-y-4">
-            <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#7fc7d9]">
+            <p className="text-xs font-medium uppercase tracking-[0.22em] text-[#ff5a65]">
               Demo mobile
             </p>
             <h1 className="text-4xl font-semibold leading-tight">
-              Feed fake do Ludare com experiencia de app no navegador.
+              Feed do Ludare em uma experiencia mobile no navegador.
             </h1>
             <p className="text-sm leading-6 text-zinc-300">
-              Uma simulacao do fluxo principal do app: feed publico, Flashdare,
-              acoes de post, contadores, videos, carrossel e navegacao inferior
-              inspirada no projeto Flutter real.
+              Ajustado para se aproximar da tela real: tema escuro, stories no
+              topo, post com midia grande, acoes sociais e navegacao inferior.
             </p>
           </div>
 
           <div className="grid max-w-md grid-cols-3 gap-3">
             {[
-              ["Posts", "3"],
+              ["Tema", "Dark"],
               ["Aba ativa", selectedTabLabel],
-              ["Stack", "Flutter + .NET"],
+              ["Tela", "Feed"],
             ].map(([label, value]) => (
               <div
                 key={label}
@@ -410,68 +317,38 @@ export function LudareDemo() {
 
         <section className="mx-auto w-full max-w-[430px] lg:ml-auto">
           <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-zinc-950 p-2 shadow-2xl shadow-black/50">
-            <div className="relative overflow-hidden rounded-[1.55rem] bg-white text-zinc-950">
-              <div className="flex h-[min(820px,calc(100svh-2rem))] min-h-[680px] flex-col">
-                <header className="sticky top-0 z-20 border-b border-zinc-100 bg-white/95 px-4 py-3 backdrop-blur">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-400">
-                        Ludare
-                      </p>
-                      <h1 className="text-xl font-semibold tracking-wide">
-                        Ludare
-                      </h1>
-                    </div>
+            <div className="relative overflow-hidden rounded-[1.55rem] bg-[#202020] text-[#d8d4dc]">
+              <div className="flex h-[min(860px,calc(100svh-2rem))] min-h-[700px] flex-col">
+                <StatusBar />
 
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        className="rounded-full p-2 text-zinc-700 hover:bg-zinc-100"
-                        aria-label="Buscar usuarios"
-                      >
-                        <Search aria-hidden="true" className="size-5" />
+                <header className="px-6 pb-4 pt-7">
+                  <div className="flex items-center justify-between gap-6">
+                    <h1 className="text-[2.6rem] font-light leading-none tracking-wide text-[#e8e4ec]">
+                      Ludare
+                    </h1>
+
+                    <div className="flex items-center gap-7 text-[#d8d4dc]">
+                      <button type="button" aria-label="Buscar usuarios">
+                        <Search aria-hidden="true" className="size-8" />
                       </button>
-                      <button
-                        type="button"
-                        className="relative rounded-full p-2 text-zinc-700 hover:bg-zinc-100"
-                        aria-label="Notificacoes"
-                      >
-                        <Bell aria-hidden="true" className="size-5" />
-                        <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-red-500" />
+                      <button type="button" aria-label="Notificacoes">
+                        <Bell aria-hidden="true" className="size-8" />
                       </button>
-                    </div>
-                  </div>
-                </header>
-
-                <div className="min-h-0 flex-1 overflow-y-auto bg-zinc-50 pb-24">
-                  <FlashdareStrip />
-
-                  <div className="border-b border-zinc-100 bg-white px-4 py-3">
-                    <div className="flex items-center gap-3 rounded-2xl bg-zinc-50 p-3">
-                      <span className="relative block size-10 shrink-0 overflow-hidden rounded-full">
+                      <span className="relative block size-12 overflow-hidden rounded-full border-2 border-[#123a87] bg-[#123a87]">
                         <Image
                           src="/images/profile.jpg"
                           alt="Avatar de Leonardo Padilha"
                           fill
-                          sizes="40px"
+                          sizes="48px"
                           className="object-cover"
                         />
                       </span>
-                      <button
-                        type="button"
-                        className="flex-1 rounded-full bg-white px-4 py-2 text-left text-sm text-zinc-500 shadow-sm ring-1 ring-zinc-100"
-                      >
-                        Compartilhe uma resenha...
-                      </button>
-                      <button
-                        type="button"
-                        className="rounded-full bg-zinc-950 p-2 text-white"
-                        aria-label="Publicar"
-                      >
-                        <Send aria-hidden="true" className="size-4" />
-                      </button>
                     </div>
                   </div>
+                </header>
+
+                <div className="min-h-0 flex-1 overflow-y-auto pb-28 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  <StoryStrip />
 
                   {feedPosts.map((post) => (
                     <FeedCard
@@ -483,8 +360,8 @@ export function LudareDemo() {
                   ))}
                 </div>
 
-                <nav className="absolute inset-x-0 bottom-0 z-20 border-t border-zinc-100 bg-white px-3 pb-3 pt-2">
-                  <div className="grid grid-cols-5">
+                <nav className="absolute inset-x-0 bottom-0 z-20 bg-[#202020] px-3 pb-4 pt-2">
+                  <div className="grid grid-cols-5 gap-1">
                     {navItems.map((item) => {
                       const Icon = item.icon
                       const active = activeNav === item.id
@@ -494,23 +371,19 @@ export function LudareDemo() {
                           key={item.id}
                           type="button"
                           onClick={() => setActiveNav(item.id)}
-                          className="flex flex-col items-center gap-1 rounded-xl px-1 py-1.5 text-[10px] font-medium text-zinc-600"
+                          className="flex flex-col items-center gap-1 rounded-xl px-1 py-1 text-[12px] font-bold text-[#d8d4dc]"
                         >
                           <span
                             className={cn(
-                              "relative grid size-8 place-items-center rounded-xl",
-                              active &&
-                                "border-2 border-[#7fc7d9] text-[#0891b2]"
+                              "grid size-10 place-items-center rounded-xl",
+                              active
+                                ? "border-2 border-[#ff5a65] text-[#ff5a65]"
+                                : "text-[#d8d4dc]"
                             )}
                           >
-                            <Icon aria-hidden="true" className="size-5" />
-                            {item.badge && (
-                              <span className="absolute -right-1 -top-1 grid min-w-4 place-items-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white ring-2 ring-white">
-                                {item.badge}
-                              </span>
-                            )}
+                            <Icon aria-hidden="true" className="size-7" />
                           </span>
-                          {item.label}
+                          <span className="truncate">{item.label}</span>
                         </button>
                       )
                     })}
