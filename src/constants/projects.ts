@@ -7,7 +7,6 @@ export type PortfolioProject = {
   id: string
   name: string
   eyebrow: string
-  summary: string
   description: string
   status: string
   stack: string[]
@@ -16,16 +15,56 @@ export type PortfolioProject = {
     label: string
     value: string
   }[]
-  demoHref: string
+  demoHref?: string
   links: ProjectLink[]
 }
 
 export const FEATURED_PROJECTS: PortfolioProject[] = [
   {
+    id: "ludare",
+    name: "Ludare",
+    eyebrow: "Rede social mobile",
+    description:
+      "Aplicativo mobile de rede social em producao, publicado na App Store e Play Store. Atuo no produto atual com foco em experiencia mobile, integracoes, comunicacao em tempo real e evolucao continua de funcionalidades para usuarios reais.",
+    status: "Em producao",
+    stack: [
+      "Flutter",
+      "Dart",
+      "C#",
+      ".NET",
+      "APIs REST",
+      "SignalR",
+      "WebRTC",
+      "WebSocket",
+      "Git",
+    ],
+    highlights: [
+      "Produto mobile publicado para iOS e Android",
+      "Rede social com funcionalidades voltadas a usuarios reais",
+      "Integracoes com APIs e recursos de comunicacao em tempo real",
+      "Atuacao atual em evolucao, manutencao e melhorias de UX",
+    ],
+    metrics: [
+      { label: "Plataformas", value: "iOS + Android" },
+      { label: "Canal", value: "App stores" },
+      { label: "Dominio", value: "Rede social" },
+    ],
+    demoHref: "/experimentos/ludare",
+    links: [
+      {
+        label: "App Store",
+        href: "https://apps.apple.com/br/app/ludare/id1628374355",
+      },
+      {
+        label: "Play Store",
+        href: "https://play.google.com/store/apps/details?id=com.ludare.followmme&hl=pt_BR&pli=1",
+      },
+    ],
+  },
+  {
     id: "fintrack",
     name: "FinTrack",
     eyebrow: "Financas pessoais",
-    summary: "Aplicacao full stack para controle financeiro pessoal.",
     description:
       "Projeto dividido entre frontend web e API, com foco em organizacao de contas, categorias, transacoes e resumos mensais. A proposta e demonstrar fluxo completo de produto: interface, regras de negocio, persistencia e autenticacao.",
     status: "MVP em evolucao",
@@ -67,7 +106,6 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     id: "minecraft-panel",
     name: "Minecraft Panel",
     eyebrow: "Painel operacional",
-    summary: "Painel web para gerenciar servidor Minecraft com front e backend.",
     description:
       "Projeto de painel administrativo pensado para centralizar operacoes de um servidor Minecraft. A proposta e explorar uma experiencia de controle com interface web, backend proprio e comandos de gestao em um contexto pratico e divertido.",
     status: "MVP tecnico",
