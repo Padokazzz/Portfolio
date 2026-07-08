@@ -106,18 +106,18 @@ const navItems = [
 
 function StatusBar() {
   return (
-    <div className="flex items-center justify-between px-3 pt-3 text-[15px] font-semibold text-[#f4f0f5]">
-      <div className="flex items-center gap-2">
+    <div className="flex items-center justify-between px-3 pt-2.5 text-xs font-semibold text-[#f4f0f5]">
+      <div className="flex items-center gap-1.5">
         <span>14:43</span>
-        <span className="size-2 rounded-full bg-[#f4f0f5]" />
-        <span className="size-2 rounded-full border border-[#f4f0f5]" />
-        <span className="size-2 rounded-full bg-[#f4f0f5]" />
+        <span className="size-1.5 rounded-full bg-[#f4f0f5]" />
+        <span className="size-1.5 rounded-full border border-[#f4f0f5]" />
+        <span className="size-1.5 rounded-full bg-[#f4f0f5]" />
       </div>
 
-      <div className="flex items-center gap-2">
-        <Wifi aria-hidden="true" className="size-4" />
-        <span className="text-[11px] leading-none">5G</span>
-        <BatteryFull aria-hidden="true" className="size-5" />
+      <div className="flex items-center gap-1.5">
+        <Wifi aria-hidden="true" className="size-3.5" />
+        <span className="text-[10px] leading-none">5G</span>
+        <BatteryFull aria-hidden="true" className="size-4" />
         <span>100%</span>
       </div>
     </div>
@@ -126,32 +126,32 @@ function StatusBar() {
 
 function StoryStrip() {
   return (
-    <section className="px-4 pt-6">
-      <div className="flex gap-5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <section className="px-3 pt-4">
+      <div className="flex gap-4 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {stories.map((story) => (
           <button
             key={story.name}
             type="button"
-            className="flex w-[66px] shrink-0 flex-col items-center gap-2"
+            className="flex w-[56px] shrink-0 flex-col items-center gap-1.5"
           >
-            <span className="grid size-[66px] place-items-center rounded-[22px] border-2 border-[#c8cbff] bg-[#202020] p-1">
+            <span className="grid size-14 place-items-center rounded-[18px] border-2 border-[#c8cbff] bg-[#202020] p-1">
               {story.create ? (
-                <span className="grid size-full place-items-center rounded-[17px] text-[#c8cbff]">
-                  <Camera aria-hidden="true" className="size-8" />
+                <span className="grid size-full place-items-center rounded-[13px] text-[#c8cbff]">
+                  <Camera aria-hidden="true" className="size-7" />
                 </span>
               ) : (
-                <span className="relative block size-full overflow-hidden rounded-[17px]">
+                <span className="relative block size-full overflow-hidden rounded-[13px]">
                   <Image
                     src={story.image ?? ""}
                     alt={`Story de ${story.name}`}
                     fill
-                    sizes="66px"
+                    sizes="56px"
                     className="object-cover"
                   />
                 </span>
               )}
             </span>
-            <span className="max-w-full truncate text-[13px] font-semibold text-[#d8d4dc]">
+            <span className="max-w-full truncate text-xs font-semibold text-[#d8d4dc]">
               {story.name}
             </span>
           </button>
@@ -171,23 +171,23 @@ function FeedCard({
   onToggleLike: () => void
 }) {
   return (
-    <article className="pt-8 text-[#d8d4dc]">
-      <header className="flex items-center gap-3 px-4 pb-5">
-        <span className="relative block size-12 shrink-0 overflow-hidden rounded-full">
+    <article className="pt-5 text-[#d8d4dc]">
+      <header className="flex items-center gap-3 px-3.5 pb-4">
+        <span className="relative block size-10 shrink-0 overflow-hidden rounded-full">
           <Image
             src={post.avatar}
             alt={`Avatar de ${post.author}`}
             fill
-            sizes="48px"
+            sizes="40px"
             className="object-cover"
           />
         </span>
 
         <div className="min-w-0 flex-1">
-          <h2 className="truncate text-base font-bold leading-tight">
+          <h2 className="truncate text-sm font-bold leading-tight">
             {post.author}
           </h2>
-          <p className="mt-1 text-sm leading-none text-[#b8b4bd]">
+          <p className="mt-1 text-xs leading-none text-[#b8b4bd]">
             {post.time}
           </p>
         </div>
@@ -197,11 +197,11 @@ function FeedCard({
           className="rounded-full p-2 text-[#c9c5ce]"
           aria-label="Mais opcoes"
         >
-          <MoreVertical aria-hidden="true" className="size-6" />
+          <MoreVertical aria-hidden="true" className="size-5" />
         </button>
       </header>
 
-      <div className="relative aspect-[4/5] w-full bg-zinc-950">
+      <div className="relative aspect-[4/4.65] w-full bg-zinc-950">
         <Image
           src={post.image}
           alt={post.imageAlt}
@@ -211,8 +211,8 @@ function FeedCard({
         />
       </div>
 
-      <div className="px-7 pb-5 pt-5">
-        <div className="flex items-center gap-7">
+      <div className="px-6 pb-4 pt-4">
+        <div className="flex items-center gap-6">
           <button
             type="button"
             onClick={onToggleLike}
@@ -224,7 +224,7 @@ function FeedCard({
           >
             <Heart
               aria-hidden="true"
-              className={cn("size-7", liked && "fill-current")}
+              className={cn("size-6", liked && "fill-current")}
             />
           </button>
 
@@ -233,7 +233,7 @@ function FeedCard({
             className="text-[#d8d4dc]"
             aria-label="Comentar"
           >
-            <MessageCircle aria-hidden="true" className="size-7" />
+            <MessageCircle aria-hidden="true" className="size-6" />
           </button>
 
           <button
@@ -241,14 +241,14 @@ function FeedCard({
             className="text-[#d8d4dc]"
             aria-label="Compartilhar"
           >
-            <Share2 aria-hidden="true" className="size-7" />
+            <Share2 aria-hidden="true" className="size-6" />
           </button>
         </div>
 
-        <p className="mt-5 flex items-center gap-4 text-sm font-semibold text-[#bcb8c1]">
+        <p className="mt-4 flex items-center gap-4 text-xs font-semibold text-[#bcb8c1]">
           <span>{post.likes + (liked ? 1 : 0)} curtidas</span>
           <span className="inline-flex items-center gap-1.5">
-            <Eye aria-hidden="true" className="size-4" />
+            <Eye aria-hidden="true" className="size-3.5" />
             {post.views}
           </span>
         </p>
@@ -275,7 +275,7 @@ export function LudareDemo() {
 
   return (
     <main className="min-h-screen bg-[#11100f] text-white">
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-6 px-4 py-4 lg:grid lg:grid-cols-[0.75fr_1fr] lg:items-center lg:px-8">
+      <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-5 px-4 py-3 lg:grid lg:grid-cols-[0.75fr_1fr] lg:items-center lg:px-8">
         <section className="hidden space-y-5 lg:block">
           <Link
             href="/"
@@ -315,31 +315,31 @@ export function LudareDemo() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-[430px] lg:ml-auto">
-          <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-zinc-950 p-2 shadow-2xl shadow-black/50">
-            <div className="relative overflow-hidden rounded-[1.55rem] bg-[#202020] text-[#d8d4dc]">
-              <div className="flex h-[min(860px,calc(100svh-2rem))] min-h-[700px] flex-col">
+        <section className="mx-auto w-full max-w-[360px] lg:ml-auto">
+          <div className="overflow-hidden rounded-[1.75rem] border border-white/15 bg-zinc-950 p-1.5 shadow-2xl shadow-black/50">
+            <div className="relative overflow-hidden rounded-[1.35rem] bg-[#202020] text-[#d8d4dc]">
+              <div className="flex h-[min(720px,calc(100svh-1.5rem))] min-h-[560px] flex-col">
                 <StatusBar />
 
-                <header className="px-6 pb-4 pt-7">
-                  <div className="flex items-center justify-between gap-6">
-                    <h1 className="text-[2.6rem] font-light leading-none tracking-wide text-[#e8e4ec]">
+                <header className="px-5 pb-3 pt-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <h1 className="text-[2.05rem] font-light leading-none tracking-wide text-[#e8e4ec]">
                       Ludare
                     </h1>
 
-                    <div className="flex items-center gap-7 text-[#d8d4dc]">
+                    <div className="flex items-center gap-5 text-[#d8d4dc]">
                       <button type="button" aria-label="Buscar usuarios">
-                        <Search aria-hidden="true" className="size-8" />
+                        <Search aria-hidden="true" className="size-6" />
                       </button>
                       <button type="button" aria-label="Notificacoes">
-                        <Bell aria-hidden="true" className="size-8" />
+                        <Bell aria-hidden="true" className="size-6" />
                       </button>
-                      <span className="relative block size-12 overflow-hidden rounded-full border-2 border-[#123a87] bg-[#123a87]">
+                      <span className="relative block size-10 overflow-hidden rounded-full border-2 border-[#123a87] bg-[#123a87]">
                         <Image
                           src="/images/profile.jpg"
                           alt="Avatar de Leonardo Padilha"
                           fill
-                          sizes="48px"
+                          sizes="40px"
                           className="object-cover"
                         />
                       </span>
@@ -347,7 +347,7 @@ export function LudareDemo() {
                   </div>
                 </header>
 
-                <div className="min-h-0 flex-1 overflow-y-auto pb-28 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="min-h-0 flex-1 overflow-y-auto pb-22 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   <StoryStrip />
 
                   {feedPosts.map((post) => (
@@ -360,7 +360,7 @@ export function LudareDemo() {
                   ))}
                 </div>
 
-                <nav className="absolute inset-x-0 bottom-0 z-20 bg-[#202020] px-3 pb-4 pt-2">
+                <nav className="absolute inset-x-0 bottom-0 z-20 bg-[#202020] px-2 pb-3 pt-1.5">
                   <div className="grid grid-cols-5 gap-1">
                     {navItems.map((item) => {
                       const Icon = item.icon
@@ -371,17 +371,17 @@ export function LudareDemo() {
                           key={item.id}
                           type="button"
                           onClick={() => setActiveNav(item.id)}
-                          className="flex flex-col items-center gap-1 rounded-xl px-1 py-1 text-[12px] font-bold text-[#d8d4dc]"
+                          className="flex flex-col items-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-bold text-[#d8d4dc]"
                         >
                           <span
                             className={cn(
-                              "grid size-10 place-items-center rounded-xl",
+                              "grid size-8 place-items-center rounded-lg",
                               active
                                 ? "border-2 border-[#ff5a65] text-[#ff5a65]"
                                 : "text-[#d8d4dc]"
                             )}
                           >
-                            <Icon aria-hidden="true" className="size-7" />
+                            <Icon aria-hidden="true" className="size-5" />
                           </span>
                           <span className="truncate">{item.label}</span>
                         </button>
