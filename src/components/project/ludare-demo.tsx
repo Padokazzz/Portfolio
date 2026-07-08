@@ -106,18 +106,18 @@ const navItems = [
 
 function StatusBar() {
   return (
-    <div className="flex items-center justify-between px-3 pt-2.5 text-xs font-semibold text-[#f4f0f5]">
-      <div className="flex items-center gap-1.5">
+    <div className="flex items-center justify-between px-3 pt-2 text-[11px] font-semibold text-[#f4f0f5]">
+      <div className="flex items-center gap-1">
         <span>14:43</span>
-        <span className="size-1.5 rounded-full bg-[#f4f0f5]" />
-        <span className="size-1.5 rounded-full border border-[#f4f0f5]" />
-        <span className="size-1.5 rounded-full bg-[#f4f0f5]" />
+        <span className="size-1 rounded-full bg-[#f4f0f5]" />
+        <span className="size-1 rounded-full border border-[#f4f0f5]" />
+        <span className="size-1 rounded-full bg-[#f4f0f5]" />
       </div>
 
-      <div className="flex items-center gap-1.5">
-        <Wifi aria-hidden="true" className="size-3.5" />
-        <span className="text-[10px] leading-none">5G</span>
-        <BatteryFull aria-hidden="true" className="size-4" />
+      <div className="flex items-center gap-1">
+        <Wifi aria-hidden="true" className="size-3" />
+        <span className="text-[9px] leading-none">5G</span>
+        <BatteryFull aria-hidden="true" className="size-3.5" />
         <span>100%</span>
       </div>
     </div>
@@ -126,18 +126,18 @@ function StatusBar() {
 
 function StoryStrip() {
   return (
-    <section className="px-3 pt-4">
-      <div className="flex gap-4 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <section className="px-3 pt-3">
+      <div className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {stories.map((story) => (
           <button
             key={story.name}
             type="button"
-            className="flex w-[56px] shrink-0 flex-col items-center gap-1.5"
+            className="flex w-12 shrink-0 flex-col items-center gap-1"
           >
-            <span className="grid size-14 place-items-center rounded-[18px] border-2 border-[#c8cbff] bg-[#202020] p-1">
+            <span className="grid size-12 place-items-center rounded-2xl border-2 border-[#c8cbff] bg-[#202020] p-0.5">
               {story.create ? (
                 <span className="grid size-full place-items-center rounded-[13px] text-[#c8cbff]">
-                  <Camera aria-hidden="true" className="size-7" />
+                  <Camera aria-hidden="true" className="size-6" />
                 </span>
               ) : (
                 <span className="relative block size-full overflow-hidden rounded-[13px]">
@@ -145,13 +145,13 @@ function StoryStrip() {
                     src={story.image ?? ""}
                     alt={`Story de ${story.name}`}
                     fill
-                    sizes="56px"
+                    sizes="48px"
                     className="object-cover"
                   />
                 </span>
               )}
             </span>
-            <span className="max-w-full truncate text-xs font-semibold text-[#d8d4dc]">
+            <span className="max-w-full truncate text-[10px] font-semibold text-[#d8d4dc]">
               {story.name}
             </span>
           </button>
@@ -171,48 +171,48 @@ function FeedCard({
   onToggleLike: () => void
 }) {
   return (
-    <article className="pt-5 text-[#d8d4dc]">
-      <header className="flex items-center gap-3 px-3.5 pb-4">
-        <span className="relative block size-10 shrink-0 overflow-hidden rounded-full">
+    <article className="pt-4 text-[#d8d4dc]">
+      <header className="flex items-center gap-2.5 px-3 pb-3">
+        <span className="relative block size-9 shrink-0 overflow-hidden rounded-full">
           <Image
             src={post.avatar}
             alt={`Avatar de ${post.author}`}
             fill
-            sizes="40px"
+            sizes="36px"
             className="object-cover"
           />
         </span>
 
         <div className="min-w-0 flex-1">
-          <h2 className="truncate text-sm font-bold leading-tight">
+          <h2 className="truncate text-[13px] font-bold leading-tight">
             {post.author}
           </h2>
-          <p className="mt-1 text-xs leading-none text-[#b8b4bd]">
+          <p className="mt-0.5 text-[11px] leading-none text-[#b8b4bd]">
             {post.time}
           </p>
         </div>
 
         <button
           type="button"
-          className="rounded-full p-2 text-[#c9c5ce]"
+          className="rounded-full p-1.5 text-[#c9c5ce]"
           aria-label="Mais opcoes"
         >
-          <MoreVertical aria-hidden="true" className="size-5" />
+          <MoreVertical aria-hidden="true" className="size-4" />
         </button>
       </header>
 
-      <div className="relative aspect-[4/4.65] w-full bg-zinc-950">
+      <div className="relative aspect-[4/4.55] w-full bg-zinc-950">
         <Image
           src={post.image}
           alt={post.imageAlt}
           fill
-          sizes="430px"
+          sizes="320px"
           className="object-cover"
         />
       </div>
 
-      <div className="px-6 pb-4 pt-4">
-        <div className="flex items-center gap-6">
+      <div className="px-5 pb-3 pt-3.5">
+        <div className="flex items-center gap-5">
           <button
             type="button"
             onClick={onToggleLike}
@@ -224,7 +224,7 @@ function FeedCard({
           >
             <Heart
               aria-hidden="true"
-              className={cn("size-6", liked && "fill-current")}
+              className={cn("size-5", liked && "fill-current")}
             />
           </button>
 
@@ -233,7 +233,7 @@ function FeedCard({
             className="text-[#d8d4dc]"
             aria-label="Comentar"
           >
-            <MessageCircle aria-hidden="true" className="size-6" />
+            <MessageCircle aria-hidden="true" className="size-5" />
           </button>
 
           <button
@@ -241,14 +241,14 @@ function FeedCard({
             className="text-[#d8d4dc]"
             aria-label="Compartilhar"
           >
-            <Share2 aria-hidden="true" className="size-6" />
+            <Share2 aria-hidden="true" className="size-5" />
           </button>
         </div>
 
-        <p className="mt-4 flex items-center gap-4 text-xs font-semibold text-[#bcb8c1]">
+        <p className="mt-3 flex items-center gap-3 text-[11px] font-semibold text-[#bcb8c1]">
           <span>{post.likes + (liked ? 1 : 0)} curtidas</span>
           <span className="inline-flex items-center gap-1.5">
-            <Eye aria-hidden="true" className="size-3.5" />
+            <Eye aria-hidden="true" className="size-3" />
             {post.views}
           </span>
         </p>
@@ -315,31 +315,31 @@ export function LudareDemo() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-[360px] lg:ml-auto">
-          <div className="overflow-hidden rounded-[1.75rem] border border-white/15 bg-zinc-950 p-1.5 shadow-2xl shadow-black/50">
-            <div className="relative overflow-hidden rounded-[1.35rem] bg-[#202020] text-[#d8d4dc]">
-              <div className="flex h-[min(720px,calc(100svh-1.5rem))] min-h-[560px] flex-col">
+        <section className="mx-auto w-full max-w-[320px] lg:ml-auto">
+          <div className="overflow-hidden rounded-[1.55rem] border border-white/15 bg-zinc-950 p-1.5 shadow-2xl shadow-black/50">
+            <div className="relative overflow-hidden rounded-[1.2rem] bg-[#202020] text-[#d8d4dc]">
+              <div className="flex h-[min(660px,calc(100svh-1.5rem))] min-h-[520px] flex-col">
                 <StatusBar />
 
-                <header className="px-5 pb-3 pt-5">
-                  <div className="flex items-center justify-between gap-4">
-                    <h1 className="text-[2.05rem] font-light leading-none tracking-wide text-[#e8e4ec]">
+                <header className="px-4 pb-2.5 pt-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h1 className="text-[1.8rem] font-light leading-none tracking-wide text-[#e8e4ec]">
                       Ludare
                     </h1>
 
-                    <div className="flex items-center gap-5 text-[#d8d4dc]">
+                    <div className="flex items-center gap-4 text-[#d8d4dc]">
                       <button type="button" aria-label="Buscar usuarios">
-                        <Search aria-hidden="true" className="size-6" />
+                        <Search aria-hidden="true" className="size-5" />
                       </button>
                       <button type="button" aria-label="Notificacoes">
-                        <Bell aria-hidden="true" className="size-6" />
+                        <Bell aria-hidden="true" className="size-5" />
                       </button>
-                      <span className="relative block size-10 overflow-hidden rounded-full border-2 border-[#123a87] bg-[#123a87]">
+                      <span className="relative block size-9 overflow-hidden rounded-full border-2 border-[#123a87] bg-[#123a87]">
                         <Image
                           src="/images/profile.jpg"
                           alt="Avatar de Leonardo Padilha"
                           fill
-                          sizes="40px"
+                          sizes="36px"
                           className="object-cover"
                         />
                       </span>
@@ -347,7 +347,7 @@ export function LudareDemo() {
                   </div>
                 </header>
 
-                <div className="min-h-0 flex-1 overflow-y-auto pb-22 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="min-h-0 flex-1 overflow-y-auto pb-18 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   <StoryStrip />
 
                   {feedPosts.map((post) => (
@@ -360,8 +360,8 @@ export function LudareDemo() {
                   ))}
                 </div>
 
-                <nav className="absolute inset-x-0 bottom-0 z-20 bg-[#202020] px-2 pb-3 pt-1.5">
-                  <div className="grid grid-cols-5 gap-1">
+                <nav className="absolute inset-x-0 bottom-0 z-20 bg-[#202020] px-2 pb-2.5 pt-1">
+                  <div className="grid grid-cols-5 gap-0.5">
                     {navItems.map((item) => {
                       const Icon = item.icon
                       const active = activeNav === item.id
@@ -371,17 +371,17 @@ export function LudareDemo() {
                           key={item.id}
                           type="button"
                           onClick={() => setActiveNav(item.id)}
-                          className="flex flex-col items-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-bold text-[#d8d4dc]"
+                          className="flex flex-col items-center gap-0.5 rounded-lg px-0.5 py-0.5 text-[8.5px] font-bold text-[#d8d4dc]"
                         >
                           <span
                             className={cn(
-                              "grid size-8 place-items-center rounded-lg",
+                              "grid size-7 place-items-center rounded-lg",
                               active
                                 ? "border-2 border-[#ff5a65] text-[#ff5a65]"
                                 : "text-[#d8d4dc]"
                             )}
                           >
-                            <Icon aria-hidden="true" className="size-5" />
+                            <Icon aria-hidden="true" className="size-4" />
                           </span>
                           <span className="truncate">{item.label}</span>
                         </button>
