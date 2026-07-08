@@ -16,11 +16,53 @@ export type PortfolioProject = {
     label: string
     value: string
   }[]
-  demoHref: string
+  demoHref?: string
   links: ProjectLink[]
 }
 
 export const FEATURED_PROJECTS: PortfolioProject[] = [
+  {
+    id: "ludare",
+    name: "Ludare",
+    eyebrow: "Rede social mobile",
+    summary: "Aplicativo mobile de rede social publicado nas lojas.",
+    description:
+      "Aplicativo mobile de rede social em producao, publicado na App Store e Play Store. Atuo no produto atual com foco em experiencia mobile, integracoes, comunicacao em tempo real e evolucao continua de funcionalidades para usuarios reais.",
+    status: "Em producao",
+    stack: [
+      "Flutter",
+      "Dart",
+      "C#",
+      ".NET",
+      "APIs REST",
+      "SignalR",
+      "WebRTC",
+      "WebSocket",
+      "Git",
+    ],
+    highlights: [
+      "Produto mobile publicado para iOS e Android",
+      "Rede social com funcionalidades voltadas a usuarios reais",
+      "Integracoes com APIs e recursos de comunicacao em tempo real",
+      "Atuacao atual em evolucao, manutencao e melhorias de UX",
+    ],
+    metrics: [
+      { label: "Plataformas", value: "iOS + Android" },
+      { label: "Canal", value: "App stores" },
+      { label: "Dominio", value: "Rede social" },
+    ],
+    demoHref: "/experimentos/ludare",
+    links: [
+      {
+        label: "App Store",
+        href: "https://apps.apple.com/br/app/ludare/id1628374355",
+      },
+      {
+        label: "Play Store",
+        href: "https://play.google.com/store/apps/details?id=com.ludare.followmme&hl=pt_BR&pli=1",
+      },
+    ],
+  },
   {
     id: "fintrack",
     name: "FinTrack",

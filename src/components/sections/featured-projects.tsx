@@ -100,13 +100,15 @@ export function FeaturedProjects() {
             </div>
 
             <div className="mt-4 flex flex-wrap gap-3">
-              <Link
-                href={activeProject.demoHref}
-                className="inline-flex items-center gap-1.5 rounded-md bg-[#f0dfbd] px-3 py-2 text-sm text-[#15110c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ffe9bf] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                Testar
-                <Play aria-hidden="true" className="size-4" />
-              </Link>
+              {activeProject.demoHref && (
+                <Link
+                  href={activeProject.demoHref}
+                  className="inline-flex items-center gap-1.5 rounded-md bg-[#f0dfbd] px-3 py-2 text-sm text-[#15110c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ffe9bf] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Testar
+                  <Play aria-hidden="true" className="size-4" />
+                </Link>
+              )}
 
               {activeProject.links.map((link) => (
                 <Link
