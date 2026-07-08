@@ -7,7 +7,6 @@ export type PortfolioProject = {
   id: string
   name: string
   eyebrow: string
-  summary: string
   description: string
   status: string
   stack: string[]
@@ -25,7 +24,6 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     id: "ludare",
     name: "Ludare",
     eyebrow: "Rede social mobile",
-    summary: "Aplicativo mobile de rede social publicado nas lojas.",
     description:
       "Aplicativo mobile de rede social em producao, publicado na App Store e Play Store. Atuo no produto atual com foco em experiencia mobile, integracoes, comunicacao em tempo real e evolucao continua de funcionalidades para usuarios reais.",
     status: "Em producao",
@@ -67,7 +65,6 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     id: "fintrack",
     name: "FinTrack",
     eyebrow: "Financas pessoais",
-    summary: "Aplicacao full stack para controle financeiro pessoal.",
     description:
       "Projeto dividido entre frontend web e API, com foco em organizacao de contas, categorias, transacoes e resumos mensais. A proposta e demonstrar fluxo completo de produto: interface, regras de negocio, persistencia e autenticacao.",
     status: "MVP em evolucao",
@@ -109,7 +106,6 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     id: "minecraft-panel",
     name: "Minecraft Panel",
     eyebrow: "Painel operacional",
-    summary: "Painel web para gerenciar servidor Minecraft com front e backend.",
     description:
       "Projeto de painel administrativo pensado para centralizar operacoes de um servidor Minecraft. A proposta e explorar uma experiencia de controle com interface web, backend proprio e comandos de gestao em um contexto pratico e divertido.",
     status: "MVP tecnico",
