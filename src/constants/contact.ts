@@ -10,9 +10,8 @@ export const CONTACT_LINKS = [
   {
     label: "Email",
     value: "Enviar mensagem",
-    href: "mailto:leonardopadilhak@gmail.com",
     icon: Mail,
-    external: false,
+    action: "contact" as const,
   },
   {
     label: "LinkedIn",
@@ -20,6 +19,7 @@ export const CONTACT_LINKS = [
     href: "https://www.linkedin.com/in/leonardo-padilha-kawashaki/",
     icon: UserRound,
     external: true,
+    action: "link" as const,
   },
   {
     label: "GitHub",
@@ -27,6 +27,7 @@ export const CONTACT_LINKS = [
     href: "https://github.com/padokazzz",
     icon: GitBranch,
     external: true,
+    action: "link" as const,
   },
   {
     label: "Instagram",
@@ -34,6 +35,7 @@ export const CONTACT_LINKS = [
     href: "https://www.instagram.com/padoka_oficial",
     icon: Camera,
     external: true,
+    action: "link" as const,
   },
   {
     label: "Curriculo",
@@ -41,5 +43,6 @@ export const CONTACT_LINKS = [
     href: "/Leonardo_Padilha_CV_PT.pdf",
     icon: Download,
     external: true,
+    action: "link" as const,
   },
 ] as const

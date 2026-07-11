@@ -1,8 +1,5 @@
-import { ArrowUpRight } from "lucide-react"
-import Link from "next/link"
-
 import { Reveal } from "@/components/motion/reveal"
-import { CONTACT_LINKS } from "@/constants/contact"
+import { ContactOptions } from "@/components/contact/contact-options"
 
 type ContactCtaProps = {
   variant?: "home" | "page"
@@ -57,42 +54,7 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
           delay={0.08}
           className="surface overflow-hidden rounded-lg border"
         >
-          {CONTACT_LINKS.map((link) => {
-            const Icon = link.icon
-
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noreferrer" : undefined}
-                className="group flex items-center justify-between gap-5 border-b border-white/10 px-4 py-3.5 transition duration-300 last:border-b-0 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <span className="flex min-w-0 items-center gap-4">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-[#e7c78f]/10 text-[#f0dfbd] transition-colors group-hover:bg-[#e7c78f]/18">
-                    <Icon aria-hidden="true" className="size-3.5" />
-                  </span>
-
-                  <span className="min-w-0">
-                    <span className="block text-sm font-medium">
-                      {link.label}
-                    </span>
-                    <span className="mt-1 block truncate text-sm text-muted-foreground">
-                      {link.value}
-                    </span>
-                  </span>
-                </span>
-
-                <span className="flex shrink-0 items-center gap-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Abrir
-                  <ArrowUpRight
-                    aria-hidden="true"
-                    className="size-3.5 text-muted-foreground/70 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </span>
-              </Link>
-            )
-          })}
+          <ContactOptions />
         </Reveal>
       </div>
     </section>
