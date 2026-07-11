@@ -28,7 +28,7 @@ export function ContactOptions() {
       <ContactModal
         open={isOpen}
         onOpenChange={setIsOpen}
-        onSuccess={() => setToast({ type: "success", message: "Your message has been sent successfully. I'll get back to you as soon as possible." })}
+        onSuccess={() => setToast({ type: "success", message: "Sua mensagem foi enviada com sucesso. Entrarei em contato o mais breve possível." })}
         onFailure={(message) => setToast({ type: "error", message })}
       />
 

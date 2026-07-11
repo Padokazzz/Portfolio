@@ -18,11 +18,11 @@ type ContactModalProps = {
 
 function validate(data: ContactFormData) {
   const errors: Partial<Record<ContactField, string>> = {}
-  if (!data.name) errors.name = "Name is required."
-  if (!data.email) errors.email = "Email is required."
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = "Enter a valid email."
-  if (!data.subject) errors.subject = "Subject is required."
-  if (!data.message) errors.message = "Message is required."
+  if (!data.name) errors.name = "O nome é obrigatório."
+  if (!data.email) errors.email = "O e-mail é obrigatório."
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = "Informe um e-mail válido."
+  if (!data.subject) errors.subject = "O assunto é obrigatório."
+  if (!data.message) errors.message = "A mensagem é obrigatória."
   return errors
 }
 
@@ -58,7 +58,7 @@ export function ContactModal({ open, onOpenChange, onSuccess, onFailure }: Conta
         setErrors(error.fieldErrors)
         onFailure(error.message)
       } else {
-        onFailure("Unable to send your message. Please try again.")
+        onFailure("Não foi possível enviar sua mensagem. Tente novamente.")
       }
     } finally {
       setIsSending(false)
@@ -71,24 +71,24 @@ export function ContactModal({ open, onOpenChange, onSuccess, onFailure }: Conta
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm data-[state=closed]:animate-out data-[state=open]:animate-in data-[state=closed]:fade-out data-[state=open]:fade-in" />
         <Dialog.Content aria-describedby="contact-dialog-description" className="surface fixed left-1/2 top-1/2 z-50 max-h-[90svh] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-lg border p-5 shadow-2xl focus:outline-none sm:p-6">
           <div className="pr-10">
-            <Dialog.Title className="text-xl font-semibold">Send a message</Dialog.Title>
-            <Dialog.Description id="contact-dialog-description" className="mt-1 text-sm text-muted-foreground">Fill in the details below and I&apos;ll get back to you soon.</Dialog.Description>
+            <Dialog.Title className="text-xl font-semibold">Enviar mensagem</Dialog.Title>
+            <Dialog.Description id="contact-dialog-description" className="mt-1 text-sm text-muted-foreground">Preencha os dados abaixo e entrarei em contato em breve.</Dialog.Description>
           </div>
           <Dialog.Close asChild>
-            <button aria-label="Close contact form" className="absolute right-4 top-4 rounded-md p-2 text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><X className="size-4" /></button>
+            <button aria-label="Fechar formulário de contato" className="absolute right-4 top-4 rounded-md p-2 text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><X className="size-4" /></button>
           </Dialog.Close>
 
           <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Name" field="name" value={form.name} error={errors.name} disabled={isSending} autoFocus onChange={updateField} />
-              <Field label="Email" field="email" type="email" value={form.email} error={errors.email} disabled={isSending} onChange={updateField} />
+              <Field label="Nome" field="name" value={form.name} error={errors.name} disabled={isSending} autoFocus onChange={updateField} />
+              <Field label="E-mail" field="email" type="email" value={form.email} error={errors.email} disabled={isSending} onChange={updateField} />
             </div>
-            <Field label="Company" field="company" optional value={form.company} error={errors.company} disabled={isSending} onChange={updateField} />
-            <Field label="Subject" field="subject" value={form.subject} error={errors.subject} disabled={isSending} onChange={updateField} />
-            <Field label="Message" field="message" multiline value={form.message} error={errors.message} disabled={isSending} onChange={updateField} />
+            <Field label="Empresa (opcional)" field="company" optional value={form.company} error={errors.company} disabled={isSending} onChange={updateField} />
+            <Field label="Assunto" field="subject" value={form.subject} error={errors.subject} disabled={isSending} onChange={updateField} />
+            <Field label="Mensagem" field="message" multiline value={form.message} error={errors.message} disabled={isSending} onChange={updateField} />
             <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-              <Dialog.Close asChild><Button type="button" variant="outline" size="lg">Cancel</Button></Dialog.Close>
-              <Button type="submit" size="lg" disabled={isSending}>{isSending && <LoaderCircle aria-hidden="true" className="animate-spin" />}{isSending ? "Sending..." : "Send Message"}</Button>
+              <Dialog.Close asChild><Button type="button" variant="outline" size="lg">Cancelar</Button></Dialog.Close>
+              <Button type="submit" size="lg" disabled={isSending}>{isSending && <LoaderCircle aria-hidden="true" className="animate-spin" />}{isSending ? "Enviando..." : "Enviar mensagem"}</Button>
             </div>
           </form>
         </Dialog.Content>

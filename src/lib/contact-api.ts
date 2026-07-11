@@ -1,5 +1,13 @@
 const CONTACT_FIELDS = ["name", "email", "company", "subject", "message"] as const
 
+const API_FIELD_ERRORS: Record<ContactField, string> = {
+  name: "Verifique o nome informado.",
+  email: "Verifique o e-mail informado.",
+  company: "Verifique a empresa informada.",
+  subject: "Verifique o assunto informado.",
+  message: "Verifique a mensagem informada.",
+}
+
 export type ContactField = (typeof CONTACT_FIELDS)[number]
 export type ContactFormData = Record<ContactField, string>
 
@@ -20,7 +28,7 @@ function normalizeFieldName(field: string): ContactField | undefined {
 
 export async function sendContactMessage(data: ContactFormData) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "")
-  if (!apiUrl) throw new ContactApiError("The contact service is not configured.")
+  if (!apiUrl) throw new ContactApiError("O serviço de contato não está configurado.")
 
   const response = await fetch(`${apiUrl}/api/contact`, {
     method: "POST",
@@ -38,13 +46,15 @@ export async function sendContactMessage(data: ContactFormData) {
   }
 
   const fieldErrors: Partial<Record<ContactField, string>> = {}
-  for (const [field, messages] of Object.entries(body.errors ?? {})) {
+  for (const field of Object.keys(body.errors ?? {})) {
     const normalized = normalizeFieldName(field)
-    if (normalized && messages[0]) fieldErrors[normalized] = messages[0]
+    if (normalized) fieldErrors[normalized] = API_FIELD_ERRORS[normalized]
   }
 
   throw new ContactApiError(
-    body.detail ?? body.title ?? "Unable to send your message. Please try again.",
+    body.errors
+      ? "Verifique os campos informados."
+      : "Não foi possível enviar sua mensagem. Tente novamente.",
     fieldErrors,
   )
 }
