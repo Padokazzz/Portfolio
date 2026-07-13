@@ -13,7 +13,10 @@ const STACKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#0e0d0c]/60">
+    <footer
+      id="site-footer"
+      className="border-t border-white/10 bg-[#0e0d0c]/60"
+    >
       <Container className="flex flex-col gap-5 py-6 text-xs text-muted-foreground lg:flex-row lg:items-center lg:justify-between">
         <p className="shrink-0">
           &copy; {new Date().getFullYear()} Leonardo Padilha. Todos os direitos

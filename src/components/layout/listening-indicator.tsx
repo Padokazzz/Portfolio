@@ -13,6 +13,7 @@ const WAVE_HEIGHTS = [45, 72, 38, 64, 52] as const
 export function ListeningIndicator() {
   const [activeSection, setActiveSection] =
     useState<SectionId>(DEFAULT_SECTION)
+  const [isFooterVisible, setIsFooterVisible] = useState(true)
 
   useEffect(() => {
     const updateFromHash = () => {
@@ -56,9 +57,29 @@ export function ListeningIndicator() {
     }
   }, [])
 
+  useEffect(() => {
+    const footer = document.getElementById("site-footer")
+
+    if (!footer) {
+      return
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsFooterVisible(entry.isIntersecting)
+    })
+
+    observer.observe(footer)
+
+    return () => observer.disconnect()
+  }, [])
+
   const soundtrack =
     SECTION_SOUNDTRACKS.find((item) => item.sectionId === activeSection) ??
     SECTION_SOUNDTRACKS[0]
+
+  if (isFooterVisible) {
+    return null
+  }
 
   return (
     <aside
