@@ -12,7 +12,7 @@ export function Navbar() {
           className="group inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
         >
           <span className="size-1.5 rounded-full bg-[#e7c78f] transition-transform group-hover:scale-125" />
-          Padoka.dev
+          Leonardo Padilha
         </Link>
         <nav aria-label="Navegacao principal" className="hidden md:block">
           <ul className="flex items-center gap-1">

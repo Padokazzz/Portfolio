@@ -23,7 +23,7 @@ export function SiteIntro() {
       <div className="w-44 overflow-hidden">
         <div className="site-intro-line h-px w-full origin-left bg-[#e7c78f]" />
         <p className="mt-3 text-center text-[0.62rem] uppercase tracking-[0.24em] text-[#f0dfbd]/70">
-          Padoka.dev
+          Leonardo Padilha - Fullstack Developer
         </p>
       </div>
     </div>
