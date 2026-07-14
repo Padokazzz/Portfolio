@@ -1,4 +1,11 @@
 import { PageShell } from "@/components/layout/page-shell"
+import { createPageMetadata } from "@/lib/site-metadata"
+
+export const metadata = createPageMetadata(
+  "Blog",
+  "Artigos e reflexões de Leonardo Padilha sobre desenvolvimento web, engenharia e arquitetura de software.",
+  "/blog",
+)
 
 export default function BlogPage() {
   return (
