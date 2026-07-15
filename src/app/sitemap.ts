@@ -25,34 +25,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   )
 
-  try {
-    const [posts, categories, tags] = await Promise.all([
-      getAllPublishedPosts(),
-      getBlogCategories(),
-      getBlogTags(),
-    ])
+  const [postsResult, categoriesResult, tagsResult] = await Promise.allSettled([
+    getAllPublishedPosts(),
+    getBlogCategories(),
+    getBlogTags(),
+  ])
+  const posts = postsResult.status === "fulfilled" ? postsResult.value : []
+  const categories =
+    categoriesResult.status === "fulfilled" ? categoriesResult.value : []
+  const tags = tagsResult.status === "fulfilled" ? tagsResult.value : []
 
-    return [
-      ...staticRoutes,
-      ...posts.map((post) => ({
-        url: `${SITE_URL}/blog/${post.slug}`,
-        lastModified: post.publishedAt,
-        changeFrequency: "monthly" as const,
-        priority: 0.7,
-        ...(post.coverImageUrl ? { images: [post.coverImageUrl] } : {}),
-      })),
-      ...categories.map((category) => ({
-        url: `${SITE_URL}/blog/categoria/${category.slug}`,
-        changeFrequency: "weekly" as const,
-        priority: 0.5,
-      })),
-      ...tags.map((tag) => ({
-        url: `${SITE_URL}/blog/tag/${tag.slug}`,
-        changeFrequency: "weekly" as const,
-        priority: 0.4,
-      })),
-    ]
-  } catch {
-    return staticRoutes
-  }
+  return [
+    ...staticRoutes,
+    ...posts.map((post) => ({
+      url: `${SITE_URL}/blog/${post.slug}`,
+      lastModified: post.publishedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      ...(post.coverImageUrl ? { images: [post.coverImageUrl] } : {}),
+    })),
+    ...categories.map((category) => ({
+      url: `${SITE_URL}/blog/categoria/${category.slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    })),
+    ...tags.map((tag) => ({
+      url: `${SITE_URL}/blog/tag/${tag.slug}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.4,
+    })),
+  ]
 }

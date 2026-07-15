@@ -131,18 +131,22 @@ export async function getPublishedPosts(
 
 export async function getAllPublishedPosts() {
   const firstPage = await getPublishedPosts({ page: 1, pageSize: 50 })
+  if (
+    !Number.isInteger(firstPage.totalPages) ||
+    firstPage.totalPages < 0 ||
+    firstPage.totalPages > 1000
+  ) {
+    throw new PublicBlogApiError("A paginação retornada pela API é inválida.")
+  }
   if (firstPage.totalPages <= 1) return firstPage.items
 
-  const remainingPages = await Promise.all(
-    Array.from({ length: firstPage.totalPages - 1 }, (_, index) =>
-      getPublishedPosts({ page: index + 2, pageSize: 50 }),
-    ),
-  )
+  const items = [...firstPage.items]
+  for (let page = 2; page <= firstPage.totalPages; page += 1) {
+    const result = await getPublishedPosts({ page, pageSize: 50 })
+    items.push(...result.items)
+  }
 
-  return [
-    ...firstPage.items,
-    ...remainingPages.flatMap((page) => page.items),
-  ]
+  return items
 }
 
 export async function getPublishedPost(slug: string): Promise<BlogPost> {

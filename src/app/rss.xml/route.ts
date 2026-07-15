@@ -17,12 +17,19 @@ function escapeXml(value: string) {
 }
 
 export async function GET() {
-  let posts = [] as Awaited<ReturnType<typeof getAllPublishedPosts>>
+  let posts: Awaited<ReturnType<typeof getAllPublishedPosts>>
 
   try {
     posts = await getAllPublishedPosts()
   } catch {
-    // A valid empty feed is preferable to exposing an internal API failure.
+    return new Response("RSS temporariamente indisponível.", {
+      status: 503,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-store",
+        "Retry-After": "300",
+      },
+    })
   }
 
   const items = posts
