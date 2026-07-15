@@ -66,6 +66,7 @@ export default async function AdminDashboardPage() {
             <Link href="/_control/painel/posts" className="rounded-md border border-white/10 px-3 py-2 hover:bg-white/[0.05]">Gerenciar posts</Link>
             <Link href="/_control/painel/categorias" className="rounded-md border border-white/10 px-3 py-2 hover:bg-white/[0.05]">Gerenciar categorias</Link>
             <Link href="/_control/painel/tags" className="rounded-md border border-white/10 px-3 py-2 hover:bg-white/[0.05]">Gerenciar tags</Link>
+            <Link href="/_control/painel/imagens" className="rounded-md border border-white/10 px-3 py-2 hover:bg-white/[0.05]">Gerenciar imagens</Link>
             <Link href="/blog" target="_blank" className="rounded-md border border-white/10 px-3 py-2 hover:bg-white/[0.05]">Abrir blog público</Link>
           </div>
         </aside>

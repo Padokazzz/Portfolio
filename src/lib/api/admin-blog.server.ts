@@ -7,7 +7,7 @@ import { getSessionToken, requireAdmin } from "@/lib/auth/session.server"
 import type { AdminCategoryInput, AdminDashboardData, AdminPost, AdminPostInput, AdminTagInput } from "@/types/admin"
 import type { BlogCategory, BlogImage, BlogTag } from "@/types/blog"
 
-type AdminRequestOptions = { method?: "GET" | "POST" | "PUT" | "DELETE"; body?: unknown }
+type AdminRequestOptions = { method?: "GET" | "POST" | "PUT" | "DELETE"; body?: unknown; multipart?: boolean }
 
 export class AdminApiError extends Error {
   constructor(public status: number, message: string) {
@@ -23,9 +23,9 @@ async function adminRequest<T>(path: string, options: AdminRequestOptions = {}):
     method: options.method ?? "GET",
     headers: {
       Authorization: `Bearer ${token}`,
-      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...(options.body && !options.multipart ? { "Content-Type": "application/json" } : {}),
     },
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body: options.body ? (options.multipart ? options.body as FormData : JSON.stringify(options.body)) : undefined,
     cache: "no-store",
   })
 
@@ -46,6 +46,11 @@ export const getAdminPosts = () => adminRequest<AdminPost[]>("/posts")
 export const getAdminPost = (id: string) => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}`)
 export const getAdminCategories = () => adminRequest<BlogCategory[]>("/categories")
 export const getAdminTags = () => adminRequest<BlogTag[]>("/tags")
+export const getAdminImages = async () => {
+  const images = await adminRequest<BlogImage[]>("/images")
+  const apiBaseUrl = getApiBaseUrl()
+  return images.map((image) => ({ ...image, publicUrl: new URL(image.publicUrl, `${apiBaseUrl}/`).toString() }))
+}
 export const createAdminPost = (input: AdminPostInput) => adminRequest<AdminPost>("/posts", { method: "POST", body: input })
 export const updateAdminPost = (id: string, input: AdminPostInput) => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}`, { method: "PUT", body: input })
 export const changeAdminPostStatus = (id: string, transition: "publish" | "unpublish" | "archive") => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}/${transition}`, { method: "POST" })
@@ -56,10 +61,13 @@ export const deleteAdminCategory = (id: string) => adminRequest<void>(`/categori
 export const createAdminTag = (input: AdminTagInput) => adminRequest<BlogTag>("/tags", { method: "POST", body: input })
 export const updateAdminTag = (id: string, input: AdminTagInput) => adminRequest<BlogTag>(`/tags/${encodeURIComponent(id)}`, { method: "PUT", body: input })
 export const deleteAdminTag = (id: string) => adminRequest<void>(`/tags/${encodeURIComponent(id)}`, { method: "DELETE" })
+export const uploadAdminImage = (body: FormData) => adminRequest<BlogImage>("/images", { method: "POST", body, multipart: true })
+export const updateAdminImage = (id: string, altText: string | null) => adminRequest<BlogImage>(`/images/${encodeURIComponent(id)}`, { method: "PUT", body: { altText } })
+export const deleteAdminImage = (id: string) => adminRequest<void>(`/images/${encodeURIComponent(id)}`, { method: "DELETE" })
 
 export async function getAdminDashboard(): Promise<AdminDashboardData> {
   const [posts, categories, tags, images] = await Promise.all([
-    getAdminPosts(), getAdminCategories(), getAdminTags(), adminRequest<BlogImage[]>("/images"),
+    getAdminPosts(), getAdminCategories(), getAdminTags(), getAdminImages(),
   ])
   return { posts, categories, tags, images }
 }

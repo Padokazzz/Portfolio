@@ -17,6 +17,7 @@ export default async function AdminPanelLayout({ children }: { children: React.R
               <Link href="/_control/painel/posts" className="text-sm text-muted-foreground hover:text-foreground">Posts</Link>
               <Link href="/_control/painel/categorias" className="text-sm text-muted-foreground hover:text-foreground">Categorias</Link>
               <Link href="/_control/painel/tags" className="text-sm text-muted-foreground hover:text-foreground">Tags</Link>
+              <Link href="/_control/painel/imagens" className="text-sm text-muted-foreground hover:text-foreground">Imagens</Link>
             </nav>
           </div>
           <div className="flex items-center gap-4 text-sm">
