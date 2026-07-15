@@ -31,7 +31,7 @@ function validate(input: AdminPostInput) {
 }
 function failure(error: unknown): PostFormState {
   if (error instanceof AdminApiError) return { success: false, message: error.status === 409 ? "Este post mudou em outra sessão. Recarregue a página antes de salvar novamente." : error.message }
-  return { success: false, message: "Não foi possível salvar o post. Tente novamente." }
+  throw error
 }
 
 export async function createPostAction(_: PostFormState, data: FormData): Promise<PostFormState> {
@@ -56,11 +56,18 @@ export async function transitionPostAction(data: FormData) {
   await requireAdmin()
   const id = String(data.get("id") ?? ""); const transition = String(data.get("transition") ?? "")
   if (!id || !["publish", "unpublish", "archive"].includes(transition)) return
-  await changeAdminPostStatus(id, transition as "publish" | "unpublish" | "archive")
+  let errorMessage = ""
+  try { await changeAdminPostStatus(id, transition as "publish" | "unpublish" | "archive") }
+  catch (error) { if (error instanceof AdminApiError) errorMessage = error.message; else throw error }
+  if (errorMessage) redirect(`/_control/painel/posts?erro=${encodeURIComponent(errorMessage)}`)
   revalidatePath("/_control/painel/posts"); revalidatePath("/blog")
 }
 export async function deletePostAction(data: FormData) {
   await requireAdmin()
   const id = String(data.get("id") ?? ""); if (!id) return
-  await deleteAdminPost(id); revalidatePath("/_control/painel/posts")
+  let errorMessage = ""
+  try { await deleteAdminPost(id) }
+  catch (error) { if (error instanceof AdminApiError) errorMessage = error.message; else throw error }
+  if (errorMessage) redirect(`/_control/painel/posts?erro=${encodeURIComponent(errorMessage)}`)
+  revalidatePath("/_control/painel/posts")
 }
