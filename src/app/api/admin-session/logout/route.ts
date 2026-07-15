@@ -1,21 +1,11 @@
 import { NextResponse } from "next/server"
 
+import { isSameOriginRequest } from "@/lib/auth/request.server"
 import { ADMIN_SESSION_COOKIE } from "@/types/admin"
 
-export async function POST(request: Request) {
-  const origin = request.headers.get("origin")
-  const host = request.headers.get("host")
-  if (origin && host) {
-    try {
-      if (new URL(origin).host !== host) {
-        return NextResponse.json({ message: "Requisição inválida." }, { status: 403 })
-      }
-    } catch {
-      return NextResponse.json({ message: "Requisição inválida." }, { status: 403 })
-    }
-  }
-
+function clearSession(request: Request) {
   const response = NextResponse.redirect(new URL("/_control/login", request.url), 303)
+  response.headers.set("Cache-Control", "private, no-store")
   response.cookies.set({
     name: ADMIN_SESSION_COOKIE,
     value: "",
@@ -26,4 +16,20 @@ export async function POST(request: Request) {
     maxAge: 0,
   })
   return response
+}
+
+export function GET(request: Request) {
+  return clearSession(request)
+}
+
+export function POST(request: Request) {
+  if (!isSameOriginRequest(request)) {
+    const response = NextResponse.json(
+      { message: "Requisição inválida." },
+      { status: 403 },
+    )
+    response.headers.set("Cache-Control", "private, no-store")
+    return response
+  }
+  return clearSession(request)
 }

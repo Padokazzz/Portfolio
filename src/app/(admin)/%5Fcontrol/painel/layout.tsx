@@ -9,7 +9,12 @@ export default async function AdminPanelLayout({ children }: { children: React.R
     <div className="min-h-screen bg-[#11100f]">
       <header className="border-b border-white/10">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <Link href="/_control/painel" className="font-semibold">Painel editorial</Link>
+          <div className="flex items-center gap-6">
+            <Link href="/_control/painel" className="font-semibold">Painel editorial</Link>
+            <nav aria-label="Navegação administrativa" className="hidden sm:block">
+              <Link href="/_control/painel/posts" className="text-sm text-muted-foreground hover:text-foreground">Posts</Link>
+            </nav>
+          </div>
           <div className="flex items-center gap-4 text-sm">
             <span className="hidden text-muted-foreground sm:inline">{user.displayName}</span>
             <form action="/api/admin-session/logout" method="post">

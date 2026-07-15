@@ -6,6 +6,7 @@ import { cache } from "react"
 
 import { getApiBaseUrl } from "@/lib/api/config.server"
 import {
+  ADMIN_ROLE,
   ADMIN_SESSION_COOKIE,
   type AuthenticatedAdmin,
 } from "@/types/admin"
@@ -24,11 +25,13 @@ export const requireAdmin = cache(async (): Promise<AuthenticatedAdmin> => {
   })
 
   if (response.status === 401 || response.status === 403) {
-    redirect("/_control/login?motivo=sessao")
+    redirect("/api/admin-session/logout?motivo=sessao")
   }
   if (!response.ok) throw new Error("Não foi possível validar a sessão administrativa.")
 
   const user = (await response.json()) as AuthenticatedAdmin
-  if (user.role !== "Admin") redirect("/_control/login?motivo=permissao")
+  if (user.role !== ADMIN_ROLE) {
+    redirect("/api/admin-session/logout?motivo=permissao")
+  }
   return user
 })

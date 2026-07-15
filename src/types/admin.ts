@@ -1,6 +1,12 @@
 import type { BlogCategory, BlogImage, BlogTag } from "@/types/blog"
 
 export const ADMIN_SESSION_COOKIE = "portfolio-admin-session"
+export const ADMIN_ROLE = "Admin"
+export const ADMIN_POST_STATUS = {
+  draft: 1,
+  published: 2,
+  archived: 3,
+} as const
 
 export type AuthenticatedAdmin = {
   id: string
@@ -16,7 +22,8 @@ export type LoginResponse = {
   user: AuthenticatedAdmin
 }
 
-export type AdminPostStatus = 1 | 2 | 3
+export type AdminPostStatus =
+  (typeof ADMIN_POST_STATUS)[keyof typeof ADMIN_POST_STATUS]
 
 export type AdminPost = {
   id: string
