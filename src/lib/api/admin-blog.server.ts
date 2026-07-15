@@ -17,7 +17,7 @@ async function adminRequest<T>(path: string): Promise<T> {
 
   if (response.status === 401) redirect("/_control/renovar")
   if (response.status === 403) {
-    redirect("/api/admin-session/logout?motivo=permissao")
+    redirect("/_control/login?motivo=permissao")
   }
   if (!response.ok) throw new Error("Não foi possível carregar os dados administrativos.")
   return response.json() as Promise<T>

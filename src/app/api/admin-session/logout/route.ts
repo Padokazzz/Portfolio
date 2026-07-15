@@ -28,10 +28,6 @@ async function clearSession(request: Request) {
   return response
 }
 
-export async function GET(request: Request) {
-  return clearSession(request)
-}
-
 export async function POST(request: Request) {
   if (!isSameOriginRequest(request)) {
     const response = NextResponse.json(

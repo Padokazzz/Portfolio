@@ -26,13 +26,13 @@ export const requireAdmin = cache(async (): Promise<AuthenticatedAdmin> => {
 
   if (response.status === 401) redirect("/_control/renovar")
   if (response.status === 403) {
-    redirect("/api/admin-session/logout?motivo=permissao")
+    redirect("/_control/login?motivo=permissao")
   }
   if (!response.ok) throw new Error("Não foi possível validar a sessão administrativa.")
 
   const user = (await response.json()) as AuthenticatedAdmin
   if (user.role !== ADMIN_ROLE) {
-    redirect("/api/admin-session/logout?motivo=permissao")
+    redirect("/_control/login?motivo=permissao")
   }
   return user
 })

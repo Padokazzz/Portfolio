@@ -13,13 +13,13 @@ import {
   type LoginResponse,
 } from "@/types/admin"
 
-function failure(status: number) {
+function failure(status: number, clearCredentials = true) {
   const response = NextResponse.json(
     { message: "Não foi possível renovar a sessão." },
     { status },
   )
   response.headers.set("Cache-Control", "private, no-store")
-  clearSessionCookies(response)
+  if (clearCredentials) clearSessionCookies(response)
   return response
 }
 
@@ -44,15 +44,20 @@ export async function POST(request: Request) {
       cache: "no-store",
     })
   } catch {
-    return failure(503)
+    return failure(503, false)
   }
-  if (!response.ok) return failure(response.status === 429 ? 429 : 401)
+  if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      return failure(response.status)
+    }
+    return failure(response.status === 429 ? 429 : 502, false)
+  }
 
   let session: LoginResponse
   try {
     session = (await response.json()) as LoginResponse
   } catch {
-    return failure(502)
+    return failure(502, false)
   }
   if (
     !session.accessToken ||
