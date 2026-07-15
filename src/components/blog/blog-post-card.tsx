@@ -29,12 +29,13 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
       <div className="flex flex-1 flex-col p-5">
         <div className="flex flex-wrap gap-2">
           {post.categories.map((category) => (
-            <span
+            <Link
               key={category.id}
-              className="rounded-full border border-[#e7c78f]/20 bg-[#e7c78f]/10 px-2.5 py-1 text-xs text-[#f0dfbd]"
+              href={`/blog/categoria/${category.slug}`}
+              className="rounded-full border border-[#e7c78f]/20 bg-[#e7c78f]/10 px-2.5 py-1 text-xs text-[#f0dfbd] transition hover:bg-[#e7c78f]/15"
             >
               {category.name}
-            </span>
+            </Link>
           ))}
         </div>
 
@@ -63,9 +64,13 @@ export function BlogPostCard({ post }: { post: BlogPost }) {
         {post.tags.length > 0 && (
           <div className="relative mt-4 flex flex-wrap gap-x-3 gap-y-1 border-t border-white/10 pt-4 text-xs text-muted-foreground">
             {post.tags.map((tag) => (
-              <span key={tag.id}>
+              <Link
+                key={tag.id}
+                href={`/blog/tag/${tag.slug}`}
+                className="hover:text-foreground"
+              >
                 #{tag.name}
-              </span>
+              </Link>
             ))}
           </div>
         )}
