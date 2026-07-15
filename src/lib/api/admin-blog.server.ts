@@ -48,14 +48,24 @@ async function adminRequest<T>(path: string, options: AdminRequestOptions = {}):
   return response.json() as Promise<T>
 }
 
-export const getAdminPosts = () => adminRequest<AdminPost[]>("/posts")
-export const getAdminPost = (id: string) => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}`)
+function normalizeAdminPost(post: AdminPost) {
+  return {
+    ...post,
+    coverImageUrl: post.coverImageUrl
+      ? new URL(post.coverImageUrl, `${getApiBaseUrl()}/`).toString()
+      : null,
+  }
+}
+export const getAdminPosts = async () => (await adminRequest<AdminPost[]>("/posts")).map(normalizeAdminPost)
+export const getAdminPost = async (id: string) => normalizeAdminPost(await adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}`))
 export const getAdminCategories = () => adminRequest<BlogCategory[]>("/categories")
 export const getAdminTags = () => adminRequest<BlogTag[]>("/tags")
+function normalizeAdminImage(image: BlogImage) {
+  return { ...image, publicUrl: new URL(image.publicUrl, `${getApiBaseUrl()}/`).toString() }
+}
 export const getAdminImages = async () => {
   const images = await adminRequest<BlogImage[]>("/images")
-  const apiBaseUrl = getApiBaseUrl()
-  return images.map((image) => ({ ...image, publicUrl: new URL(image.publicUrl, `${apiBaseUrl}/`).toString() }))
+  return images.map(normalizeAdminImage)
 }
 export const createAdminPost = (input: AdminPostInput) => adminRequest<AdminPost>("/posts", { method: "POST", body: input })
 export const updateAdminPost = (id: string, input: AdminPostInput) => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}`, { method: "PUT", body: input })
@@ -67,7 +77,7 @@ export const deleteAdminCategory = (id: string) => adminRequest<void>(`/categori
 export const createAdminTag = (input: AdminTagInput) => adminRequest<BlogTag>("/tags", { method: "POST", body: input })
 export const updateAdminTag = (id: string, input: AdminTagInput) => adminRequest<BlogTag>(`/tags/${encodeURIComponent(id)}`, { method: "PUT", body: input })
 export const deleteAdminTag = (id: string) => adminRequest<void>(`/tags/${encodeURIComponent(id)}`, { method: "DELETE" })
-export const uploadAdminImage = (body: FormData) => adminRequest<BlogImage>("/images", { method: "POST", body })
+export const uploadAdminImage = async (body: FormData) => normalizeAdminImage(await adminRequest<BlogImage>("/images", { method: "POST", body }))
 export const updateAdminImage = (id: string, altText: string | null) => adminRequest<BlogImage>(`/images/${encodeURIComponent(id)}`, { method: "PUT", body: { altText } })
 export const deleteAdminImage = (id: string) => adminRequest<void>(`/images/${encodeURIComponent(id)}`, { method: "DELETE" })
 

@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 import { AdminApiError, changeAdminPostStatus, createAdminPost, deleteAdminPost, updateAdminPost } from "@/lib/api/admin-blog.server"
 import { requireAdmin } from "@/lib/auth/session.server"
@@ -33,6 +33,12 @@ function failure(error: unknown): PostFormState {
   if (error instanceof AdminApiError) return { success: false, message: error.status === 409 ? "Este post mudou em outra sessão. Recarregue a página antes de salvar novamente." : error.message }
   throw error
 }
+function refreshPublicBlog() {
+  revalidateTag("public-blog", { expire: 0 })
+  revalidatePath("/blog")
+  revalidatePath("/sitemap.xml")
+  revalidatePath("/rss.xml")
+}
 
 export async function createPostAction(_: PostFormState, data: FormData): Promise<PostFormState> {
   await requireAdmin()
@@ -41,16 +47,18 @@ export async function createPostAction(_: PostFormState, data: FormData): Promis
   let post
   try { post = await createAdminPost(input) } catch (cause) { return failure(cause) }
   revalidatePath("/_control/painel/posts")
+  refreshPublicBlog()
   redirect(`/_control/painel/posts/${post.id}`)
 }
 export async function updatePostAction(id: string, _: PostFormState, data: FormData): Promise<PostFormState> {
   await requireAdmin()
   const input = parsePost(data); const error = validate(input)
   if (error) return { success: false, message: error }
-  try {
-    await updateAdminPost(id, input); revalidatePath("/_control/painel/posts"); revalidatePath(`/_control/painel/posts/${id}`)
-    return { success: true, message: "Post salvo com sucesso." }
-  } catch (cause) { return failure(cause) }
+  try { await updateAdminPost(id, input) } catch (cause) { return failure(cause) }
+  revalidatePath("/_control/painel/posts")
+  revalidatePath(`/_control/painel/posts/${id}`)
+  refreshPublicBlog()
+  redirect("/_control/painel/posts")
 }
 export async function transitionPostAction(data: FormData) {
   await requireAdmin()
@@ -60,7 +68,7 @@ export async function transitionPostAction(data: FormData) {
   try { await changeAdminPostStatus(id, transition as "publish" | "unpublish" | "archive") }
   catch (error) { if (error instanceof AdminApiError) errorMessage = error.message; else throw error }
   if (errorMessage) redirect(`/_control/painel/posts?erro=${encodeURIComponent(errorMessage)}`)
-  revalidatePath("/_control/painel/posts"); revalidatePath("/blog")
+  revalidatePath("/_control/painel/posts"); refreshPublicBlog()
 }
 export async function deletePostAction(data: FormData) {
   await requireAdmin()
@@ -70,4 +78,5 @@ export async function deletePostAction(data: FormData) {
   catch (error) { if (error instanceof AdminApiError) errorMessage = error.message; else throw error }
   if (errorMessage) redirect(`/_control/painel/posts?erro=${encodeURIComponent(errorMessage)}`)
   revalidatePath("/_control/painel/posts")
+  refreshPublicBlog()
 }
