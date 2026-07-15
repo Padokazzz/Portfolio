@@ -9,7 +9,8 @@ import type {
 } from "@/types/blog"
 import { getApiBaseUrl } from "@/lib/api/config.server"
 
-type PublicPostResponse = Omit<BlogPost, "categories" | "tags"> & {
+type PublicPostResponse = Omit<BlogPost, "categories" | "tags" | "publishedAt"> & {
+  publishedAtUtc: string
   categoryIds: string[]
   tagIds: string[]
 }
@@ -67,12 +68,16 @@ function hydratePost(
   categories: BlogCategory[],
   tags: BlogTag[],
 ): BlogPost {
-  const { categoryIds, tagIds, ...fields } = post
+  const { categoryIds, tagIds, publishedAtUtc, ...fields } = post
+  if (Number.isNaN(Date.parse(publishedAtUtc))) {
+    throw new PublicBlogApiError("A API retornou uma data de publicação inválida.")
+  }
   const categoryIdSet = new Set(categoryIds)
   const tagIdSet = new Set(tagIds)
 
   return {
     ...fields,
+    publishedAt: publishedAtUtc,
     categories: categories.filter((category) => categoryIdSet.has(category.id)),
     tags: tags.filter((tag) => tagIdSet.has(tag.id)),
   }
