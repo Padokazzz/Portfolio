@@ -64,6 +64,9 @@ export type AdminPostInput = {
   version: string | null
 }
 
+export type AdminCategoryInput = { name: string; slug: string; description: string | null }
+export type AdminTagInput = { name: string; slug: string }
+
 export type AdminDashboardData = {
   posts: AdminPost[]
   categories: BlogCategory[]

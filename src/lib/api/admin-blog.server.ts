@@ -4,7 +4,7 @@ import { redirect } from "next/navigation"
 
 import { getApiBaseUrl } from "@/lib/api/config.server"
 import { getSessionToken, requireAdmin } from "@/lib/auth/session.server"
-import type { AdminDashboardData, AdminPost, AdminPostInput } from "@/types/admin"
+import type { AdminCategoryInput, AdminDashboardData, AdminPost, AdminPostInput, AdminTagInput } from "@/types/admin"
 import type { BlogCategory, BlogImage, BlogTag } from "@/types/blog"
 
 type AdminRequestOptions = { method?: "GET" | "POST" | "PUT" | "DELETE"; body?: unknown }
@@ -50,6 +50,12 @@ export const createAdminPost = (input: AdminPostInput) => adminRequest<AdminPost
 export const updateAdminPost = (id: string, input: AdminPostInput) => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}`, { method: "PUT", body: input })
 export const changeAdminPostStatus = (id: string, transition: "publish" | "unpublish" | "archive") => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}/${transition}`, { method: "POST" })
 export const deleteAdminPost = (id: string) => adminRequest<void>(`/posts/${encodeURIComponent(id)}`, { method: "DELETE" })
+export const createAdminCategory = (input: AdminCategoryInput) => adminRequest<BlogCategory>("/categories", { method: "POST", body: input })
+export const updateAdminCategory = (id: string, input: AdminCategoryInput) => adminRequest<BlogCategory>(`/categories/${encodeURIComponent(id)}`, { method: "PUT", body: input })
+export const deleteAdminCategory = (id: string) => adminRequest<void>(`/categories/${encodeURIComponent(id)}`, { method: "DELETE" })
+export const createAdminTag = (input: AdminTagInput) => adminRequest<BlogTag>("/tags", { method: "POST", body: input })
+export const updateAdminTag = (id: string, input: AdminTagInput) => adminRequest<BlogTag>(`/tags/${encodeURIComponent(id)}`, { method: "PUT", body: input })
+export const deleteAdminTag = (id: string) => adminRequest<void>(`/tags/${encodeURIComponent(id)}`, { method: "DELETE" })
 
 export async function getAdminDashboard(): Promise<AdminDashboardData> {
   const [posts, categories, tags, images] = await Promise.all([
