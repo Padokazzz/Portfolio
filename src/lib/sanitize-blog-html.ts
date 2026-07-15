@@ -9,7 +9,6 @@ export function sanitizeBlogHtml(html: string) {
       "img",
       "figure",
       "figcaption",
-      "h1",
       "h2",
     ],
     allowedAttributes: {

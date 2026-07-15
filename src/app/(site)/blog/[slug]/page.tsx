@@ -12,6 +12,7 @@ import {
 } from "@/lib/api/public-blog"
 import {
   SITE_NAME,
+  SITE_DESCRIPTION,
   SITE_URL,
   SOCIAL_IMAGE,
 } from "@/lib/site-metadata"
@@ -35,14 +36,28 @@ async function loadPost(slug: string) {
   }
 }
 
+function getCanonicalUrl(canonicalUrl: string | null, slug: string) {
+  const fallback = `${SITE_URL}/blog/${slug}`
+  if (!canonicalUrl) return fallback
+
+  try {
+    const url = new URL(canonicalUrl, SITE_URL)
+    return url.protocol === "http:" || url.protocol === "https:"
+      ? url.toString()
+      : fallback
+  } catch {
+    return fallback
+  }
+}
+
 export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params
   const post = await loadPost(slug)
   const title = post.seoTitle ?? post.title
-  const description = post.seoDescription ?? post.excerpt ?? ""
-  const canonical = post.canonicalUrl ?? `/blog/${post.slug}`
+  const description = post.seoDescription ?? post.excerpt ?? SITE_DESCRIPTION
+  const canonical = getCanonicalUrl(post.canonicalUrl, post.slug)
   const image = post.coverImageUrl ?? SOCIAL_IMAGE.url
 
   return {
@@ -73,11 +88,39 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const post = await loadPost(slug)
   const related = await getRelatedPosts(slug)
   const articleUrl = `${SITE_URL}/blog/${post.slug}`
+  const canonicalUrl = getCanonicalUrl(post.canonicalUrl, post.slug)
   const encodedUrl = encodeURIComponent(articleUrl)
   const encodedTitle = encodeURIComponent(post.title)
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.seoDescription ?? post.excerpt ?? SITE_DESCRIPTION,
+    image: post.coverImageUrl || undefined,
+    datePublished: post.publishedAt,
+    mainEntityOfPage: canonicalUrl,
+    author: {
+      "@type": "Person",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Person",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    articleSection: post.categories.map((category) => category.name),
+    keywords: post.tags.map((tag) => tag.name).join(", "),
+  }
 
   return (
     <main className="flex-1">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <Container className="py-16 sm:py-24">
         <article className="mx-auto max-w-3xl">
           <Link
