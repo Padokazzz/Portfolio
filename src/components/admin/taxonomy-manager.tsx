@@ -6,7 +6,8 @@ import type { BlogCategory, BlogTag } from "@/types/blog"
 
 type Item = BlogCategory | BlogTag
 type Action = (state: TaxonomyFormState, data: FormData) => Promise<TaxonomyFormState>
-type Props = { kind: "category" | "tag"; items: Item[]; createAction: Action; updateAction: (id: string) => Action; deleteAction: (id: string) => Action }
+type ItemAction = (id: string, state: TaxonomyFormState, data: FormData) => Promise<TaxonomyFormState>
+type Props = { kind: "category" | "tag"; items: Item[]; createAction: Action; updateAction: ItemAction; deleteAction: ItemAction }
 const input = "rounded-md border border-white/10 bg-black/20 px-3 py-2 text-sm"
 const initial: TaxonomyFormState = { success: false, message: "" }
 
@@ -15,11 +16,11 @@ function Feedback({ state }: { state: TaxonomyFormState }) {
 }
 function TaxonomyRow({ kind, item, updateAction, deleteAction }: Omit<Props, "items" | "createAction"> & { item: Item }) {
   const [editing, setEditing] = useState(false)
-  const [updateState, updateForm, updating] = useActionState(updateAction(item.id), initial)
-  const [deleteState, deleteForm, deleting] = useActionState(deleteAction(item.id), initial)
+  const [updateState, updateForm, updating] = useActionState(updateAction.bind(null, item.id), initial)
+  const [deleteState, deleteForm, deleting] = useActionState(deleteAction.bind(null, item.id), initial)
   const description = "description" in item ? item.description : null
   return <li className="border-t border-white/10 px-5 py-4">
-    {editing ? <form action={updateForm} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]"><input className={input} name="name" required defaultValue={item.name} maxLength={kind === "category" ? 100 : 80} /><input className={input} name="slug" required defaultValue={item.slug} pattern="[a-z0-9]+(?:-[a-z0-9]+)*" maxLength={kind === "category" ? 120 : 100} /><div className="flex gap-2"><button disabled={updating} className="rounded-md bg-[#e7c78f] px-3 py-2 text-xs text-[#191713]">Salvar</button><button type="button" onClick={() => setEditing(false)} className="rounded-md border border-white/10 px-3 py-2 text-xs">Cancelar</button></div>{kind === "category" && <textarea className={`${input} md:col-span-2`} name="description" defaultValue={description ?? ""} maxLength={300} />}{<Feedback state={updateState} />}</form> : <div className="flex flex-wrap items-center justify-between gap-4"><div><p className="font-medium">{item.name}</p><p className="mt-1 text-xs text-muted-foreground">/{item.slug} · {item.postCount} post(s)</p>{description && <p className="mt-2 text-sm text-muted-foreground">{description}</p>}</div><div className="flex gap-2"><button type="button" onClick={() => setEditing(true)} className="rounded-md border border-white/10 px-3 py-2 text-xs">Editar</button><form action={deleteForm}><input type="hidden" name="confirmation" value={item.id} /><button disabled={deleting} onClick={(event) => { if (!window.confirm(`Excluir ${item.name}?`)) event.preventDefault() }} className="rounded-md border border-red-400/20 px-3 py-2 text-xs text-red-300">Excluir</button></form></div></div>}
+    {editing ? <form action={updateForm} className="grid gap-3 md:grid-cols-[1fr_1fr_auto]"><input className={input} name="name" required defaultValue={item.name} maxLength={kind === "category" ? 100 : 80} /><input className={`${input} opacity-70`} name="slug" required readOnly value={item.slug} title="O slug é preservado para não quebrar URLs públicas." /><div className="flex gap-2"><button disabled={updating} className="rounded-md bg-[#e7c78f] px-3 py-2 text-xs text-[#191713]">Salvar</button><button type="button" onClick={() => setEditing(false)} className="rounded-md border border-white/10 px-3 py-2 text-xs">Cancelar</button></div>{kind === "category" && <textarea className={`${input} md:col-span-2`} name="description" defaultValue={description ?? ""} maxLength={300} />}{<Feedback state={updateState} />}</form> : <div className="flex flex-wrap items-center justify-between gap-4"><div><p className="font-medium">{item.name}</p><p className="mt-1 text-xs text-muted-foreground">/{item.slug} · {item.postCount} post(s)</p>{description && <p className="mt-2 text-sm text-muted-foreground">{description}</p>}</div><div className="flex gap-2"><button type="button" onClick={() => setEditing(true)} className="rounded-md border border-white/10 px-3 py-2 text-xs">Editar</button><form action={deleteForm}><input type="hidden" name="confirmation" value={item.id} /><button disabled={deleting} onClick={(event) => { if (!window.confirm(`Excluir ${item.name}?`)) event.preventDefault() }} className="rounded-md border border-red-400/20 px-3 py-2 text-xs text-red-300">Excluir</button></form></div></div>}
     <Feedback state={deleteState} />
   </li>
 }
