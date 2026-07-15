@@ -168,7 +168,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </header>
 
           {post.coverImageUrl && (
-            <figure className="surface-soft mx-auto mt-10 flex max-w-3xl items-center justify-center overflow-hidden rounded-xl border p-1.5 shadow-2xl shadow-black/20">
+            <figure className="mx-auto mt-10 flex max-w-3xl items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={post.coverImageUrl} alt="" className="h-auto max-h-[26.25rem] w-auto max-w-full rounded-lg object-contain" />
             </figure>
