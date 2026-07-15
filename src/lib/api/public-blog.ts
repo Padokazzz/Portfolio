@@ -7,6 +7,7 @@ import type {
   BlogTag,
   PaginatedBlogPosts,
 } from "@/types/blog"
+import { getApiBaseUrl } from "@/lib/api/config.server"
 
 type PublicPostResponse = Omit<BlogPost, "categories" | "tags"> & {
   categoryIds: string[]
@@ -41,15 +42,6 @@ export class PublicBlogApiError extends Error {
     super(message)
     this.name = "PublicBlogApiError"
   }
-}
-
-function getApiBaseUrl() {
-  const value = process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_URL
-  if (!value) {
-    throw new PublicBlogApiError("A API do blog não está configurada.")
-  }
-
-  return value.replace(/\/$/, "")
 }
 
 async function request<T>(path: string): Promise<T> {
