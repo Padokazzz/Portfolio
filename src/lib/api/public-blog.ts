@@ -17,6 +17,22 @@ type PagedPostsResponse = Omit<PaginatedBlogPosts, "items"> & {
   items: PublicPostResponse[]
 }
 
+function normalizePagedPosts(
+  response: PagedPostsResponse | PublicPostResponse[],
+  requestedPage: number,
+  requestedPageSize: number,
+): PagedPostsResponse {
+  if (!Array.isArray(response)) return response
+
+  return {
+    items: response,
+    page: requestedPage,
+    pageSize: requestedPageSize,
+    totalItems: response.length,
+    totalPages: response.length > 0 ? 1 : 0,
+  }
+}
+
 export class PublicBlogApiError extends Error {
   constructor(
     message: string,
@@ -90,21 +106,24 @@ async function getBlogTaxonomies() {
 export async function getPublishedPosts(
   filters: BlogPostFilters = {},
 ): Promise<PaginatedBlogPosts> {
+  const page = filters.page ?? 1
+  const pageSize = filters.pageSize ?? 10
   const params = new URLSearchParams()
-  params.set("page", String(filters.page ?? 1))
-  params.set("pageSize", String(filters.pageSize ?? 10))
+  params.set("page", String(page))
+  params.set("pageSize", String(pageSize))
   if (filters.search) params.set("search", filters.search)
   if (filters.category) params.set("category", filters.category)
   if (filters.tag) params.set("tag", filters.tag)
 
   const [result, taxonomies] = await Promise.all([
-    request<PagedPostsResponse>(`/posts?${params}`),
+    request<PagedPostsResponse | PublicPostResponse[]>(`/posts?${params}`),
     getBlogTaxonomies(),
   ])
+  const normalizedResult = normalizePagedPosts(result, page, pageSize)
 
   return {
-    ...result,
-    items: result.items.map((post) =>
+    ...normalizedResult,
+    items: normalizedResult.items.map((post) =>
       hydratePost(post, taxonomies.categories, taxonomies.tags),
     ),
   }
