@@ -7,7 +7,7 @@ import { getSessionToken, requireAdmin } from "@/lib/auth/session.server"
 import type { AdminCategoryInput, AdminDashboardData, AdminPost, AdminPostInput, AdminTagInput } from "@/types/admin"
 import type { BlogCategory, BlogImage, BlogTag } from "@/types/blog"
 
-type AdminRequestOptions = { method?: "GET" | "POST" | "PUT" | "DELETE"; body?: unknown; multipart?: boolean }
+type AdminRequestOptions = { method?: "GET" | "POST" | "PUT" | "DELETE"; body?: unknown }
 
 export class AdminApiError extends Error {
   constructor(public status: number, message: string) {
@@ -19,13 +19,19 @@ export class AdminApiError extends Error {
 async function adminRequest<T>(path: string, options: AdminRequestOptions = {}): Promise<T> {
   await requireAdmin()
   const token = await getSessionToken()
+  const isMultipart = options.body instanceof FormData
+  const requestBody = options.body === undefined
+    ? undefined
+    : options.body instanceof FormData
+      ? options.body
+      : JSON.stringify(options.body)
   const response = await fetch(`${getApiBaseUrl()}/api/v1/admin${path}`, {
     method: options.method ?? "GET",
     headers: {
       Authorization: `Bearer ${token}`,
-      ...(options.body && !options.multipart ? { "Content-Type": "application/json" } : {}),
+      ...(options.body && !isMultipart ? { "Content-Type": "application/json" } : {}),
     },
-    body: options.body ? (options.multipart ? options.body as FormData : JSON.stringify(options.body)) : undefined,
+    body: requestBody,
     cache: "no-store",
   })
 
@@ -61,7 +67,7 @@ export const deleteAdminCategory = (id: string) => adminRequest<void>(`/categori
 export const createAdminTag = (input: AdminTagInput) => adminRequest<BlogTag>("/tags", { method: "POST", body: input })
 export const updateAdminTag = (id: string, input: AdminTagInput) => adminRequest<BlogTag>(`/tags/${encodeURIComponent(id)}`, { method: "PUT", body: input })
 export const deleteAdminTag = (id: string) => adminRequest<void>(`/tags/${encodeURIComponent(id)}`, { method: "DELETE" })
-export const uploadAdminImage = (body: FormData) => adminRequest<BlogImage>("/images", { method: "POST", body, multipart: true })
+export const uploadAdminImage = (body: FormData) => adminRequest<BlogImage>("/images", { method: "POST", body })
 export const updateAdminImage = (id: string, altText: string | null) => adminRequest<BlogImage>(`/images/${encodeURIComponent(id)}`, { method: "PUT", body: { altText } })
 export const deleteAdminImage = (id: string) => adminRequest<void>(`/images/${encodeURIComponent(id)}`, { method: "DELETE" })
 

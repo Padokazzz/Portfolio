@@ -6,6 +6,8 @@ import { requireAdmin } from "@/lib/auth/session.server"
 
 export type ImageFormState = { success: boolean; message: string }
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"])
+const maximumUploadBytes = Math.floor(4.9 * 1024 * 1024)
+const maximumAltTextLength = 300
 
 function failure(error: unknown, conflict: string): ImageFormState {
   if (error instanceof AdminApiError) return { success: false, message: error.status === 409 ? conflict : error.message }
@@ -17,15 +19,19 @@ export async function uploadImageAction(_: ImageFormState, data: FormData): Prom
   await requireAdmin()
   const file = data.get("file")
   if (!(file instanceof File) || file.size === 0) return { success: false, message: "Selecione uma imagem." }
-  if (file.size > 5 * 1024 * 1024) return { success: false, message: "A imagem deve ter no máximo 5 MB." }
+  if (file.size > maximumUploadBytes) return { success: false, message: "A imagem deve ter no máximo 4,9 MB." }
   if (!allowedTypes.has(file.type)) return { success: false, message: "Envie uma imagem JPEG, PNG ou WebP." }
-  const payload = new FormData(); payload.set("file", file); payload.set("altText", String(data.get("altText") ?? "").trim())
+  const altText = String(data.get("altText") ?? "").trim()
+  if (altText.length > maximumAltTextLength) return { success: false, message: "O texto alternativo deve ter até 300 caracteres." }
+  const payload = new FormData(); payload.set("file", file); payload.set("altText", altText)
   try { await uploadAdminImage(payload) } catch (error) { return failure(error, "Não foi possível enviar esta imagem.") }
   refresh(); return { success: true, message: "Imagem enviada com sucesso." }
 }
 export async function updateImageAction(id: string, _: ImageFormState, data: FormData): Promise<ImageFormState> {
   await requireAdmin()
-  try { await updateAdminImage(id, String(data.get("altText") ?? "").trim() || null) }
+  const altText = String(data.get("altText") ?? "").trim()
+  if (altText.length > maximumAltTextLength) return { success: false, message: "O texto alternativo deve ter até 300 caracteres." }
+  try { await updateAdminImage(id, altText || null) }
   catch (error) { return failure(error, "Não foi possível atualizar esta imagem.") }
   refresh(); return { success: true, message: "Texto alternativo atualizado." }
 }
