@@ -78,6 +78,15 @@ export function getBlogTags() {
   return request<BlogTag[]>("/tags")
 }
 
+async function getBlogTaxonomies() {
+  const [categories, tags] = await Promise.all([
+    getBlogCategories(),
+    getBlogTags(),
+  ])
+
+  return { categories, tags }
+}
+
 export async function getPublishedPosts(
   filters: BlogPostFilters = {},
 ): Promise<PaginatedBlogPosts> {
@@ -88,36 +97,37 @@ export async function getPublishedPosts(
   if (filters.category) params.set("category", filters.category)
   if (filters.tag) params.set("tag", filters.tag)
 
-  const [result, categories, tags] = await Promise.all([
+  const [result, taxonomies] = await Promise.all([
     request<PagedPostsResponse>(`/posts?${params}`),
-    getBlogCategories(),
-    getBlogTags(),
+    getBlogTaxonomies(),
   ])
 
   return {
     ...result,
-    items: result.items.map((post) => hydratePost(post, categories, tags)),
+    items: result.items.map((post) =>
+      hydratePost(post, taxonomies.categories, taxonomies.tags),
+    ),
   }
 }
 
 export async function getPublishedPost(slug: string): Promise<BlogPost> {
-  const [post, categories, tags] = await Promise.all([
+  const [post, taxonomies] = await Promise.all([
     request<PublicPostResponse>(`/posts/${encodeURIComponent(slug)}`),
-    getBlogCategories(),
-    getBlogTags(),
+    getBlogTaxonomies(),
   ])
 
-  return hydratePost(post, categories, tags)
+  return hydratePost(post, taxonomies.categories, taxonomies.tags)
 }
 
 export async function getRelatedPosts(slug: string, limit = 4) {
-  const [posts, categories, tags] = await Promise.all([
+  const [posts, taxonomies] = await Promise.all([
     request<PublicPostResponse[]>(
       `/posts/${encodeURIComponent(slug)}/related?limit=${limit}`,
     ),
-    getBlogCategories(),
-    getBlogTags(),
+    getBlogTaxonomies(),
   ])
 
-  return posts.map((post) => hydratePost(post, categories, tags))
+  return posts.map((post) =>
+    hydratePost(post, taxonomies.categories, taxonomies.tags),
+  )
 }

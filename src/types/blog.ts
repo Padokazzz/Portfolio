@@ -11,6 +11,17 @@ export type BlogCategory = BlogTaxonomy & {
 
 export type BlogTag = BlogTaxonomy
 
+export type BlogImage = {
+  id: string
+  publicUrl: string
+  altText: string | null
+  mimeType: string
+  sizeBytes: number
+  width: number
+  height: number
+  createdAtUtc: string
+}
+
 export type BlogPost = {
   id: string
   title: string
