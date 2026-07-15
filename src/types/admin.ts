@@ -49,6 +49,21 @@ export type AdminPost = {
   tagIds: string[]
 }
 
+export type AdminPostInput = {
+  title: string
+  slug: string
+  excerpt: string | null
+  contentJson: string | null
+  contentHtml: string | null
+  coverImageUrl: string | null
+  seoTitle: string | null
+  seoDescription: string | null
+  canonicalUrl: string | null
+  categoryIds: string[]
+  tagIds: string[]
+  version: string | null
+}
+
 export type AdminDashboardData = {
   posts: AdminPost[]
   categories: BlogCategory[]
