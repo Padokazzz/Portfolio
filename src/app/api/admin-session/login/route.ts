@@ -2,9 +2,9 @@ import { NextResponse } from "next/server"
 
 import { getApiBaseUrl } from "@/lib/api/config.server"
 import { isSameOriginRequest } from "@/lib/auth/request.server"
+import { setSessionCookies } from "@/lib/auth/session-cookies.server"
 import {
   ADMIN_ROLE,
-  ADMIN_SESSION_COOKIE,
   type LoginResponse,
 } from "@/types/admin"
 
@@ -66,6 +66,8 @@ export async function POST(request: Request) {
   if (
     !login.accessToken ||
     !login.expiresAtUtc ||
+    !login.refreshToken ||
+    !login.refreshTokenExpiresAtUtc ||
     !login.user ||
     login.user.role !== ADMIN_ROLE
   ) {
@@ -73,14 +75,6 @@ export async function POST(request: Request) {
   }
 
   const result = privateJson({ user: login.user })
-  result.cookies.set({
-    name: ADMIN_SESSION_COOKIE,
-    value: login.accessToken,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-    expires: new Date(login.expiresAtUtc),
-  })
+  setSessionCookies(result, login)
   return result
 }

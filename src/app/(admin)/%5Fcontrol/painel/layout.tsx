@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import { SessionRefresh } from "@/components/admin/session-refresh"
 import { requireAdmin } from "@/lib/auth/session.server"
 
 export default async function AdminPanelLayout({ children }: { children: React.ReactNode }) {
@@ -7,6 +8,7 @@ export default async function AdminPanelLayout({ children }: { children: React.R
 
   return (
     <div className="min-h-screen bg-[#11100f]">
+      <SessionRefresh />
       <header className="border-b border-white/10">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <div className="flex items-center gap-6">

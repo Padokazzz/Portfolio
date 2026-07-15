@@ -1,6 +1,7 @@
 import type { BlogCategory, BlogImage, BlogTag } from "@/types/blog"
 
-export const ADMIN_SESSION_COOKIE = "portfolio-admin-session"
+export const ADMIN_ACCESS_COOKIE = "portfolio-admin-access"
+export const ADMIN_REFRESH_COOKIE = "portfolio-admin-refresh"
 export const ADMIN_ROLE = "Admin"
 export const ADMIN_POST_STATUS = {
   draft: 1,
@@ -19,6 +20,8 @@ export type LoginResponse = {
   accessToken: string
   tokenType: string
   expiresAtUtc: string
+  refreshToken: string
+  refreshTokenExpiresAtUtc: string
   user: AuthenticatedAdmin
 }
 
