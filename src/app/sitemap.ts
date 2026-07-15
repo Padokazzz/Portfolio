@@ -1,4 +1,9 @@
 import type { MetadataRoute } from "next"
+import {
+  getAllPublishedPosts,
+  getBlogCategories,
+  getBlogTags,
+} from "@/lib/api/public-blog"
 import { SITE_URL } from "@/lib/site-metadata"
 
 const routes = [
@@ -11,10 +16,43 @@ const routes = [
   { path: "/contato", changeFrequency: "yearly", priority: 0.5 },
 ] as const
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map(({ path, changeFrequency, priority }) => ({
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const staticRoutes: MetadataRoute.Sitemap = routes.map(
+    ({ path, changeFrequency, priority }) => ({
     url: `${SITE_URL}${path}`,
     changeFrequency,
     priority,
-  }))
+    }),
+  )
+
+  try {
+    const [posts, categories, tags] = await Promise.all([
+      getAllPublishedPosts(),
+      getBlogCategories(),
+      getBlogTags(),
+    ])
+
+    return [
+      ...staticRoutes,
+      ...posts.map((post) => ({
+        url: `${SITE_URL}/blog/${post.slug}`,
+        lastModified: post.publishedAt,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+        ...(post.coverImageUrl ? { images: [post.coverImageUrl] } : {}),
+      })),
+      ...categories.map((category) => ({
+        url: `${SITE_URL}/blog/categoria/${category.slug}`,
+        changeFrequency: "weekly" as const,
+        priority: 0.5,
+      })),
+      ...tags.map((tag) => ({
+        url: `${SITE_URL}/blog/tag/${tag.slug}`,
+        changeFrequency: "weekly" as const,
+        priority: 0.4,
+      })),
+    ]
+  } catch {
+    return staticRoutes
+  }
 }

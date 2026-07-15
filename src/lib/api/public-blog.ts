@@ -129,6 +129,22 @@ export async function getPublishedPosts(
   }
 }
 
+export async function getAllPublishedPosts() {
+  const firstPage = await getPublishedPosts({ page: 1, pageSize: 50 })
+  if (firstPage.totalPages <= 1) return firstPage.items
+
+  const remainingPages = await Promise.all(
+    Array.from({ length: firstPage.totalPages - 1 }, (_, index) =>
+      getPublishedPosts({ page: index + 2, pageSize: 50 }),
+    ),
+  )
+
+  return [
+    ...firstPage.items,
+    ...remainingPages.flatMap((page) => page.items),
+  ]
+}
+
 export async function getPublishedPost(slug: string): Promise<BlogPost> {
   const [post, taxonomies] = await Promise.all([
     request<PublicPostResponse>(`/posts/${encodeURIComponent(slug)}`),
