@@ -2,7 +2,7 @@ import { Container } from "@/components/layout/container"
 
 export default function BlogLoading() {
   return (
-    <main className="flex-1" aria-busy="true" aria-label="Carregando artigos">
+    <main className="blog-public-shell flex-1" aria-busy="true" aria-label="Carregando artigos">
       <Container className="py-20 sm:py-28">
         <div className="max-w-3xl space-y-4">
           <div className="h-4 w-20 animate-pulse rounded bg-white/10" />
@@ -14,7 +14,7 @@ export default function BlogLoading() {
           {Array.from({ length: 6 }, (_, index) => (
             <div
               key={index}
-              className="surface h-80 animate-pulse rounded-lg border"
+              className={`h-80 animate-pulse rounded-xl border ${index % 3 === 0 ? "border-blue-300/15 bg-blue-400/[.04]" : index % 3 === 1 ? "border-cyan-300/15 bg-cyan-400/[.04]" : "border-sky-300/15 bg-sky-400/[.04]"}`}
             />
           ))}
         </div>

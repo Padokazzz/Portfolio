@@ -1,9 +1,5 @@
 import type { MetadataRoute } from "next"
-import {
-  getAllPublishedPosts,
-  getBlogCategories,
-  getBlogTags,
-} from "@/lib/api/public-blog"
+import { getAllPublishedPosts } from "@/lib/api/public-blog"
 import { SITE_URL } from "@/lib/site-metadata"
 
 const routes = [
@@ -25,21 +21,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   )
 
-  const [postsResult, categoriesResult, tagsResult] = await Promise.allSettled([
-    getAllPublishedPosts(),
-    getBlogCategories(),
-    getBlogTags(),
-  ])
+  const [postsResult] = await Promise.allSettled([getAllPublishedPosts()])
   const posts = postsResult.status === "fulfilled" ? postsResult.value : []
-  const categories =
-    categoriesResult.status === "fulfilled" ? categoriesResult.value : []
-  const tags = tagsResult.status === "fulfilled" ? tagsResult.value : []
+  const categories = [...new Map(posts.flatMap(post => post.categories).map(item => [item.id, item])).values()]
+  const tags = [...new Map(posts.flatMap(post => post.tags).map(item => [item.id, item])).values()]
 
   return [
     ...staticRoutes,
     ...posts.map((post) => ({
       url: `${SITE_URL}/blog/${post.slug}`,
-      lastModified: post.publishedAt,
+      lastModified: post.updatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.7,
       ...(post.coverImageUrl ? { images: [post.coverImageUrl] } : {}),

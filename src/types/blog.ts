@@ -33,6 +33,7 @@ export type BlogPost = {
   seoDescription: string | null
   canonicalUrl: string | null
   publishedAt: string
+  updatedAt: string
   readingTimeMinutes: number
   categories: BlogCategory[]
   tags: BlogTag[]

@@ -30,12 +30,12 @@ export function BlogPagination({
   return (
     <nav
       aria-label="Paginação dos artigos"
-      className="mt-10 flex items-center justify-between gap-4 border-t border-white/10 pt-6"
+      className="mt-12 flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[.025] p-3 sm:p-4"
     >
       {page > 1 ? (
         <Link
           href={pageHref(basePath, page - 1, search)}
-          className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+          className={cn(buttonVariants({ variant: "outline", size: "lg" }), "border-cyan-300/20 hover:border-cyan-300/50")}
         >
           <ChevronLeft aria-hidden="true" />
           Anterior
@@ -51,7 +51,7 @@ export function BlogPagination({
       {page < totalPages ? (
         <Link
           href={pageHref(basePath, page + 1, search)}
-          className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+          className={cn(buttonVariants({ variant: "outline", size: "lg" }), "border-blue-300/20 hover:border-blue-300/50")}
         >
           Próxima
           <ChevronRight aria-hidden="true" />

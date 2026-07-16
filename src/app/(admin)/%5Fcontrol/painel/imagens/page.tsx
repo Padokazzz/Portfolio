@@ -6,5 +6,5 @@ import { deleteImageAction, updateImageAction, uploadImageAction } from "./actio
 export default async function AdminImagesPage() {
   await requireAdmin()
   const images = await getAdminImages()
-  return <main className="mx-auto max-w-6xl px-6 py-10"><p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Mídia</p><h1 className="mt-2 text-3xl font-semibold">Imagens</h1><p className="mt-3 text-sm text-muted-foreground">JPEG, PNG ou WebP, com no máximo 4,9 MB. Imagens vinculadas a posts não podem ser excluídas.</p><ImageLibrary images={images} uploadAction={uploadImageAction} updateAction={updateImageAction} deleteAction={deleteImageAction} /></main>
+  return <main className="admin-page"><header className="admin-page-header"><div><p className="admin-eyebrow">Mídia</p><h1 className="admin-title">Imagens</h1><p className="admin-description">JPEG, PNG ou WebP · máximo de 4,9 MB.</p></div><span className="text-xs text-muted-foreground">{images.length} arquivos</span></header><ImageLibrary images={images} uploadAction={uploadImageAction} updateAction={updateImageAction} deleteAction={deleteImageAction} /></main>
 }

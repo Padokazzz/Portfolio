@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import {
   AdminApiError, createAdminCategory, createAdminTag, deleteAdminCategory,
   deleteAdminTag, updateAdminCategory, updateAdminTag,
@@ -26,6 +26,7 @@ function apiFailure(error: unknown, conflictMessage: string): TaxonomyFormState 
   throw error
 }
 function refresh(kind: Kind) {
+  revalidateTag("public-blog", { expire: 0 })
   revalidatePath(`/_control/painel/${kind === "category" ? "categorias" : "tags"}`)
   revalidatePath("/_control/painel")
   revalidatePath("/blog")

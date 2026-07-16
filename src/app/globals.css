@@ -48,6 +48,75 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@layer components {
+  .admin-shell { background-color: #0b0f15; background-image: radial-gradient(circle at 12% 0%, rgb(37 99 235 / 8%), transparent 28rem), radial-gradient(circle at 88% 15%, rgb(34 211 238 / 5%), transparent 30rem); }
+  .admin-shell .surface { background: rgb(13 19 28 / 78%); border-color: rgb(147 197 253 / 12%); box-shadow: none; }
+  .admin-page { @apply mx-auto max-w-7xl px-5 py-7 sm:px-6 sm:py-9; }
+  .admin-page-header { @apply flex flex-wrap items-end justify-between gap-4; }
+  .admin-eyebrow { @apply text-[10px] font-semibold uppercase tracking-[.18em] text-sky-300; }
+  .admin-title { @apply mt-1 text-2xl font-semibold tracking-[-.02em]; }
+  .admin-description { @apply mt-1 text-sm text-muted-foreground; }
+  .admin-primary-action { @apply rounded-lg bg-yellow-300 px-3.5 py-2 text-xs font-semibold text-[#171713] transition hover:bg-yellow-200; }
+  .admin-secondary-action { @apply rounded-lg border border-blue-200/15 px-3 py-2 text-xs text-muted-foreground transition hover:border-sky-300/30 hover:text-sky-100; }
+  .admin-input { @apply rounded-lg border border-blue-200/10 bg-black/15 px-3 py-2 text-xs outline-none transition focus:border-sky-300/35; }
+  .admin-shell .admin-editor-step-info,
+  .admin-shell .admin-editor-step-content,
+  .admin-shell .admin-editor-step-organize { --step-from: #60a5fa; --step-to: #22d3ee; --step-border: rgb(96 165 250 / 16%); --step-glow: rgb(14 165 233 / 5%); }
+  .admin-shell .admin-editor-layout fieldset { background: rgb(59 130 246 / 3%) !important; }
+  .admin-shell .admin-editor-layout fieldset legend { color: #bae6fd !important; }
+  .admin-shell .editor-toolbar button { border-color: rgb(125 211 252 / 18%) !important; color: #bae6fd !important; }
+  .admin-shell .admin-editor-layout { margin-top: 1.5rem; }
+  .admin-shell .admin-editor-step { padding: 1.25rem; }
+  .blog-public-shell {
+    background-image:
+      radial-gradient(circle at 12% 8%, rgb(37 99 235 / 10%), transparent 28rem),
+      radial-gradient(circle at 82% 13%, rgb(34 211 238 / 8%), transparent 28rem),
+      radial-gradient(circle at 50% 52%, rgb(14 116 144 / 5%), transparent 36rem);
+  }
+  .blog-article-column a { color: #bae6fd !important; text-decoration-color: rgb(56 189 248 / 40%) !important; }
+  .blog-article-column blockquote { border-left-color: rgb(56 189 248 / 60%) !important; background: rgb(14 165 233 / 4%) !important; }
+  .blog-article-column > :first-child { margin-top: 0; }
+  .admin-editor-step {
+    position: relative;
+    overflow: hidden;
+    background-image: radial-gradient(circle at 100% 0%, var(--step-glow), transparent 34%);
+    border-color: var(--step-border);
+  }
+  .admin-editor-step::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--step-from), var(--step-to));
+  }
+  .admin-editor-step-info { --step-from: #fcd34d; --step-to: #f97316; --step-border: rgb(252 211 77 / 22%); --step-glow: rgb(249 115 22 / 9%); }
+  .admin-editor-step-content { --step-from: #67e8f9; --step-to: #3b82f6; --step-border: rgb(103 232 249 / 22%); --step-glow: rgb(59 130 246 / 10%); }
+  .admin-editor-step-organize { --step-from: #c4b5fd; --step-to: #d946ef; --step-border: rgb(196 181 253 / 22%); --step-glow: rgb(217 70 239 / 9%); }
+  .admin-editor-layout > aside > section:first-child { border-color: rgb(103 232 249 / 22%); background-image: linear-gradient(145deg, rgb(6 182 212 / 7%), transparent 45%); }
+  .admin-editor-layout > aside > section:last-child { border-color: rgb(110 231 183 / 24%); background-image: linear-gradient(145deg, rgb(16 185 129 / 8%), transparent 45%); }
+  .admin-editor-layout fieldset:first-child { border-radius: .75rem; background: rgb(139 92 246 / 5%); padding: 1rem; }
+  .admin-editor-layout fieldset:last-child { border-radius: .75rem; background: rgb(217 70 239 / 5%); padding: 1rem; }
+  .admin-editor-layout fieldset:first-child legend { color: #ddd6fe; padding-inline: .25rem; }
+  .admin-editor-layout fieldset:last-child legend { color: #f5d0fe; padding-inline: .25rem; }
+  .admin-editor-layout details { border-color: rgb(110 231 183 / 20%); background-image: linear-gradient(145deg, rgb(16 185 129 / 6%), transparent 40%); }
+  .editor-toolbar button:nth-child(-n+4) { border-color: rgb(252 211 77 / 25%); color: #fde68a; }
+  .editor-toolbar button:nth-child(n+5):nth-child(-n+8) { border-color: rgb(103 232 249 / 25%); color: #a5f3fc; }
+  .editor-toolbar button:nth-child(n+9):nth-child(-n+11) { border-color: rgb(196 181 253 / 28%); color: #ddd6fe; }
+  .editor-toolbar button:nth-child(n+12) { border-color: rgb(110 231 183 / 25%); color: #a7f3d0; }
+  .tiptap h2 { @apply mt-7 mb-3 text-2xl font-semibold; }
+  .tiptap h3 { @apply mt-6 mb-2 text-xl font-semibold; }
+  .tiptap p { @apply my-3 leading-7; }
+  .tiptap ul { @apply my-3 list-disc pl-6; }
+  .tiptap ol { @apply my-3 list-decimal pl-6; }
+  .tiptap blockquote { @apply my-4 border-l-2 border-[#e7c78f] pl-4 text-muted-foreground; }
+  .tiptap pre { @apply my-4 overflow-x-auto rounded-lg bg-black/40 p-4 font-mono text-sm; }
+  .tiptap img { @apply my-5 h-auto max-w-full rounded-lg; }
+  .tiptap table { @apply my-5 w-full border-collapse; }
+  .tiptap td, .tiptap th { @apply border border-white/15 p-2 align-top; }
+  .tiptap th { @apply bg-white/[0.06] font-semibold; }
+  .tiptap p.is-editor-empty:first-child::before { content: "Comece a escrever seu artigo..."; @apply pointer-events-none float-left h-0 text-muted-foreground; }
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

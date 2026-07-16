@@ -6,5 +6,5 @@ import { createTaxonomyAction, deleteTaxonomyAction, updateTaxonomyAction } from
 export default async function AdminCategoriesPage() {
   await requireAdmin()
   const items = await getAdminCategories()
-  return <main className="mx-auto max-w-6xl px-6 py-10"><p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Organização</p><h1 className="mt-2 text-3xl font-semibold">Categorias</h1><p className="mt-3 text-sm text-muted-foreground">Categorias vinculadas a posts não podem ser excluídas.</p><TaxonomyManager kind="category" items={items} createAction={createTaxonomyAction.bind(null, "category")} updateAction={updateTaxonomyAction.bind(null, "category")} deleteAction={deleteTaxonomyAction.bind(null, "category")} /></main>
+  return <main className="admin-page"><header className="admin-page-header"><div><p className="admin-eyebrow">Organização</p><h1 className="admin-title">Categorias</h1><p className="admin-description">Agrupe os posts por assunto principal.</p></div><span className="text-xs text-muted-foreground">{items.length} cadastradas</span></header><TaxonomyManager kind="category" items={items} createAction={createTaxonomyAction.bind(null, "category")} updateAction={updateTaxonomyAction.bind(null, "category")} deleteAction={deleteTaxonomyAction.bind(null, "category")} /></main>
 }

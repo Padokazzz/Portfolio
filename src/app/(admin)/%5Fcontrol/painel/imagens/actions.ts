@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { AdminApiError, deleteAdminImage, updateAdminImage, uploadAdminImage } from "@/lib/api/admin-blog.server"
 import { requireAdmin } from "@/lib/auth/session.server"
 
-export type ImageFormState = { success: boolean; message: string }
+export type ImageFormState = { success: boolean; message: string; imageUrl?: string }
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp"])
 const maximumUploadBytes = Math.floor(4.9 * 1024 * 1024)
 const maximumAltTextLength = 300
@@ -24,8 +24,9 @@ export async function uploadImageAction(_: ImageFormState, data: FormData): Prom
   const altText = String(data.get("altText") ?? "").trim()
   if (altText.length > maximumAltTextLength) return { success: false, message: "O texto alternativo deve ter até 300 caracteres." }
   const payload = new FormData(); payload.set("file", file); payload.set("altText", altText)
-  try { await uploadAdminImage(payload) } catch (error) { return failure(error, "Não foi possível enviar esta imagem.") }
-  refresh(); return { success: true, message: "Imagem enviada com sucesso." }
+  let image
+  try { image = await uploadAdminImage(payload) } catch (error) { return failure(error, "Não foi possível enviar esta imagem.") }
+  refresh(); return { success: true, message: "Imagem enviada com sucesso.", imageUrl: image.publicUrl }
 }
 export async function updateImageAction(id: string, _: ImageFormState, data: FormData): Promise<ImageFormState> {
   await requireAdmin()

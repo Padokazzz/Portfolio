@@ -17,9 +17,9 @@ export default function BlogError({
   }, [error])
 
   return (
-    <main className="flex-1">
+    <main className="blog-public-shell flex-1">
       <Container className="py-24 sm:py-32">
-        <section className="surface max-w-2xl rounded-lg border p-8">
+        <section className="max-w-2xl rounded-xl border border-blue-300/20 bg-gradient-to-br from-blue-500/[.09] to-cyan-400/[.03] p-8">
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted-foreground">
             Blog indisponível
           </p>

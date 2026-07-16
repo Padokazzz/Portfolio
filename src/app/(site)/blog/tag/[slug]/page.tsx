@@ -25,13 +25,13 @@ export default async function TagPage({ params, searchParams }: TagPageProps) {
   const posts = await getPublishedPosts({ page, pageSize: 9, search: search || undefined, tag: slug })
 
   return (
-    <main className="flex-1">
+    <main className="blog-public-shell flex-1">
       <Container className="py-20 sm:py-28">
-        <header className="max-w-3xl space-y-4">
-          <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Tag</p>
-          <h1 className="text-3xl font-semibold sm:text-5xl">#{tag.name}</h1>
+        <header className="max-w-3xl rounded-2xl border border-blue-300/20 bg-gradient-to-br from-blue-500/[.09] to-cyan-400/[.04] p-7 sm:p-9">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">Assunto · Tag</p>
+          <h1 className="mt-3 text-3xl font-semibold sm:text-5xl">#{tag.name}</h1>
         </header>
-        <BlogSearchForm action={basePath} defaultValue={search} />
+        <div className="mt-8 max-w-3xl"><BlogSearchForm action={basePath} defaultValue={search} /></div>
         <BlogResults posts={posts} title={search ? `Resultados para “${search}”` : `Artigos com #${tag.name}`} emptyMessage="Nenhum artigo publicado com esta tag." search={search} basePath={basePath} />
       </Container>
     </main>

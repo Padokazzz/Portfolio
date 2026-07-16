@@ -2,7 +2,7 @@
 
 import { revalidatePath, revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
-import { AdminApiError, changeAdminPostStatus, createAdminPost, deleteAdminPost, updateAdminPost } from "@/lib/api/admin-blog.server"
+import { AdminApiError, changeAdminPostStatus, createAdminPost, createAndPublishAdminPost, deleteAdminPost, updateAdminPost, updateAndPublishAdminPost } from "@/lib/api/admin-blog.server"
 import { requireAdmin } from "@/lib/auth/session.server"
 import type { AdminPostInput } from "@/types/admin"
 
@@ -44,17 +44,19 @@ export async function createPostAction(_: PostFormState, data: FormData): Promis
   await requireAdmin()
   const input = parsePost(data); const error = validate(input)
   if (error) return { success: false, message: error }
+  const publish = data.get("intent") === "publish"
   let post
-  try { post = await createAdminPost(input) } catch (cause) { return failure(cause) }
+  try { post = await (publish ? createAndPublishAdminPost(input) : createAdminPost(input)) } catch (cause) { return failure(cause) }
   revalidatePath("/_control/painel/posts")
   refreshPublicBlog()
-  redirect(`/_control/painel/posts/${post.id}`)
+  redirect(publish ? "/_control/painel/posts" : `/_control/painel/posts/${post.id}`)
 }
 export async function updatePostAction(id: string, _: PostFormState, data: FormData): Promise<PostFormState> {
   await requireAdmin()
   const input = parsePost(data); const error = validate(input)
   if (error) return { success: false, message: error }
-  try { await updateAdminPost(id, input) } catch (cause) { return failure(cause) }
+  const publish = data.get("intent") === "publish"
+  try { await (publish ? updateAndPublishAdminPost(id, input) : updateAdminPost(id, input)) } catch (cause) { return failure(cause) }
   revalidatePath("/_control/painel/posts")
   revalidatePath(`/_control/painel/posts/${id}`)
   refreshPublicBlog()

@@ -68,7 +68,9 @@ export const getAdminImages = async () => {
   return images.map(normalizeAdminImage)
 }
 export const createAdminPost = (input: AdminPostInput) => adminRequest<AdminPost>("/posts", { method: "POST", body: input })
+export const createAndPublishAdminPost = (input: AdminPostInput) => adminRequest<AdminPost>("/posts/publish", { method: "POST", body: input })
 export const updateAdminPost = (id: string, input: AdminPostInput) => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}`, { method: "PUT", body: input })
+export const updateAndPublishAdminPost = (id: string, input: AdminPostInput) => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}/publish`, { method: "PUT", body: input })
 export const changeAdminPostStatus = (id: string, transition: "publish" | "unpublish" | "archive") => adminRequest<AdminPost>(`/posts/${encodeURIComponent(id)}/${transition}`, { method: "POST" })
 export const deleteAdminPost = (id: string) => adminRequest<void>(`/posts/${encodeURIComponent(id)}`, { method: "DELETE" })
 export const createAdminCategory = (input: AdminCategoryInput) => adminRequest<BlogCategory>("/categories", { method: "POST", body: input })

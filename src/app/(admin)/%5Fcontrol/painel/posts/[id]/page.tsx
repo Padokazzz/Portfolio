@@ -1,16 +1,17 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { PostForm } from "@/components/admin/post-form"
-import { getAdminCategories, getAdminPost, getAdminTags } from "@/lib/api/admin-blog.server"
+import { getAdminCategories, getAdminImages, getAdminPost, getAdminTags } from "@/lib/api/admin-blog.server"
 import { requireAdmin } from "@/lib/auth/session.server"
 import { ADMIN_POST_STATUS } from "@/types/admin"
 import { updatePostAction } from "../actions"
+import { createTaxonomyAction } from "../../taxonomy-actions"
+import { uploadImageAction } from "../../imagens/actions"
 
 export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
   await requireAdmin()
   const { id } = await params
-  const [post, categories, tags] = await Promise.all([getAdminPost(id), getAdminCategories(), getAdminTags()])
+  const [post, categories, tags, images] = await Promise.all([getAdminPost(id), getAdminCategories(), getAdminTags(), getAdminImages()])
   if (post.status === ADMIN_POST_STATUS.archived) redirect("/_control/painel/posts")
-  const action = updatePostAction.bind(null, id)
-  return <main className="mx-auto max-w-5xl px-6 py-10"><Link href="/_control/painel/posts" className="text-sm text-muted-foreground">← Voltar aos posts</Link><h1 className="mt-5 text-3xl font-semibold">Editar post</h1><p className="mt-2 text-sm text-muted-foreground">{post.status === ADMIN_POST_STATUS.published ? "Publicado" : "Rascunho"}</p><PostForm key={post.version} post={post} categories={categories} tags={tags} action={action} /></main>
+  return <main className="admin-page"><header className="admin-page-header"><div><Link href="/_control/painel/posts" className="text-[11px] text-muted-foreground hover:text-sky-200">Posts / editar</Link><div className="mt-1 flex items-center gap-2"><h1 className="admin-title mt-0">{post.title}</h1><span className={`rounded-full px-2 py-0.5 text-[9px] ${post.status === ADMIN_POST_STATUS.published ? "bg-cyan-400/10 text-cyan-200" : "bg-blue-400/10 text-blue-200"}`}>{post.status === ADMIN_POST_STATUS.published ? "Publicado" : "Rascunho"}</span></div></div></header><PostForm key={post.version} post={post} categories={categories} tags={tags} images={images} action={updatePostAction.bind(null, id)} createCategoryAction={createTaxonomyAction.bind(null, "category")} createTagAction={createTaxonomyAction.bind(null, "tag")} uploadImageAction={uploadImageAction} /></main>
 }
