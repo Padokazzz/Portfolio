@@ -27,6 +27,9 @@ export function createPageMetadata(
     description,
     alternates: {
       canonical: path,
+      types: {
+        "application/rss+xml": `${SITE_URL}/rss.xml`,
+      },
     },
     openGraph: {
       type: "website",

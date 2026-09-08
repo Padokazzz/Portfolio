@@ -49,7 +49,7 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Canal", value: "App stores" },
       { label: "Dominio", value: "Rede social" },
     ],
-    demoHref: "/experimentos/ludare",
+    demoHref: "/demo/ludare",
     links: [
       {
         label: "App Store",
@@ -90,7 +90,7 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Camadas", value: "Front + API" },
       { label: "Dominio", value: "Financas" },
     ],
-    demoHref: "/experimentos/fintrack",
+    demoHref: "/demo/fintrack",
     links: [
       {
         label: "Frontend",
@@ -129,7 +129,7 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Camadas", value: "Full stack" },
       { label: "Dominio", value: "Servidores" },
     ],
-    demoHref: "/experimentos/minecraft-panel",
+    demoHref: "/demo/minecraft-panel",
     links: [
       {
         label: "Repositorio",
