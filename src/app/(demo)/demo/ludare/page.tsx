@@ -1,5 +1,5 @@
 import { LudareDemo } from "@/components/project/ludare-demo"
 
-export default function LudareExperimentPage() {
+export default function LudareDemoPage() {
   return <LudareDemo />
 }

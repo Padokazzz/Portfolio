@@ -22,10 +22,12 @@ export function AnimatedHeading({
       aria-label={text}
       className={cn("overflow-hidden", className)}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.5 }}
       variants={{
-        hidden: {},
+        hidden: { opacity: 0 },
         visible: {
+          opacity: 1,
           transition: {
             delayChildren: delay,
             staggerChildren: 0.022,
@@ -36,7 +38,6 @@ export function AnimatedHeading({
       {words.map((word, wordIndex) => (
         <span
           key={`${word}-${wordIndex}`}
-          aria-hidden="true"
           className="inline-block whitespace-nowrap"
         >
           {word.split("").map((letter, letterIndex) => {
