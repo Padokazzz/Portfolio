@@ -9,5 +9,4 @@ export const NAV_LINKS = [
 
 export const BLOG_NAV_LINKS = [
   { href: "/blog", label: "Início" },
-  { href: "/blog#artigos", label: "Artigos" },
 ] as const

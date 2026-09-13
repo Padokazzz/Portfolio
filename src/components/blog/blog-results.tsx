@@ -8,7 +8,7 @@ export function BlogResults({ posts, title, emptyMessage, search, basePath, edit
   const visibleArticles = editorial && featured ? archive.length : posts.totalItems
 
   return (
-    <section id="artigos" className="mt-12 scroll-mt-24" aria-labelledby="articles-heading">
+    <section className="mt-12" aria-labelledby="articles-heading">
       {editorial && featured && <BlogPostCard post={featured} variant="featured" index={startIndex + 1} />}
       <div className="mb-7 mt-14 flex items-end justify-between gap-4 border-b border-white/10 pb-4">
         <div><p className="mb-1 text-[10px] font-semibold uppercase tracking-[.2em] text-sky-300">Biblioteca editorial</p><h2 id="articles-heading" className="text-2xl font-semibold">{title}</h2></div>
