@@ -14,6 +14,7 @@ import {
   SITE_DESCRIPTION,
   SITE_URL,
   SOCIAL_IMAGE,
+  SOCIAL_LINKS,
 } from "@/lib/site-metadata"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
 
@@ -102,16 +103,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     description: post.seoDescription ?? post.excerpt ?? SITE_DESCRIPTION,
     image: post.coverImageUrl || undefined,
     datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
     mainEntityOfPage: canonicalUrl,
     author: {
       "@type": "Person",
-      name: SITE_NAME,
+      name: "Leonardo Padilha Kawashaki",
       url: SITE_URL,
+      image: `${SITE_URL}/images/profile.jpg`,
+      sameAs: SOCIAL_LINKS,
     },
     publisher: {
       "@type": "Person",
       name: SITE_NAME,
       url: SITE_URL,
+      image: `${SITE_URL}/images/profile.jpg`,
     },
     articleSection: post.categories.map((category) => category.name),
     keywords: post.tags.map((tag) => tag.name).join(", "),
@@ -154,6 +159,15 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               <span className="flex items-center gap-1.5">
                 <Clock3 aria-hidden="true" className="size-3.5" />
                 {post.readingTimeMinutes} min de leitura
+              </span>
+              <span className="text-muted-foreground">
+                por{" "}
+                <a
+                  href={SITE_URL}
+                  className="text-sky-300 transition hover:text-sky-100"
+                >
+                  {SITE_NAME}
+                </a>
               </span>
             </div>
           </header>

@@ -15,6 +15,7 @@ export const SOCIAL_IMAGE = {
 export const SOCIAL_LINKS = [
   "https://github.com/padokazzz",
   "https://www.linkedin.com/in/leonardo-padilha-kawashaki/",
+  "https://www.instagram.com/padoka_oficial",
 ]
 
 export function createPageMetadata(

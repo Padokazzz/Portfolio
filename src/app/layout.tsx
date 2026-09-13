@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   keywords: [
     "Leonardo Padilha",
+    "Leonardo Padilha Kawashaki",
     "desenvolvedor full stack",
     "desenvolvedor .NET",
     "desenvolvedor Next.js",
@@ -69,9 +70,11 @@ export const metadata: Metadata = {
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: SITE_NAME,
+  name: "Leonardo Padilha Kawashaki",
   url: SITE_URL,
+  image: `${SITE_URL}/images/profile.jpg`,
   jobTitle: "Desenvolvedor Full Stack",
+  description: SITE_DESCRIPTION,
   sameAs: SOCIAL_LINKS,
   knowsAbout: [
     "Desenvolvimento web",
@@ -80,6 +83,18 @@ const personJsonLd = {
     "TypeScript",
     "Arquitetura de software",
   ],
+}
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  author: {
+    "@type": "Person",
+    name: "Leonardo Padilha Kawashaki",
+    url: SITE_URL,
+  },
 };
 
 export default function RootLayout({
@@ -97,6 +112,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c"),
           }}
         />
       </head>
