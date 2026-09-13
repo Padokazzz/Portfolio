@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Suspense } from "react"
+import { Suspense, useState } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 
 import { Container } from "@/components/layout/container"
@@ -21,6 +21,7 @@ export function Navbar() {
   const pathname = usePathname()
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/")
   const links = isBlog ? BLOG_NAV_LINKS : NAV_LINKS
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#11100f]/82 backdrop-blur-xl">
@@ -32,6 +33,7 @@ export function Navbar() {
           <span className="size-1.5 rounded-full bg-[#e7c78f] transition-transform group-hover:scale-125" />
           {isBlog ? <><span className="sm:hidden">Blog</span><span className="hidden sm:inline">Leonardo · Blog</span></> : "Leonardo Padilha"}
         </Link>
+
         <nav aria-label={isBlog ? "Navegação do blog" : "Navegação principal"} className="min-w-0">
           <ul className="flex items-center gap-1">
             {links.map((item, index) => (
@@ -49,12 +51,68 @@ export function Navbar() {
                 Portfólio
               </Link>
             </li>}
-            {isBlog && <li className="ml-1">
+            {isBlog && <li className="ml-1 hidden sm:block">
               <Suspense fallback={<div className="h-9 w-28 rounded-md border border-white/10 bg-white/[0.03] sm:w-44" />}><BlogMenuSearch /></Suspense>
             </li>}
+            <li className="sm:hidden">
+              <button
+                type="button"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="relative flex size-9 items-center justify-center rounded-md transition hover:bg-white/[0.06]"
+                aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+                aria-expanded={mobileOpen}
+              >
+                <span className="sr-only">{mobileOpen ? "Fechar" : "Menu"}</span>
+                <span className="flex flex-col gap-1.5">
+                  <span className={`block h-0.5 w-4 rounded bg-foreground transition-all duration-300 ${mobileOpen ? "translate-y-[3.5px] rotate-45" : ""}`} />
+                  <span className={`block h-0.5 w-4 rounded bg-foreground transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
+                  <span className={`block h-0.5 w-4 rounded bg-foreground transition-all duration-300 ${mobileOpen ? "-translate-y-[3.5px] -rotate-45" : ""}`} />
+                </span>
+              </button>
+            </li>
           </ul>
         </nav>
       </Container>
+
+      {mobileOpen && (
+        <div className="sm:hidden border-t border-white/10 bg-[#11100f]/95 backdrop-blur-xl">
+          <Container className="py-4">
+            <nav aria-label="Menu mobile">
+              <ul className="flex flex-col gap-1">
+                {links.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block rounded-md px-3 py-2.5 text-sm text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+                {isBlog && (
+                  <li>
+                    <Link
+                      href="/"
+                      onClick={() => setMobileOpen(false)}
+                      className="block rounded-md border border-sky-300/20 bg-sky-400/[0.06] px-3 py-2.5 text-sm text-sky-100 transition hover:border-sky-300/35 hover:bg-sky-400/10"
+                    >
+                      Portfólio
+                    </Link>
+                  </li>
+                )}
+              </ul>
+              {isBlog && (
+                <div className="mt-3">
+                  <Suspense fallback={<div className="h-9 rounded-md border border-white/10 bg-white/[0.03]" />}>
+                    <BlogMenuSearch />
+                  </Suspense>
+                </div>
+              )}
+            </nav>
+          </Container>
+        </div>
+      )}
     </header>
   )
 }
