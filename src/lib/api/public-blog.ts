@@ -14,6 +14,7 @@ type PublicPostResponse = Omit<BlogPost, "categories" | "tags" | "publishedAt" |
   updatedAtUtc?: string
   categoryIds: string[]
   tagIds: string[]
+  isFeatured: boolean
 }
 
 type PagedPostsResponse = Omit<PaginatedBlogPosts, "items"> & {

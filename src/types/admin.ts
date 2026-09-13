@@ -37,6 +37,7 @@ export type AdminPost = {
   contentJson: string | null
   contentHtml: string | null
   status: AdminPostStatus
+  isFeatured: boolean
   coverImageUrl: string | null
   seoTitle: string | null
   seoDescription: string | null
@@ -59,6 +60,7 @@ export type AdminPostInput = {
   seoTitle: string | null
   seoDescription: string | null
   canonicalUrl: string | null
+  isFeatured: boolean
   categoryIds: string[]
   tagIds: string[]
   version: string | null

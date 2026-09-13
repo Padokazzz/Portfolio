@@ -32,6 +32,7 @@ export type BlogPost = {
   seoTitle: string | null
   seoDescription: string | null
   canonicalUrl: string | null
+  isFeatured: boolean
   publishedAt: string
   updatedAt: string
   readingTimeMinutes: number

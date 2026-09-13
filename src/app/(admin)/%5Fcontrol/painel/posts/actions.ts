@@ -14,7 +14,8 @@ function parsePost(data: FormData): AdminPostInput {
     title: String(data.get("title") ?? "").trim(), slug: String(data.get("slug") ?? "").trim().toLowerCase(),
     excerpt: optional(data, "excerpt"), contentJson: optional(data, "contentJson"), contentHtml: optional(data, "contentHtml"),
     coverImageUrl: optional(data, "coverImageUrl"), seoTitle: optional(data, "seoTitle"), seoDescription: optional(data, "seoDescription"),
-    canonicalUrl: optional(data, "canonicalUrl"), categoryIds: data.getAll("categoryIds").map(String), tagIds: data.getAll("tagIds").map(String),
+    canonicalUrl: optional(data, "canonicalUrl"), isFeatured: data.get("isFeatured") === "true",
+    categoryIds: data.getAll("categoryIds").map(String), tagIds: data.getAll("tagIds").map(String),
     version: optional(data, "version"),
   }
 }

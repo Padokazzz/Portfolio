@@ -43,6 +43,7 @@ export function PostForm({ post, categories, tags, images, action, createCategor
   const coverInput = useRef<HTMLInputElement>(null)
   const [selectedCategories, setSelectedCategories] = useState(() => new Set(post?.categoryIds ?? []))
   const [selectedTags, setSelectedTags] = useState(() => new Set(post?.tagIds ?? []))
+  const [isFeatured, setIsFeatured] = useState(post?.isFeatured ?? false)
   const draftKey = `portfolio-post-draft:${post?.id ?? "new"}`
   const hasContent = contentHtml.replace(/<[^>]*>/g, "").trim().length > 0
   const canPublish = Boolean(title.trim() && slug && excerpt.trim() && hasContent && selectedCategories.size)
@@ -124,6 +125,7 @@ export function PostForm({ post, categories, tags, images, action, createCategor
     <input type="hidden" name="version" value={post?.version ?? ""} />
     <input type="hidden" name="slug" value={slug} />
     <input type="hidden" name="coverImageUrl" value={cover} />
+    <input type="hidden" name="isFeatured" value={isFeatured ? "true" : "false"} />
 
     <div className="space-y-5">
       <section className="surface rounded-xl border p-5 sm:p-6">
@@ -167,6 +169,13 @@ export function PostForm({ post, categories, tags, images, action, createCategor
       </section>
 
       {(message || state.message) && <p role="status" className="rounded-lg border border-white/10 bg-white/[0.03] p-3 text-xs text-muted-foreground">{state.message || message}</p>}
+      <section className="surface rounded-xl border p-4">
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" checked={isFeatured} onChange={event => { setIsFeatured(event.target.checked); setDirty(true) }} className="size-4 rounded border-white/20 bg-black/20 text-sky-400 focus:ring-sky-400/20" />
+          <span className="text-sm font-medium">Post em destaque</span>
+        </label>
+        <p className="mt-1 text-[10px] text-muted-foreground">Aparece em destaque na página do blog</p>
+      </section>
       <section className="surface rounded-xl border p-4">
         <button name="intent" value="publish" disabled={pending || !canPublish} className="w-full rounded-lg bg-[#f2d16b] px-4 py-2.5 text-sm font-semibold text-[#171a20] transition hover:bg-[#f6dc89] disabled:opacity-50">{pending ? "Salvando..." : post?.status === ADMIN_POST_STATUS.published ? "Atualizar publicação" : "Publicar"}</button>
         <button name="intent" value="save" disabled={pending || !title || !slug} className="mt-2 w-full rounded-lg border border-white/10 px-4 py-2 text-xs text-muted-foreground hover:border-sky-400/20 hover:text-sky-200 disabled:opacity-50">{post ? "Salvar sem publicar" : "Salvar rascunho"}</button>

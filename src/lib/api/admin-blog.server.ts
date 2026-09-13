@@ -51,6 +51,7 @@ async function adminRequest<T>(path: string, options: AdminRequestOptions = {}):
 function normalizeAdminPost(post: AdminPost) {
   return {
     ...post,
+    isFeatured: post.isFeatured ?? false,
     coverImageUrl: post.coverImageUrl
       ? new URL(post.coverImageUrl, `${getApiBaseUrl()}/`).toString()
       : null,
