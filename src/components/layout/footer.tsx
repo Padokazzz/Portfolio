@@ -15,7 +15,7 @@ export function Footer() {
   return (
     <footer
       id="site-footer"
-      className="border-t border-white/10 bg-[#0e0d0c]/60"
+      className="border-t border-white/10 bg-[#0d111b]/60"
     >
       <Container className="flex flex-col gap-5 py-6 text-xs text-muted-foreground lg:flex-row lg:items-center lg:justify-between">
         <p className="shrink-0">

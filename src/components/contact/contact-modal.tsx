@@ -101,7 +101,7 @@ type FieldProps = { label: string; field: ContactField; value: string; error?: s
 
 function Field({ label, field, value, error, type = "text", optional, multiline, disabled, autoFocus, onChange }: FieldProps) {
   const id = `contact-${field}`
-  const className = "mt-1 w-full rounded-md border border-white/10 bg-white/[0.035] px-3 py-1.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-[#e7c78f]/50 focus:ring-2 focus:ring-[#e7c78f]/15 disabled:cursor-not-allowed disabled:opacity-60 aria-invalid:border-destructive"
+  const className = "mt-1 w-full rounded-md border border-white/10 bg-white/[0.035] px-3 py-1.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/60 focus:border-[#8b5cf6]/50 focus:ring-2 focus:ring-[#8b5cf6]/15 disabled:cursor-not-allowed disabled:opacity-60 aria-invalid:border-destructive"
   const props = { id, name: field, value, disabled, autoFocus, "aria-required": !optional, "aria-invalid": Boolean(error), "aria-describedby": error ? `${id}-error` : undefined, onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(field, event.target.value) }
   return <div><label htmlFor={id} className="text-sm font-medium">{label} {!optional && <span aria-hidden="true">*</span>}</label>{multiline ? <textarea {...props} rows={3} className={`${className} resize-none`} /> : <input {...props} type={type} className={className} />}{error && <p id={`${id}-error`} className="mt-1 text-xs text-destructive">{error}</p>}</div>
 }

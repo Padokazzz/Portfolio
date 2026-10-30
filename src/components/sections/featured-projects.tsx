@@ -44,7 +44,7 @@ export function FeaturedProjects() {
 
   return (
     <section id="projetos" className="scroll-mt-20 border-t border-white/10">
-      <div className="mx-auto flex min-h-[calc(100svh-3.75rem)] w-full max-w-7xl flex-col justify-center px-6 py-8">
+      <div className="section-shell flex flex-col justify-center">
         <Reveal className="mb-6 max-w-2xl space-y-3">
           <div className="h-1 w-20 rounded-full accent-line" />
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted-foreground">
@@ -65,7 +65,7 @@ export function FeaturedProjects() {
               type="button"
               onClick={goPrev}
               aria-label="Projeto anterior"
-              className="surface-soft rounded-md border p-2 transition duration-300 hover:-translate-y-0.5 hover:border-[#e7c78f]/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="surface-soft rounded-md border p-2 transition duration-300 hover:-translate-y-0.5 hover:border-[#8b5cf6]/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ChevronLeft aria-hidden="true" className="size-4" />
             </button>
@@ -84,7 +84,7 @@ export function FeaturedProjects() {
                   className={cn(
                     "h-1.5 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     index === activeIndex
-                      ? "w-6 bg-[#e7c78f]"
+                      ? "w-6 bg-[#8b5cf6]"
                       : "w-1.5 bg-white/20 hover:bg-white/40"
                   )}
                 />
@@ -95,7 +95,7 @@ export function FeaturedProjects() {
               type="button"
               onClick={goNext}
               aria-label="Proximo projeto"
-              className="surface-soft rounded-md border p-2 transition duration-300 hover:-translate-y-0.5 hover:border-[#e7c78f]/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="surface-soft rounded-md border p-2 transition duration-300 hover:-translate-y-0.5 hover:border-[#8b5cf6]/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ChevronRight aria-hidden="true" className="size-4" />
             </button>
@@ -117,7 +117,7 @@ export function FeaturedProjects() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]"
             >
-              <article className="surface rounded-lg border p-4 transition duration-300 hover:border-[#e7c78f]/35 hover:bg-white/[0.055]">
+              <article className="surface rounded-lg border p-4 transition duration-300 hover:border-[#8b5cf6]/35 hover:bg-white/[0.055]">
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div className="space-y-2">
                     <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
@@ -127,7 +127,7 @@ export function FeaturedProjects() {
                       {activeProject.name}
                     </h3>
                   </div>
-                  <span className="rounded-md border border-[#e7c78f]/20 bg-[#e7c78f]/10 px-3 py-1.5 text-xs text-[#f0dfbd]">
+                  <span className="rounded-md border border-[#8b5cf6]/20 bg-[#8b5cf6]/10 px-3 py-1.5 text-xs text-[#a78bfa]">
                     {activeProject.status}
                   </span>
                 </div>
@@ -140,7 +140,7 @@ export function FeaturedProjects() {
                   {activeProject.stack.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-md border border-white/10 bg-[#11100f]/45 px-2.5 py-1 text-xs text-muted-foreground"
+                      className="rounded-md border border-white/10 bg-[#080b12]/45 px-2.5 py-1 text-xs text-muted-foreground"
                     >
                       {tech}
                     </span>
@@ -153,7 +153,7 @@ export function FeaturedProjects() {
                     {activeProject.demoHref && (
                       <Link
                         href={activeProject.demoHref}
-                        className="inline-flex items-center gap-1.5 rounded-md bg-[#f0dfbd] px-3 py-2 text-sm text-[#15110c] transition duration-300 hover:-translate-y-0.5 hover:bg-[#ffe9bf] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="inline-flex items-center gap-1.5 rounded-md bg-[#8b5cf6] px-3 py-2 text-sm text-[#f1f5f9] transition duration-300 hover:-translate-y-0.5 hover:bg-[#a78bfa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       >
                         Testar
                         <Play aria-hidden="true" className="size-4" />
@@ -177,7 +177,7 @@ export function FeaturedProjects() {
               </article>
 
               <div className="grid gap-4 md:grid-cols-[0.85fr_1.15fr]">
-                <div className="surface rounded-lg border p-4 transition duration-300 hover:border-[#7fc7d9]/35 hover:bg-white/[0.055]">
+                <div className="surface rounded-lg border p-4 transition duration-300 hover:border-[#38bdf8]/35 hover:bg-white/[0.055]">
                   <div className="mb-4 flex items-center gap-2">
                     <Layers3 aria-hidden="true" className="size-4" />
                     <h3 className="text-sm font-medium">Leitura rapida</h3>
@@ -187,7 +187,7 @@ export function FeaturedProjects() {
                     {activeProject.metrics.map((metric) => (
                       <div
                         key={metric.label}
-                        className="rounded-md border border-white/10 bg-[#11100f]/45 p-2.5"
+                        className="rounded-md border border-white/10 bg-[#080b12]/45 p-2.5"
                       >
                         <span className="block text-xs text-muted-foreground">
                           {metric.label}
@@ -200,7 +200,7 @@ export function FeaturedProjects() {
                   </div>
                 </div>
 
-                <div className="surface rounded-lg border p-4 transition duration-300 hover:border-[#7fc7d9]/35 hover:bg-white/[0.055]">
+                <div className="surface rounded-lg border p-4 transition duration-300 hover:border-[#38bdf8]/35 hover:bg-white/[0.055]">
                   <div className="mb-4 flex items-center gap-2">
                     <Server aria-hidden="true" className="size-4" />
                     <h3 className="text-sm font-medium">
