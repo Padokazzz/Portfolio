@@ -20,6 +20,8 @@ import {
   CASE_STUDY_STACK,
 } from "@/constants/case-study-leilao"
 import { createPageMetadata } from "@/lib/site-metadata"
+import { breadcrumbList } from "@/lib/structured-data"
+import { JsonLd } from "@/components/seo/json-ld"
 
 export const metadata = createPageMetadata(
   "Leilão Online — Estudo de caso",
@@ -57,12 +59,19 @@ export default function LeilaoOnlineCaseStudyPage() {
 
   return (
     <main className="flex-1">
+      <JsonLd
+        data={breadcrumbList([
+          { name: "Início", path: "" },
+          { name: "Projetos", path: "/projetos" },
+          { name: "Leilão Online", path: "/projetos/leilao-online" },
+        ])}
+      />
       {/* Cabeçalho do estudo de caso */}
       <section className="border-b border-white/10">
         <div className="section-shell">
           <Reveal>
             <Link
-              href="/#projetos"
+              href="/projetos"
               className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ArrowLeft aria-hidden="true" className="size-4" />

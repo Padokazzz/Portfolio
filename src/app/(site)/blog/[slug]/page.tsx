@@ -16,7 +16,9 @@ import {
   SOCIAL_IMAGE,
   SOCIAL_LINKS,
 } from "@/lib/site-metadata"
+import { breadcrumbList } from "@/lib/structured-data"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
+import { JsonLd } from "@/components/seo/json-ld"
 
 type ArticlePageProps = { params: Promise<{ slug: string }> }
 
@@ -129,6 +131,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
         }}
+      />
+      <JsonLd
+        data={breadcrumbList([
+          { name: "Início", path: "" },
+          { name: "Blog", path: "/blog" },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ])}
       />
       <Container className="py-12 sm:py-20">
         <article className="mx-auto grid max-w-6xl items-start gap-y-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-10 xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-x-14">

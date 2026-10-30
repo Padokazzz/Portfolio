@@ -6,6 +6,8 @@ import { Container } from "@/components/layout/container"
 import { getBlogCategories, getPublishedPosts } from "@/lib/api/public-blog"
 import { parseBlogSearchParams, type BlogSearchParams } from "@/lib/blog-query"
 import { createPageMetadata } from "@/lib/site-metadata"
+import { breadcrumbList } from "@/lib/structured-data"
+import { JsonLd } from "@/components/seo/json-ld"
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>
@@ -33,6 +35,13 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
 
   return (
     <main className="blog-public-shell flex-1">
+      <JsonLd
+        data={breadcrumbList([
+          { name: "Início", path: "" },
+          { name: "Blog", path: "/blog" },
+          { name: `Categoria: ${category.name}`, path: basePath },
+        ])}
+      />
       <Container className="py-20 sm:py-28">
         <header className="max-w-3xl rounded-2xl border border-blue-300/20 bg-gradient-to-br from-blue-500/[.09] to-cyan-400/[.03] p-7 sm:p-9">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">Coleção · Categoria</p>
