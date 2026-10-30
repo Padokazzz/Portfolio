@@ -1,8 +1,9 @@
 "use client"
 
-import { motion, useReducedMotion } from "framer-motion"
+import { motion } from "framer-motion"
 import type { ReactNode } from "react"
 
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion"
 import { cn } from "@/lib/utils"
 
 type RevealProps = {
@@ -12,10 +13,12 @@ type RevealProps = {
 }
 
 export function Reveal({ children, className, delay = 0 }: RevealProps) {
-  const prefersReducedMotion = useReducedMotion()
+  // O servidor nunca marca reduced-motion (getServerSnapshot = false), entao
+  // o primeiro render do cliente bater com o HTML e a hidrataria nao quebra.
+  const reduced = usePrefersReducedMotion()
 
   // Sem animação para quem pediu menos movimento: o conteúdo fica visível na hora.
-  if (prefersReducedMotion) {
+  if (reduced) {
     return <div className={cn(className)}>{children}</div>
   }
 
