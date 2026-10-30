@@ -2,6 +2,7 @@
 
 import {
   ArrowUpRight,
+  BookOpen,
   ChevronLeft,
   ChevronRight,
   GitBranch,
@@ -9,6 +10,7 @@ import {
   Play,
   Server,
 } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
 import { useCallback, useMemo, useState } from "react"
@@ -16,6 +18,12 @@ import { useCallback, useMemo, useState } from "react"
 import { Reveal } from "@/components/motion/reveal"
 import { FEATURED_PROJECTS } from "@/constants/projects"
 import { cn } from "@/lib/utils"
+
+/** Hostname curto exibido na moldura de janela do screenshot. */
+function frameLabel(src: string) {
+  const file = src.split("/").pop() ?? src
+  return file.replace(/\.(webp|png|jpg|jpeg)$/, "") + ".app"
+}
 
 export function FeaturedProjects() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -41,6 +49,8 @@ export function FeaturedProjects() {
   if (!activeProject) {
     return null
   }
+
+  const image = activeProject.image
 
   return (
     <section id="projetos" className="scroll-mt-20 border-t border-white/10">
@@ -115,75 +125,126 @@ export function FeaturedProjects() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]"
+              className="grid gap-4"
             >
-              <article className="surface rounded-lg border p-4 transition duration-300 hover:border-[#8b5cf6]/35 hover:bg-white/[0.055]">
-                <div className="mb-4 flex items-start justify-between gap-4">
-                  <div className="space-y-2">
-                    <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                      {activeProject.eyebrow}
-                    </p>
-                    <h3 className="text-2xl font-semibold leading-tight">
-                      {activeProject.name}
-                    </h3>
-                  </div>
-                  <span className="rounded-md border border-[#8b5cf6]/20 bg-[#8b5cf6]/10 px-3 py-1.5 text-xs text-[#a78bfa]">
-                    {activeProject.status}
-                  </span>
-                </div>
-
-                <p className="text-sm leading-6 text-muted-foreground">
-                  {activeProject.description}
-                </p>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {activeProject.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md border border-white/10 bg-[#080b12]/45 px-2.5 py-1 text-xs text-muted-foreground"
-                    >
-                      {tech}
+              {/* Linha 1: texto do projeto + screenshot real (quando existe) */}
+              <div className="grid gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+                <article
+                  className={cn(
+                    "surface rounded-lg border p-4 transition duration-300 hover:border-[#8b5cf6]/35 hover:bg-white/[0.055]",
+                    !image && "lg:col-span-2"
+                  )}
+                >
+                  <div className="mb-4 flex items-start justify-between gap-4">
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                        {activeProject.eyebrow}
+                      </p>
+                      <h3 className="text-2xl font-semibold leading-tight">
+                        {activeProject.name}
+                      </h3>
+                    </div>
+                    <span className="rounded-md border border-[#8b5cf6]/20 bg-[#8b5cf6]/10 px-3 py-1.5 text-xs text-[#a78bfa]">
+                      {activeProject.status}
                     </span>
-                  ))}
-                </div>
+                  </div>
 
-                {(activeProject.demoHref ||
-                  activeProject.links.length > 0) && (
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    {activeProject.demoHref && (
-                      <Link
-                        href={activeProject.demoHref}
-                        className="inline-flex items-center gap-1.5 rounded-md bg-[#8b5cf6] px-3 py-2 text-sm text-[#f1f5f9] transition duration-300 hover:-translate-y-0.5 hover:bg-[#a78bfa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                      >
-                        Testar
-                        <Play aria-hidden="true" className="size-4" />
-                      </Link>
-                    )}
+                  <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+                    {activeProject.description}
+                  </p>
 
-                    {activeProject.links.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {activeProject.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-md border border-white/10 bg-[#080b12]/45 px-2.5 py-1 text-xs text-muted-foreground"
                       >
-                        {link.label}
-                        <ArrowUpRight aria-hidden="true" className="size-4" />
-                      </Link>
+                        {tech}
+                      </span>
                     ))}
                   </div>
-                )}
-              </article>
 
-              <div className="grid gap-4 md:grid-cols-[0.85fr_1.15fr]">
+                  {(activeProject.demoHref ||
+                    activeProject.caseStudyHref ||
+                    activeProject.links.length > 0) && (
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      {activeProject.caseStudyHref && (
+                        <Link
+                          href={activeProject.caseStudyHref}
+                          className="inline-flex items-center gap-1.5 rounded-md bg-[#8b5cf6] px-3 py-2 text-sm text-[#f1f5f9] transition duration-300 hover:-translate-y-0.5 hover:bg-[#a78bfa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          Ver estudo de caso
+                          <BookOpen aria-hidden="true" className="size-4" />
+                        </Link>
+                      )}
+
+                      {activeProject.demoHref && (
+                        <Link
+                          href={activeProject.demoHref}
+                          className="inline-flex items-center gap-1.5 rounded-md bg-[#8b5cf6] px-3 py-2 text-sm text-[#f1f5f9] transition duration-300 hover:-translate-y-0.5 hover:bg-[#a78bfa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          Testar
+                          <Play aria-hidden="true" className="size-4" />
+                        </Link>
+                      )}
+
+                      {activeProject.links.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.035] px-3 py-2 text-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.07] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          {link.label}
+                          <ArrowUpRight aria-hidden="true" className="size-4" />
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </article>
+
+                {image && (
+                  <figure
+                    className={cn(
+                      "surface group m-0 flex flex-col rounded-lg border p-2 transition duration-300",
+                      activeProject.caseStudyHref
+                        ? "border-[#8b5cf6]/30 hover:border-[#8b5cf6]/55"
+                        : "hover:border-[#38bdf8]/35"
+                    )}
+                  >
+                    <figcaption className="mb-2 flex items-center gap-2 px-1">
+                      <span className="size-2 rounded-full bg-[#8b5cf6]/70" />
+                      <span className="size-2 rounded-full bg-[#38bdf8]/60" />
+                      <span className="size-2 rounded-full bg-[#273248]" />
+                      <span className="ml-1 truncate font-mono text-[0.65rem] text-[#68758b]">
+                        {frameLabel(image.src)}
+                      </span>
+                    </figcaption>
+
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md border border-[#273248] bg-[#080b12]">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        sizes="(min-width: 1024px) 44vw, 92vw"
+                        className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.015]"
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_62%,rgb(8_11_18/0.42))]" />
+                    </div>
+                  </figure>
+                )}
+              </div>
+
+              {/* Linha 2: leitura rapida + evidencias do projeto */}
+              <div className="grid gap-4 md:grid-cols-2">
                 <div className="surface rounded-lg border p-4 transition duration-300 hover:border-[#38bdf8]/35 hover:bg-white/[0.055]">
                   <div className="mb-4 flex items-center gap-2">
                     <Layers3 aria-hidden="true" className="size-4" />
                     <h3 className="text-sm font-medium">Leitura rapida</h3>
                   </div>
 
-                  <div className="grid gap-3">
+                  <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                     {activeProject.metrics.map((metric) => (
                       <div
                         key={metric.label}
