@@ -76,7 +76,20 @@ export function FeaturedProjects() {
         </Reveal>
 
         <div className="mb-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+          <div
+            role="group"
+            aria-label="Navegacao de projetos"
+            className="flex items-center gap-3"
+            onKeyDown={(event) => {
+              if (event.key === "ArrowLeft") {
+                event.preventDefault()
+                goPrev()
+              } else if (event.key === "ArrowRight") {
+                event.preventDefault()
+                goNext()
+              }
+            }}
+          >
             <button
               type="button"
               onClick={goPrev}
@@ -87,6 +100,7 @@ export function FeaturedProjects() {
             </button>
 
             <div
+              role="group"
               aria-label="Selecionar projeto"
               className="flex items-center gap-2"
             >
@@ -122,6 +136,10 @@ export function FeaturedProjects() {
             {String(total).padStart(2, "0")}
           </p>
         </div>
+
+        <p className="sr-only" aria-live="polite">
+          Projeto {activeIndex + 1} de {total}: {activeProject.name}
+        </p>
 
         <Reveal delay={0.08}>
           <AnimatePresence mode="wait" initial={false}>

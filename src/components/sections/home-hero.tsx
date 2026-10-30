@@ -81,13 +81,16 @@ export function HomeHero() {
           </Button>
         </div>
 
-        <dl className="grid max-w-xl grid-cols-3 gap-3 border-y border-[#273248] py-4">
+        <dl className="grid max-w-xl grid-cols-3 gap-3 border-y border-[#273248] py-4 max-[419px]:grid-cols-2">
           {[
             ["Stack atual", "Flutter + .NET"],
             ["Direcao", "Full stack"],
             ["Especialidades", "React, TS, Python, .NET"],
-          ].map(([label, value]) => (
-            <div key={label}>
+          ].map(([label, value], index) => (
+            <div
+              key={label}
+              className={index === 2 ? "max-[419px]:col-span-2" : undefined}
+            >
               <dt className="text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground">
                 {label}
               </dt>
