@@ -62,6 +62,44 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     ],
   },
   {
+    id: "ludare-consultoria",
+    name: "Ludare Consultoria",
+    eyebrow: "Website institucional",
+    description:
+      "Desenvolvimento e modernizacao da presenca digital da Ludare Consultoria, com foco em uma experiencia institucional moderna, responsiva e alinhada ao posicionamento da empresa em tecnologia e consultoria SAP. O projeto cobriu desde a prototipacao das interfaces e a estruturacao da experiencia do usuario ate o desenvolvimento de funcionalidades, integracoes e producao de conteudo audiovisual.",
+    status: "Site no ar",
+    stack: [
+      "WordPress",
+      "PHP",
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "UI/UX Design",
+      "Prototipacao",
+      "Edicao de Video",
+      "Chatbot WhatsApp",
+    ],
+    highlights: [
+      "Website institucional desenvolvido em WordPress e PHP",
+      "Interface responsiva adaptada a diferentes dispositivos",
+      "Blog estruturado para publicacao e gestao de conteudos",
+      "Chatbot de atendimento via WhatsApp integrado ao site",
+      "Experiencia multilingue conforme a localizacao do visitante",
+      "Formularios de contato para captacao de oportunidades",
+    ],
+    metrics: [
+      { label: "Site", value: "ludare.com.br" },
+      { label: "Idiomas", value: "Multilingue" },
+      { label: "Dominio", value: "Consultoria SAP" },
+    ],
+    links: [
+      {
+        label: "Website",
+        href: "https://ludare.com.br/",
+      },
+    ],
+  },
+  {
     id: "fintrack",
     name: "FinTrack",
     eyebrow: "Financas pessoais",
