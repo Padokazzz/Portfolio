@@ -143,6 +143,43 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     ],
   },
   {
+    id: "thecodefy",
+    name: "The Codefy",
+    eyebrow: "Projeto proprio · Full stack",
+    description:
+      "Marca e plataforma de solucoes digitais voltada a pequenos negocios, oferecendo desenvolvimento de websites, cardapios virtuais, melhorias em aplicacoes e solucoes personalizadas.",
+    status: "No ar",
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "AWS",
+      "GitHub Actions",
+      "HTML5",
+      "CSS3",
+      "UI/UX Design",
+    ],
+    highlights: [
+      "Marca e plataforma propria de solucoes digitais",
+      "Desenvolvimento de websites para pequenos negocios",
+      "Cardapios virtuais e melhorias em aplicacoes",
+      "Solucoes personalizadas conforme a necessidade de cada cliente",
+      "Identidade visual e experiencia construidas de ponta a ponta",
+    ],
+    metrics: [
+      { label: "Site", value: "thecodefy.com" },
+      { label: "Modelo", value: "Projeto proprio" },
+      { label: "Publico", value: "Pequenos negocios" },
+    ],
+    links: [
+      {
+        label: "Website",
+        href: "https://thecodefy.com/",
+      },
+    ],
+  },
+  {
     id: "fintrack",
     name: "FinTrack",
     eyebrow: "Financas pessoais",
