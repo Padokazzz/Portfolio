@@ -12,13 +12,20 @@ export function HomeHero() {
       id="home"
       className="section-shell relative grid min-h-[calc(100svh-3.75rem)] items-center gap-8 md:grid-cols-[0.94fr_1.06fr] lg:gap-14"
     >
-      {/* Camada geométrica sutil: glows violeta/azul + linhas de referencia */}
+      {/* Glows em largura total de viewport: comecam e saem pela borda real da tela */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-screen -translate-x-1/2 overflow-hidden"
+      >
+        <div className="absolute -top-40 -left-40 size-[30rem] rounded-full bg-[#8b5cf6]/12 blur-[130px]" />
+        <div className="absolute top-1/3 -right-28 size-[26rem] rounded-full bg-[#38bdf8]/10 blur-[120px]" />
+      </div>
+
+      {/* Detalhes ancorados ao conteudo: linha de referencia e cantos tecnicos */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       >
-        <div className="absolute -top-40 -left-40 size-[30rem] rounded-full bg-[#8b5cf6]/12 blur-[130px]" />
-        <div className="absolute top-1/3 -right-28 size-[26rem] rounded-full bg-[#38bdf8]/10 blur-[120px]" />
         <div className="absolute top-0 left-1/4 h-full w-px bg-gradient-to-b from-transparent via-[#273248]/70 to-transparent" />
         <div className="absolute top-16 right-16 h-24 w-24 border-t border-r border-[#273248]/80" />
         <div className="absolute bottom-16 left-16 h-24 w-24 border-b border-l border-[#273248]/80" />
