@@ -6,6 +6,12 @@ export type ProjectLink = {
 export type ProjectImage = {
   src: string
   alt: string
+  /** Proporcao do frame da janela (CSS aspect-ratio). Padrao: 16/10. */
+  aspect?: string
+  /** Como a imagem se encaixa no frame. Padrao: cover. */
+  fit?: "cover" | "contain"
+  /** Renderiza a imagem dentro de um mockup de celular (apps mobile). */
+  phone?: boolean
 }
 
 export type PortfolioProject = {
@@ -59,6 +65,11 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Dominio", value: "Rede social" },
     ],
     demoHref: "/demo/ludare",
+    image: {
+      src: "/images/projects/ludare.webp",
+      alt: "Tela de login do aplicativo Ludare em um dispositivo movel",
+      phone: true,
+    },
     links: [
       {
         label: "App Store",
@@ -231,6 +242,11 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Dominio", value: "Financas" },
     ],
     demoHref: "/demo/fintrack",
+    image: {
+      src: "/images/projects/fintrack.webp",
+      alt: "Dashboard do FinTrack com saldo geral, receitas, despesas e grafico mensal",
+      aspect: "1600 / 705",
+    },
     links: [
       {
         label: "Frontend",
@@ -270,6 +286,11 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Dominio", value: "Servidores" },
     ],
     demoHref: "/demo/minecraft-panel",
+    image: {
+      src: "/images/projects/minecraft-panel.webp",
+      alt: "Painel administrativo do servidor Minecraft com status e acoes rapidas",
+      aspect: "1600 / 542",
+    },
     links: [
       {
         label: "Repositorio",
