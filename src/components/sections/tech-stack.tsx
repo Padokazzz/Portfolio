@@ -22,9 +22,19 @@ export function TechStack() {
           </p>
         </Reveal>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {TECHNOLOGY_GROUPS.map((group, index) => (
-            <Reveal key={group.title} delay={index * 0.05}>
+            <Reveal
+              key={group.title}
+              delay={index * 0.05}
+              /* 5 grupos: o ultimo ocupa a linha inteira onde o grid
+                 nao tem coluna sobrando, evitando vazio no final. */
+              className={
+                index === TECHNOLOGY_GROUPS.length - 1
+                  ? "md:col-span-2 lg:col-span-2 xl:col-span-1"
+                  : undefined
+              }
+            >
               <article className="surface h-full rounded-lg border p-3.5 transition duration-300 hover:-translate-y-1 hover:border-[#8b5cf6]/35 hover:bg-white/[0.055]">
                 <div className="mb-3 space-y-1.5 border-b border-white/10 pb-3">
                   <h3 className="text-base font-semibold">{group.title}</h3>

@@ -1,20 +1,32 @@
 import {
   Blocks,
+  Braces,
+  Cloud,
   Code2,
   Container,
   Database,
   FileCode2,
   GitBranch,
+  KeyRound,
   Layers3,
   Layout,
+  MessageCircle,
   MonitorSmartphone,
   Network,
+  Package,
+  Palette,
   Radio,
   Server,
   Smartphone,
   Terminal,
+  Workflow,
+  Zap,
 } from "lucide-react"
 
+/**
+ * Cinco grupos cobrindo as tecnologias usadas nos projetos e experiencias
+ * registrados no repositorio (src/constants/projects.ts e experience.ts).
+ */
 export const TECHNOLOGY_GROUPS = [
   {
     title: "Frontend & Mobile",
@@ -54,8 +66,13 @@ export const TECHNOLOGY_GROUPS = [
   },
   {
     title: "Backend",
-    description: "APIs e servicos de aplicacao.",
+    description: "APIs, dominio e regras de negocio.",
     items: [
+      {
+        name: "Python / Django",
+        detail: "Dominio e APIs",
+        icon: Braces,
+      },
       {
         name: "C# / .NET",
         detail: "Backend com .NET",
@@ -80,17 +97,22 @@ export const TECHNOLOGY_GROUPS = [
   },
   {
     title: "Banco de Dados",
-    description: "Dados relacionais e modelagem.",
+    description: "Dados relacionais, cache e modelagem.",
     items: [
+      {
+        name: "PostgreSQL",
+        detail: "Banco relacional open source",
+        icon: Database,
+      },
       {
         name: "SQL Server",
         detail: "Ecossistema Microsoft",
         icon: Database,
       },
       {
-        name: "PostgreSQL",
-        detail: "Banco relacional open source",
-        icon: Database,
+        name: "Redis",
+        detail: "Cache e canal de eventos",
+        icon: Zap,
       },
       {
         name: "SQL",
@@ -106,7 +128,7 @@ export const TECHNOLOGY_GROUPS = [
   },
   {
     title: "Infraestrutura",
-    description: "Ambientes e versionamento.",
+    description: "Containers, ambientes e nuvem.",
     items: [
       {
         name: "Docker",
@@ -114,19 +136,55 @@ export const TECHNOLOGY_GROUPS = [
         icon: Container,
       },
       {
-        name: "Oracle Cloud",
-        detail: "Recursos em nuvem",
-        icon: Server,
-      },
-      {
         name: "Linux",
         detail: "Servidores e terminal",
         icon: Terminal,
       },
       {
+        name: "AWS",
+        detail: "Servicos em nuvem",
+        icon: Cloud,
+      },
+      {
+        name: "Oracle Cloud",
+        detail: "Recursos em nuvem",
+        icon: Server,
+      },
+    ],
+  },
+  {
+    title: "Ferramentas e integrações",
+    description: "Versao, automacao e conexoes.",
+    items: [
+      {
         name: "Git / GitHub",
         detail: "Controle de versao",
         icon: GitBranch,
+      },
+      {
+        name: "GitHub Actions",
+        detail: "CI/CD automatizado",
+        icon: Workflow,
+      },
+      {
+        name: "Vite",
+        detail: "Build e dev server",
+        icon: Package,
+      },
+      {
+        name: "JWT",
+        detail: "Autenticacao entre camadas",
+        icon: KeyRound,
+      },
+      {
+        name: "Chatbot WhatsApp",
+        detail: "Atendimento integrado",
+        icon: MessageCircle,
+      },
+      {
+        name: "UI / Prototipacao",
+        detail: "Design de interfaces",
+        icon: Palette,
       },
     ],
   },
