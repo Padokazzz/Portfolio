@@ -18,11 +18,11 @@ export function SiteIntro() {
   return (
     <div
       aria-hidden="true"
-      className="site-intro pointer-events-none fixed inset-0 z-[80] flex items-center justify-center bg-[#11100f]"
+      className="site-intro pointer-events-none fixed inset-0 z-[80] flex items-center justify-center bg-[#080b12]"
     >
       <div className="w-44 overflow-hidden">
-        <div className="site-intro-line h-px w-full origin-left bg-[#e7c78f]" />
-        <p className="mt-3 text-center text-[0.62rem] uppercase tracking-[0.24em] text-[#f0dfbd]/70">
+        <div className="site-intro-line h-px w-full origin-left bg-[#8b5cf6]" />
+        <p className="mt-3 text-center text-[0.62rem] uppercase tracking-[0.24em] text-[#a78bfa]/80">
           Leonardo Padilha - Fullstack Developer
         </p>
       </div>

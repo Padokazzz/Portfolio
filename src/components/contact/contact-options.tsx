@@ -46,7 +46,7 @@ function OptionContent({ option }: { option: (typeof CONTACT_LINKS)[number] }) {
   return (
     <>
       <span className="flex min-w-0 items-center gap-4">
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-[#e7c78f]/10 text-[#f0dfbd] transition-colors group-hover:bg-[#e7c78f]/18"><Icon aria-hidden="true" className="size-3.5" /></span>
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-[#8b5cf6]/10 text-[#a78bfa] transition-colors group-hover:bg-[#8b5cf6]/18"><Icon aria-hidden="true" className="size-3.5" /></span>
         <span className="min-w-0"><span className="block text-sm font-medium">{option.label}</span><span className="mt-1 block truncate text-sm text-muted-foreground">{option.value}</span></span>
       </span>
       <span className="flex shrink-0 items-center gap-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">Abrir <ArrowUpRight aria-hidden="true" className="size-3.5 text-muted-foreground/70 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>

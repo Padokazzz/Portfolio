@@ -84,10 +84,10 @@ export function ListeningIndicator() {
   return (
     <aside
       aria-label={`Ouvindo ${soundtrack.track}`}
-      className="fixed bottom-4 right-4 z-40 hidden w-[14.5rem] rounded-md border border-white/[0.07] bg-[#151310]/70 px-3 py-2.5 text-muted-foreground shadow-[0_12px_36px_rgb(0_0_0/0.16)] backdrop-blur-md md:block"
+      className="fixed bottom-4 right-4 z-40 hidden w-[14.5rem] rounded-md border border-white/[0.07] bg-[#151c2b]/70 px-3 py-2.5 text-muted-foreground shadow-[0_12px_36px_rgb(0_0_0/0.16)] backdrop-blur-md md:block"
     >
       <div className="flex items-center gap-2.5">
-        <span className="flex size-5 shrink-0 items-center justify-center text-[#e7c78f]/70">
+        <span className="flex size-5 shrink-0 items-center justify-center text-[#8b5cf6]/70">
           <Music2 aria-hidden="true" className="size-3.5" />
         </span>
 
@@ -110,7 +110,7 @@ export function ListeningIndicator() {
           {WAVE_HEIGHTS.map((height, index) => (
             <span
               key={`${height}-${index}`}
-              className="w-0.5 rounded-full bg-[#e7c78f]/55"
+              className="w-0.5 rounded-full bg-[#8b5cf6]/55"
               style={{
                 height: `${height}%`,
                 transformOrigin: "bottom",

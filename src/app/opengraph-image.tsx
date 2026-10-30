@@ -31,7 +31,7 @@ export default function OpenGraphImage() {
           width: "100%",
         }}
       >
-        <div style={{ color: "#e7c78f", display: "flex", fontSize: 28, letterSpacing: 8 }}>
+        <div style={{ color: "#8b5cf6", display: "flex", fontSize: 28, letterSpacing: 8 }}>
           PORTFÓLIO
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -40,7 +40,7 @@ export default function OpenGraphImage() {
             {SITE_DESCRIPTION}
           </div>
         </div>
-        <div style={{ color: "#e7c78f", display: "flex", fontSize: 24 }}>
+        <div style={{ color: "#8b5cf6", display: "flex", fontSize: 24 }}>
           {new URL(SITE_URL).host}
         </div>
       </div>

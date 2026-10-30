@@ -3,6 +3,19 @@ export type ProjectLink = {
   href: string
 }
 
+export type ProjectImage = {
+  src: string
+  alt: string
+  /**
+   * Como a imagem se encaixa no frame. Padrao: cover.
+   * "contain" exibe a imagem inteira sobre um fundo ambiente borrado,
+   * para prints largos ou retratos nao serem cortados.
+   */
+  fit?: "cover" | "contain"
+  /** Renderiza a imagem dentro de um mockup de celular (apps mobile). */
+  phone?: boolean
+}
+
 export type PortfolioProject = {
   id: string
   name: string
@@ -16,6 +29,10 @@ export type PortfolioProject = {
     value: string
   }[]
   demoHref?: string
+  /** Screenshot real do produto publicado. */
+  image?: ProjectImage
+  /** Rota interna com o estudo de caso aprofundado do projeto. */
+  caseStudyHref?: string
   links: ProjectLink[]
 }
 
@@ -50,6 +67,11 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Dominio", value: "Rede social" },
     ],
     demoHref: "/demo/ludare",
+    image: {
+      src: "/images/projects/ludare.webp",
+      alt: "Tela de login do aplicativo Ludare em um dispositivo movel",
+      phone: true,
+    },
     links: [
       {
         label: "App Store",
@@ -92,6 +114,10 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Idiomas", value: "Multilingue" },
       { label: "Dominio", value: "Consultoria SAP" },
     ],
+    image: {
+      src: "/images/projects/ludare-consultoria.webp",
+      alt: "Pagina inicial do site institucional da Ludare Consultoria",
+    },
     links: [
       {
         label: "Website",
@@ -131,6 +157,11 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Frontend", value: "React + Vite" },
       { label: "Deploy", value: "Vercel + Render" },
     ],
+    image: {
+      src: "/images/projects/leilao-online.webp",
+      alt: "Vitrine do Leilao Online com lotes de leilao e status ao vivo",
+    },
+    caseStudyHref: "/projetos/leilao-online",
     links: [
       {
         label: "Website",
@@ -172,6 +203,10 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Modelo", value: "Projeto proprio" },
       { label: "Publico", value: "Pequenos negocios" },
     ],
+    image: {
+      src: "/images/projects/thecodefy.webp",
+      alt: "Pagina inicial do site da The Codefy com apresentacao dos servicos",
+    },
     links: [
       {
         label: "Website",
@@ -209,6 +244,11 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Dominio", value: "Financas" },
     ],
     demoHref: "/demo/fintrack",
+    image: {
+      src: "/images/projects/fintrack.webp",
+      alt: "Dashboard do FinTrack com saldo geral, receitas, despesas e grafico mensal",
+      fit: "contain",
+    },
     links: [
       {
         label: "Frontend",
@@ -248,6 +288,10 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Dominio", value: "Servidores" },
     ],
     demoHref: "/demo/minecraft-panel",
+    image: {
+      src: "/images/projects/minecraft-panel.webp",
+      alt: "Painel administrativo do servidor Minecraft com status e acoes rapidas",
+    },
     links: [
       {
         label: "Repositorio",

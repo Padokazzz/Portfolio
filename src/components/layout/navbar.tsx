@@ -24,13 +24,13 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#11100f]/82 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#080b12]/82 backdrop-blur-xl">
       <Container className="flex h-[3.75rem] items-center justify-between">
         <Link
           href={isBlog ? "/blog" : "/"}
           className="group inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground"
         >
-          <span className="size-1.5 rounded-full bg-[#e7c78f] transition-transform group-hover:scale-125" />
+          <span className="size-1.5 rounded-full bg-[#8b5cf6] transition-transform group-hover:scale-125" />
           {isBlog ? <><span className="sm:hidden">Blog</span><span className="hidden sm:inline">Leonardo · Blog</span></> : "Leonardo Padilha"}
         </Link>
 
@@ -75,7 +75,7 @@ export function Navbar() {
       </Container>
 
       {mobileOpen && (
-        <div className="sm:hidden border-t border-white/10 bg-[#11100f]/95 backdrop-blur-xl">
+        <div className="sm:hidden border-t border-white/10 bg-[#080b12]/95 backdrop-blur-xl">
           <Container className="py-4">
             <nav aria-label="Menu mobile">
               <ul className="flex flex-col gap-1">

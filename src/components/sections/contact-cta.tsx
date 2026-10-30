@@ -16,8 +16,8 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
       <div
         className={
           isPage
-            ? "mx-auto grid min-h-[calc(100svh-3.75rem)] w-full max-w-7xl items-center gap-8 px-6 py-8 lg:grid-cols-[0.92fr_1.08fr]"
-            : "mx-auto grid min-h-[calc(100svh-3.75rem)] w-full max-w-7xl gap-8 px-6 py-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center"
+            ? "section-shell grid items-center gap-8 lg:grid-cols-[0.92fr_1.08fr]"
+            : "section-shell grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center"
         }
       >
         <Reveal className="max-w-2xl">

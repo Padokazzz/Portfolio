@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import type { ReactNode } from "react"
 
 import { cn } from "@/lib/utils"
@@ -12,6 +12,13 @@ type RevealProps = {
 }
 
 export function Reveal({ children, className, delay = 0 }: RevealProps) {
+  const prefersReducedMotion = useReducedMotion()
+
+  // Sem animação para quem pediu menos movimento: o conteúdo fica visível na hora.
+  if (prefersReducedMotion) {
+    return <div className={cn(className)}>{children}</div>
+  }
+
   return (
     <motion.div
       className={cn(className)}

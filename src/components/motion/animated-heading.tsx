@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -15,7 +15,17 @@ export function AnimatedHeading({
   className,
   delay = 0.76,
 }: AnimatedHeadingProps) {
+  const prefersReducedMotion = useReducedMotion()
   const words = text.split(" ")
+
+  // Sem stagger nem blur para quem pediu menos movimento: título visível na hora.
+  if (prefersReducedMotion) {
+    return (
+      <h1 aria-label={text} className={cn("overflow-hidden", className)}>
+        {text}
+      </h1>
+    )
+  }
 
   return (
     <motion.h1
