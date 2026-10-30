@@ -6,9 +6,11 @@ export type ProjectLink = {
 export type ProjectImage = {
   src: string
   alt: string
-  /** Proporcao do frame da janela (CSS aspect-ratio). Padrao: 16/10. */
-  aspect?: string
-  /** Como a imagem se encaixa no frame. Padrao: cover. */
+  /**
+   * Como a imagem se encaixa no frame. Padrao: cover.
+   * "contain" exibe a imagem inteira sobre um fundo ambiente borrado,
+   * para prints largos ou retratos nao serem cortados.
+   */
   fit?: "cover" | "contain"
   /** Renderiza a imagem dentro de um mockup de celular (apps mobile). */
   phone?: boolean
@@ -245,7 +247,7 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     image: {
       src: "/images/projects/fintrack.webp",
       alt: "Dashboard do FinTrack com saldo geral, receitas, despesas e grafico mensal",
-      aspect: "1600 / 705",
+      fit: "contain",
     },
     links: [
       {
@@ -289,7 +291,6 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     image: {
       src: "/images/projects/minecraft-panel.webp",
       alt: "Painel administrativo do servidor Minecraft com status e acoes rapidas",
-      aspect: "1600 / 542",
     },
     links: [
       {

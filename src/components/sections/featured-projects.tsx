@@ -25,6 +25,12 @@ function frameLabel(src: string) {
   return file.replace(/\.(webp|png|jpg|jpeg)$/, "") + ".app"
 }
 
+/**
+ * Template de grid compartilhado pelas duas linhas do card.
+ * Usar o mesmo template garante que os cortes verticais fiquem alinhados.
+ */
+const CARD_GRID = "grid gap-4 lg:grid-cols-[1.02fr_0.98fr]"
+
 export function FeaturedProjects() {
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -128,7 +134,7 @@ export function FeaturedProjects() {
               className="grid gap-4"
             >
               {/* Linha 1: texto do projeto + screenshot real (quando existe) */}
-              <div className="grid gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+              <div className={CARD_GRID}>
                 <article
                   className={cn(
                     "surface rounded-lg border p-4 transition duration-300 hover:border-[#8b5cf6]/35 hover:bg-white/[0.055]",
@@ -224,8 +230,7 @@ export function FeaturedProjects() {
 
                     {image.phone ? (
                       <div
-                        className="relative flex w-full items-center justify-center overflow-hidden rounded-md border border-[#273248] bg-[#080b12]"
-                        style={{ aspectRatio: image.aspect ?? "16 / 10" }}
+                        className="relative flex w-full items-center justify-center overflow-hidden rounded-md border border-[#273248] bg-[#080b12] aspect-[16/10]"
                       >
                         {/* Fundo ambiente: a propria paleta do app, borrada, da profundidade ao retrato. */}
                         <Image
@@ -265,19 +270,34 @@ export function FeaturedProjects() {
                         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_68%,rgb(8_11_18/0.34))]" />
                       </div>
                     ) : (
-                      <div
-                        className="relative w-full overflow-hidden rounded-md border border-[#273248] bg-[#080b12]"
-                        style={{ aspectRatio: image.aspect ?? "16 / 10" }}
-                      >
+                      <div className="relative w-full overflow-hidden rounded-md border border-[#273248] bg-[#080b12] aspect-[16/10]">
+                        {image.fit === "contain" ? (
+                          <>
+                            {/* Fundo ambiente: a propria paleta do app, borrada,
+                                preenche o frame sem esticar nem cortar o print. */}
+                            <Image
+                              src={image.src}
+                              alt=""
+                              aria-hidden="true"
+                              fill
+                              sizes="(min-width: 1024px) 44vw, 92vw"
+                              className="scale-125 object-cover opacity-40 blur-2xl"
+                            />
+                            <div
+                              aria-hidden="true"
+                              className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_0%,rgb(139_92_246/0.14),rgb(8_11_18/0.88)_64%)]"
+                            />
+                          </>
+                        ) : null}
                         <Image
                           src={image.src}
                           alt={image.alt}
                           fill
                           sizes="(min-width: 1024px) 44vw, 92vw"
                           className={cn(
-                            "transition duration-700 ease-out group-hover:scale-[1.015]",
+                            "relative transition duration-700 ease-out group-hover:scale-[1.015]",
                             image.fit === "contain"
-                              ? "object-contain"
+                              ? "object-contain p-3"
                               : "object-cover object-top"
                           )}
                         />
@@ -288,8 +308,14 @@ export function FeaturedProjects() {
                 )}
               </div>
 
-              {/* Linha 2: leitura rapida + evidencias do projeto */}
-              <div className="grid gap-4 md:grid-cols-2">
+              {/* Linha 2: leitura rapida + evidencias do projeto.
+                  Mesmo template da linha 1 a partir de lg, para os cortes
+                  verticais ficarem alinhados com os cards de cima. */}
+              <div
+                className={cn(
+                  "grid gap-4 md:grid-cols-2 lg:grid-cols-[1.02fr_0.98fr]"
+                )}
+              >
                 <div className="surface rounded-lg border p-4 transition duration-300 hover:border-[#38bdf8]/35 hover:bg-white/[0.055]">
                   <div className="mb-4 flex items-center gap-2">
                     <Layers3 aria-hidden="true" className="size-4" />
