@@ -131,7 +131,16 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
       { label: "Frontend", value: "React + Vite" },
       { label: "Deploy", value: "Vercel + Render" },
     ],
-    links: [],
+    links: [
+      {
+        label: "Website",
+        href: "https://leilao-online-eta.vercel.app/",
+      },
+      {
+        label: "Repositorio",
+        href: "https://github.com/Padokazzz/elite-dev-leilao-online",
+      },
+    ],
   },
   {
     id: "fintrack",
