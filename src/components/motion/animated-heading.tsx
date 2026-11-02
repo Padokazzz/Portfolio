@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 
+import { useMounted } from "@/lib/use-mounted"
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion"
 import { cn } from "@/lib/utils"
 
@@ -19,10 +20,13 @@ export function AnimatedHeading({
   // Snapshot do servidor e "false": hidrataria identica ao HTML, depois o
   // React passa a ler a preferencia real do sistema.
   const reduced = usePrefersReducedMotion()
+  const mounted = useMounted()
   const words = text.split(" ")
 
-  // Sem stagger nem blur para quem pediu menos movimento: título visível na hora.
-  if (reduced) {
+  // Sem stagger nem blur para quem pediu menos movimento, e antes do JS assumir:
+  // o título sai no HTML estático como texto puro, sem `opacity:0` letra a
+  // letra — o crawler enxerga o H1 inteiro sem depender de renderização.
+  if (reduced || !mounted) {
     return (
       <h1 aria-label={text} className={cn("overflow-hidden", className)}>
         {text}

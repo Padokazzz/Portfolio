@@ -44,15 +44,20 @@ export function HomeHero() {
         </div>
 
         <div className="space-y-4">
+          {/* O H1 carrega o nome: e ele que o Google usa como titulo principal
+              da pagina e que associa o site a busca pelo seu proprio nome.
+              Cargo e slogan ficam no paragrafo para o texto nao repetir. */}
           <AnimatedHeading
-            text="Engenharia de produto com ritmo, clareza e cuidado visual."
+            text="Leonardo Padilha Kawashaki"
             delay={0.62}
             className="max-w-2xl text-4xl font-semibold leading-[1.02] text-balance sm:text-5xl lg:text-[3.45rem]"
           />
 
           <p className="max-w-xl text-base leading-7 text-muted-foreground">
-            Desenvolvedor Full Stack com foco em soluções digitais que unem
-            tecnologia, design e experiência do usuário.
+            Construo produtos digitais que chegam ao usuário de verdade: apps
+            publicados nas stores, APIs em produção e interfaces que dispensam
+            manual. Backend .NET, frontend React e mobile Flutter, com o mesmo
+            cuidado em cada camada.
           </p>
         </div>
 
