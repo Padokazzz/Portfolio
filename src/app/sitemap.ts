@@ -23,9 +23,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const [postsResult] = await Promise.allSettled([getAllPublishedPosts()])
   const posts = postsResult.status === "fulfilled" ? postsResult.value : []
-  const categories = [...new Map(posts.flatMap(post => post.categories).map(item => [item.id, item])).values()]
-  const tags = [...new Map(posts.flatMap(post => post.tags).map(item => [item.id, item])).values()]
 
+  // Tags e categorias ficam de fora de propósito: são 18 URLs de taxonomia
+  // (mais da metade do sitemap) com quase o mesmo conteúdo entre si, o que
+  // dilui o valor percebido do arquivo e faz o Google depriorizar o
+  // rastreamento do restante do domínio. Elas continuam acessíveis pelos
+  // links internos do blog, só não são anunciadas ao crawler.
   return [
     ...staticRoutes,
     ...posts.map((post) => ({
@@ -34,16 +37,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
       ...(post.coverImageUrl ? { images: [post.coverImageUrl] } : {}),
-    })),
-    ...categories.map((category) => ({
-      url: `${SITE_URL}/blog/categoria/${category.slug}`,
-      changeFrequency: "weekly" as const,
-      priority: 0.5,
-    })),
-    ...tags.map((tag) => ({
-      url: `${SITE_URL}/blog/tag/${tag.slug}`,
-      changeFrequency: "weekly" as const,
-      priority: 0.4,
     })),
   ]
 }
