@@ -26,7 +26,12 @@ export function BlogPostCard({ post, variant = "default", index = 0 }: { post: B
     <article className={cn(
       "group overflow-hidden rounded-xl border bg-[linear-gradient(145deg,rgba(28,27,25,.94),rgba(15,15,14,.98))] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_70px_rgba(0,0,0,.28)]",
       palette.border,
-      featured && "grid min-h-[20rem] hover:translate-y-0 lg:grid-cols-[1.02fr_1fr]",
+      // flex-col + flex-1 na div de conteudo: quando a grid estica o card
+      // para igualar a altura dos vizinhos, o conteudo preenche ate a
+      // borda (sem faixa preta embaixo) e a meta-linha desce com mt-auto.
+      featured
+        ? "grid min-h-[20rem] hover:translate-y-0 lg:grid-cols-[1.02fr_1fr]"
+        : "flex flex-col",
     )}>
       {post.coverImageUrl && (
         <Link href={`/blog/${post.slug}`} aria-label={`Ler ${post.title}`} className={cn("block overflow-hidden", featured ? "order-2 min-h-64 lg:min-h-full" : "aspect-[16/9]")}>
@@ -35,7 +40,7 @@ export function BlogPostCard({ post, variant = "default", index = 0 }: { post: B
         </Link>
       )}
 
-      <div className={cn("flex flex-col bg-gradient-to-br to-transparent p-5", palette.glow, featured && "order-1 justify-center p-7 sm:p-10")}>
+      <div className={cn("flex flex-col flex-1 bg-gradient-to-br to-transparent p-5", palette.glow, featured && "order-1 justify-center p-7 sm:p-10")}>
         <div className="flex flex-wrap gap-2">
           {post.categories.slice(0, 1).map((category) => (
             <Link key={category.id} href={`/blog/categoria/${category.slug}`} className={cn("rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide", palette.badge)}>{featured ? "Destaque" : category.name}</Link>
