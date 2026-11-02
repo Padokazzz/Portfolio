@@ -19,6 +19,12 @@ export default async function BlogPage({ searchParams }: { searchParams: BlogSea
     getPublishedPosts({ page, pageSize: 10, search: search || undefined }),
     getBlogCategories(),
   ])
+  // So as 6 categorias mais lidas cabem em uma linha no desktop sem
+  // scroll horizontal; as demais seguem acessiveis pela URL e pelo sitemap.
+  // Sort estavel preserva a ordem da API no desempate por postCount.
+  const mainCategories = [...categories]
+    .sort((a, b) => b.postCount - a.postCount)
+    .slice(0, 6)
 
   return (
     <main className="blog-public-shell flex-1">
@@ -37,9 +43,9 @@ export default async function BlogPage({ searchParams }: { searchParams: BlogSea
           </div>
         </header>
 
-        <nav id="categorias" aria-label="Categorias do blog" className="mx-auto mt-9 flex max-w-4xl scroll-mt-24 justify-start gap-2 overflow-x-auto rounded-xl border border-white/10 bg-black/10 p-2 sm:justify-center">
+        <nav id="categorias" aria-label="Categorias do blog" className="mx-auto mt-9 flex max-w-4xl scroll-mt-24 flex-wrap justify-start gap-2 rounded-xl border border-white/10 bg-black/10 p-2 sm:justify-center">
           <Link href="/blog" className="shrink-0 rounded-lg bg-yellow-300 px-4 py-2 text-xs font-semibold text-[#191713] transition hover:bg-yellow-200">Todos</Link>
-          {categories.slice(0, 9).map((category, index) => (
+          {mainCategories.map((category, index) => (
             <Link key={category.id} href={`/blog/categoria/${category.slug}`} className={`shrink-0 rounded-lg border px-4 py-2 text-xs transition ${index % 3 === 0 ? "border-cyan-300/20 text-cyan-100 hover:bg-cyan-400/10" : index % 3 === 1 ? "border-violet-300/20 text-violet-100 hover:bg-violet-400/10" : "border-emerald-300/20 text-emerald-100 hover:bg-emerald-400/10"}`}>
               {category.name}
             </Link>
