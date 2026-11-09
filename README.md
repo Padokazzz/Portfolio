@@ -86,4 +86,43 @@ Antes de publicar alteracoes, valide:
 ```bash
 npm run lint
 npm run build
+npm run test:e2e
 ```
+
+## Monetizacao
+
+O site tem uma base opcional de monetizacao (publicidade, afiliados e
+conversao comercial) que so se ativa mediante configuracao real e
+consentimento do visitante. Detalhes em `docs/monetizacao-blog.md`.
+
+### Variaveis de ambiente (`.env.local`)
+
+Nomes completos e exemplos de formato em `.env.example`. Nenhuma tag de
+terceiros e carregada enquanto as variaveis estiverem vazias:
+
+- `NEXT_PUBLIC_ADSENSE_CLIENT_ID` — ID real da conta AdSense (`ca-pub-...`),
+  somente apos a aprovacao do site. O script so e carregado com consentimento
+  da categoria "Publicidade".
+- `NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE` — ID do bloco de anuncio dos artigos,
+  criado no painel do AdSense.
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` — Measurement ID do GA4 (`G-...`). A tag so
+  e carregada com consentimento da categoria "Analise".
+
+### Consentimento
+
+- Banner na primeira visita com opcoes igualmente acessiveis de aceitar,
+  rejeitar e personalizar; preferencias reabertas pelo rodapé.
+- Registro em `localStorage` (categorias + versao da politica + data), em
+  `src/lib/consent/`. Versao antiga ou dado invalido = ausencia de consentimento.
+- `src/lib/consent/consent-types.ts` tem `CONSENT_POLICY_VERSION`, que deve
+  ser atualizada sempre que a politica de cookies mudar.
+
+### Passos pendentes do proprietario
+
+- Conta AdSense: cadastrar o dominio, verificar, publicar `public/ads.txt`
+  com a linha oficial da conta e solicitar revisao. Nao ha garantia de
+  aprovacao; anuncios so podem ser exibidos depois da aprovacao.
+- GA4: criar propriedade/fluxo e informar o Measurement ID.
+- Afiliados: ao aderir a programas, preencher `AFFILIATE_HOSTS` em
+  `src/lib/monetization/affiliate.ts` e atualizar a pagina de aviso.
+- Search Console: criar propriedade para o dominio definitivo.

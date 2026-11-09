@@ -1,3 +1,5 @@
+import { CookieConsent } from "@/components/consent/cookie-consent"
+import { GoogleAnalytics } from "@/components/analytics/google-analytics"
 import { Footer } from "@/components/layout/footer"
 import { ListeningIndicator } from "@/components/layout/listening-indicator"
 import { Navbar } from "@/components/layout/navbar"
@@ -16,6 +18,8 @@ export default function SiteLayout({
       {children}
       <ListeningIndicator />
       <Footer />
+      <CookieConsent />
+      <GoogleAnalytics />
     </MotionProvider>
   )
 }

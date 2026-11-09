@@ -4,6 +4,9 @@ import { notFound } from "next/navigation"
 import { ArrowRight, Clock3, Mail, Share2 } from "lucide-react"
 
 import { Container } from "@/components/layout/container"
+import { AdSlot } from "@/components/monetization/ad-slot"
+import { AffiliateDisclosure } from "@/components/monetization/affiliate-disclosure"
+import { CommercialCta } from "@/components/monetization/commercial-cta"
 import {
   getPublishedPost,
   getRelatedPosts,
@@ -18,6 +21,10 @@ import {
 } from "@/lib/site-metadata"
 import { breadcrumbList } from "@/lib/structured-data"
 import { sanitizeBlogHtml } from "@/lib/sanitize-blog-html"
+import {
+  annotateAffiliateLinks,
+  containsAffiliateLinks,
+} from "@/lib/monetization/affiliate"
 import { JsonLd } from "@/components/seo/json-ld"
 
 type ArticlePageProps = { params: Promise<{ slug: string }> }
@@ -98,6 +105,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const canonicalUrl = getCanonicalUrl(post.canonicalUrl, post.slug)
   const encodedUrl = encodeURIComponent(articleUrl)
   const encodedTitle = encodeURIComponent(post.title)
+  const contentHtml = post.contentHtml
+    ? annotateAffiliateLinks(sanitizeBlogHtml(post.contentHtml))
+    : ""
+  const hasAffiliateLinks = containsAffiliateLinks(contentHtml)
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -189,11 +200,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           )}
 
           <div className="blog-article-column min-w-0 lg:col-start-1 [overflow-wrap:anywhere]">
+          {hasAffiliateLinks && <AffiliateDisclosure className="mt-12 mb-6" />}
           {post.contentHtml ? (
             <div
-              className="mt-12 max-w-3xl text-[1.05rem] leading-8 text-[#d8d3c9] [&_a]:font-medium [&_a]:text-[#f0dfbd] [&_a]:underline [&_a]:decoration-[#e7c78f]/40 [&_a]:underline-offset-4 [&_a]:focus-visible:rounded-sm [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-offset-4 [&_a]:focus-visible:outline-[#e7c78f] [&_blockquote]:my-8 [&_blockquote]:rounded-r-lg [&_blockquote]:border-l-2 [&_blockquote]:border-[#e7c78f]/60 [&_blockquote]:bg-white/[0.025] [&_blockquote]:px-6 [&_blockquote]:py-4 [&_blockquote]:text-[#c9c3b8] [&_code]:rounded [&_code]:bg-white/[0.07] [&_code]:px-1.5 [&_figcaption]:mt-3 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:text-muted-foreground [&_h2]:mb-5 [&_h2]:mt-16 [&_h2]:border-b [&_h2]:border-white/10 [&_h2]:pb-4 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:text-foreground [&_h3]:mb-4 [&_h3]:mt-10 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-foreground [&_h4]:mb-3 [&_h4]:mt-8 [&_h4]:font-semibold [&_h4]:text-foreground [&_hr]:my-12 [&_hr]:border-white/10 [&_img]:my-10 [&_img]:max-h-[32rem] [&_img]:w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/10 [&_img]:bg-black/20 [&_img]:object-contain [&_li]:my-2 [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_p]:my-6 [&_pre]:my-8 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-white/10 [&_pre]:bg-black/35 [&_pre]:p-5 [&_pre]:text-sm [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:my-8 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_td]:border [&_td]:border-white/10 [&_td]:p-3 [&_th]:border [&_th]:border-white/10 [&_th]:bg-white/[0.04] [&_th]:p-3 [&_th]:text-left [&_ul]:my-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6"
+              className={`${hasAffiliateLinks ? "" : "mt-12 "}max-w-3xl text-[1.05rem] leading-8 text-[#d8d3c9] [&_a]:font-medium [&_a]:text-[#f0dfbd] [&_a]:underline [&_a]:decoration-[#e7c78f]/40 [&_a]:underline-offset-4 [&_a]:focus-visible:rounded-sm [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-offset-4 [&_a]:focus-visible:outline-[#e7c78f] [&_blockquote]:my-8 [&_blockquote]:rounded-r-lg [&_blockquote]:border-l-2 [&_blockquote]:border-[#e7c78f]/60 [&_blockquote]:bg-white/[0.025] [&_blockquote]:px-6 [&_blockquote]:py-4 [&_blockquote]:text-[#c9c3b8] [&_code]:rounded [&_code]:bg-white/[0.07] [&_code]:px-1.5 [&_figcaption]:mt-3 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:text-muted-foreground [&_h2]:mb-5 [&_h2]:mt-16 [&_h2]:border-b [&_h2]:border-white/10 [&_h2]:pb-4 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:text-foreground [&_h3]:mb-4 [&_h3]:mt-10 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-foreground [&_h4]:mb-3 [&_h4]:mt-8 [&_h4]:font-semibold [&_h4]:text-foreground [&_hr]:my-12 [&_hr]:border-white/10 [&_img]:my-10 [&_img]:max-h-[32rem] [&_img]:w-full [&_img]:rounded-xl [&_img]:border [&_img]:border-white/10 [&_img]:bg-black/20 [&_img]:object-contain [&_li]:my-2 [&_ol]:my-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_p]:my-6 [&_pre]:my-8 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-white/10 [&_pre]:bg-black/35 [&_pre]:p-5 [&_pre]:text-sm [&_strong]:font-semibold [&_strong]:text-foreground [&_table]:my-8 [&_table]:block [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_td]:border [&_td]:border-white/10 [&_td]:p-3 [&_th]:border [&_th]:border-white/10 [&_th]:bg-white/[0.04] [&_th]:p-3 [&_th]:text-left [&_ul]:my-6 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6`}
               dangerouslySetInnerHTML={{
-                __html: sanitizeBlogHtml(post.contentHtml),
+                __html: contentHtml,
               }}
             />
           ) : (
@@ -202,6 +214,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </p>
           )}
           </div>
+
+          <CommercialCta className="min-w-0 lg:col-start-1" />
+
+          <AdSlot
+            slotId={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE}
+            className="mt-4 lg:col-start-1"
+          />
 
           <footer className="min-w-0 border-t border-blue-300/15 pt-6 lg:col-start-1">
             {post.tags.length > 0 && (
