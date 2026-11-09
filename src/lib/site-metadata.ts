@@ -4,7 +4,7 @@ export const SITE_NAME = "Leonardo Padilha"
 export const SITE_TITLE = "Leonardo Padilha | Desenvolvedor Full Stack"
 export const SITE_DESCRIPTION =
   "Portfólio de Leonardo Padilha, desenvolvedor full stack especializado em aplicações web, APIs e arquitetura de software."
-export const SITE_URL = "https://padilhadev.vercel.app"
+export const SITE_URL = "https://leonardopadilha.com"
 export const SOCIAL_IMAGE = {
   url: "/opengraph-image",
   width: 1200,

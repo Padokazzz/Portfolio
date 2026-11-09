@@ -2,7 +2,9 @@ import { expect, test } from "@playwright/test"
 
 test("portfolio oferece acesso ao blog", async ({ page }) => {
   await page.goto("/")
-  await expect(page.getByRole("link", { name: "Blog", exact: true })).toHaveAttribute("href", "/blog")
+  await expect(
+    page.getByLabel("Navegação principal").getByRole("link", { name: "Blog", exact: true }),
+  ).toHaveAttribute("href", "/blog")
 })
 
 test("painel redireciona visitantes para o login", async ({ page }) => {

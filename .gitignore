@@ -31,6 +31,7 @@ CLAUDE.md
 PORTFOLIO_GUIDE.md
 DEPLOY_ORACLE_VPS.md
 DEPLOY_RENDER_RESEND.md
+docs/monetizacao-blog.md
 .external/
 
 # debug
@@ -43,6 +44,7 @@ dev.stderr.log
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel

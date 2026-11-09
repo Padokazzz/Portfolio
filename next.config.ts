@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   experimental: {
     serverActions: { bodySizeLimit: "5.1mb" },
   },
+  // Permite recursos de dev via 127.0.0.1 (usado pelo Playwright e por
+  // acessos locais via IP). Sem isso o Next 16 bloqueia chunks em dev e a
+  // página não hidrata nessa origem.
+  allowedDevOrigins: ["127.0.0.1"],
   async redirects() {
     return [
       {

@@ -1,12 +1,15 @@
+import type { ReactNode } from "react"
+
 import { Container } from "@/components/layout/container"
 
 type PageShellProps = {
   eyebrow: string
   title: string
   description: string
+  children?: ReactNode
 }
 
-export function PageShell({ eyebrow, title, description }: PageShellProps) {
+export function PageShell({ eyebrow, title, description, children }: PageShellProps) {
   return (
     <main className="flex-1">
       <Container className="py-24 sm:py-32">
@@ -21,6 +24,7 @@ export function PageShell({ eyebrow, title, description }: PageShellProps) {
             {description}
           </p>
         </section>
+        {children && <div className="mt-12 max-w-3xl">{children}</div>}
       </Container>
     </main>
   )

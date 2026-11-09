@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import { CookiePreferencesButton } from "@/components/consent/cookie-preferences-button"
 import { Container } from "@/components/layout/container"
 
 const STACKS = [
@@ -20,6 +21,12 @@ const FOOTER_LINKS = [
   { href: "/blog", label: "Blog" },
   { href: "/contato", label: "Contato" },
   { href: "/rss.xml", label: "RSS" },
+] as const
+
+const LEGAL_LINKS = [
+  { href: "/politica-de-privacidade", label: "Privacidade" },
+  { href: "/politica-de-cookies", label: "Cookies" },
+  { href: "/aviso-de-afiliados", label: "Afiliados" },
 ] as const
 
 export function Footer() {
@@ -48,6 +55,22 @@ export function Footer() {
                 {link.label}
               </Link>
             ))}
+          </nav>
+
+          <nav
+            aria-label="Links legais"
+            className="flex flex-wrap gap-x-4 gap-y-2"
+          >
+            {LEGAL_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <CookiePreferencesButton />
           </nav>
         </div>
 
