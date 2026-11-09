@@ -10,6 +10,9 @@ const routes = [
   { path: "/timeline", changeFrequency: "monthly", priority: 0.6 },
   { path: "/uses", changeFrequency: "monthly", priority: 0.6 },
   { path: "/contato", changeFrequency: "yearly", priority: 0.5 },
+  { path: "/politica-de-privacidade", changeFrequency: "yearly", priority: 0.2 },
+  { path: "/politica-de-cookies", changeFrequency: "yearly", priority: 0.2 },
+  { path: "/aviso-de-afiliados", changeFrequency: "yearly", priority: 0.2 },
 ] as const
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
