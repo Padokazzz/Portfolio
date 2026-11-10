@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
   async redirects() {
     return [
+      // Migração de domínio: o domínio antigo (anexado ao projeto na Vercel)
+      // redireciona tudo para o oficial, preservando caminho e query.
+      // permanent: true gera 308. Só casa quando o Host é o domínio antigo,
+      // então não afeta leonardopadilha.com nem previews do Vercel.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "padilhadev.vercel.app" }],
+        destination: "https://leonardopadilha.com/:path*",
+        permanent: true,
+      },
       {
         source: "/experimentos",
         destination: "/",

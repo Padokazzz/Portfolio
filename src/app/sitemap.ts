@@ -2,6 +2,11 @@ import type { MetadataRoute } from "next"
 import { getAllPublishedPosts } from "@/lib/api/public-blog"
 import { SITE_URL } from "@/lib/site-metadata"
 
+// Em produção o sitemap ficava congelado no HTML gerado no build (posts
+// publicados depois não apareciam). Com revalidação periódica ele é
+// regenerado como o rss.xml já faz, mantendo a lista sempre atual.
+export const revalidate = 300
+
 const routes = [
   { path: "", changeFrequency: "monthly", priority: 1 },
   { path: "/projetos", changeFrequency: "monthly", priority: 0.9 },

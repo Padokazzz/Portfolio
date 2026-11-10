@@ -40,7 +40,9 @@ export const metadata: Metadata = {
     "arquitetura de software",
   ],
   alternates: {
-    canonical: "/",
+    // Sem canonical global: cada página declara a própria via
+    // createPageMetadata. Um canonical "/" aqui seria herdado por
+    // páginas internas (demo, 404, admin) e apontaria tudo para a home.
     types: {
       "application/rss+xml": `${SITE_URL}/rss.xml`,
     },
