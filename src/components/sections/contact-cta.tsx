@@ -27,9 +27,18 @@ export function ContactCta({ variant = "home" }: ContactCtaProps) {
               Contato
             </p>
 
-            <h2 className="mt-4 text-2xl font-semibold leading-tight text-balance sm:text-[1.7rem]">
-              Vamos conversar sobre produto, desenvolvimento ou boas ideias.
-            </h2>
+            {/* Na home o h1 é do hero e este título fica como h2. Na página
+                /contato, porém, ele é o título principal da página: sem h1 o
+                Google e os leitores de tela ficam sem um título de documento. */}
+            {isPage ? (
+              <h1 className="mt-4 text-2xl font-semibold leading-tight text-balance sm:text-[1.7rem]">
+                Vamos conversar sobre produto, desenvolvimento ou boas ideias.
+              </h1>
+            ) : (
+              <h2 className="mt-4 text-2xl font-semibold leading-tight text-balance sm:text-[1.7rem]">
+                Vamos conversar sobre produto, desenvolvimento ou boas ideias.
+              </h2>
+            )}
 
             <p className="mt-4 text-sm leading-6 text-muted-foreground">
               Estou aberto a conversas sobre desenvolvimento full stack, mobile,
