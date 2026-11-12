@@ -2,6 +2,8 @@ import { defineConfig, devices } from "@playwright/test"
 
 export default defineConfig({
   testDir: "./tests",
+  // A suite do painel roda contra a API falsa em config própria (npm run test:admin).
+  testIgnore: ["tests/admin/**"],
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   reporter: "list",

@@ -1,12 +1,13 @@
 "use client"
 /* eslint-disable @next/next/no-img-element -- a origem das imagens e configurada em runtime. */
 
-import { useActionState, useEffect, useRef, useState, useTransition } from "react"
+import { useActionState, useCallback, useEffect, useRef, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import type { PostFormState } from "@/app/(admin)/%5Fcontrol/painel/posts/actions"
 import type { TaxonomyFormState } from "@/app/(admin)/%5Fcontrol/painel/taxonomy-actions"
 import type { ImageFormState } from "@/app/(admin)/%5Fcontrol/painel/imagens/actions"
 import { RichTextEditor } from "@/components/admin/rich-text-editor"
+import { NEW_POST_DRAFT_KEY, postDraftKey } from "@/lib/post-draft"
 import { ADMIN_POST_STATUS, type AdminPost } from "@/types/admin"
 import type { BlogCategory, BlogImage, BlogTag } from "@/types/blog"
 
@@ -44,7 +45,7 @@ export function PostForm({ post, categories, tags, images, action, createCategor
   const [selectedCategories, setSelectedCategories] = useState(() => new Set(post?.categoryIds ?? []))
   const [selectedTags, setSelectedTags] = useState(() => new Set(post?.tagIds ?? []))
   const [isFeatured, setIsFeatured] = useState(post?.isFeatured ?? false)
-  const draftKey = `portfolio-post-draft:${post?.id ?? "new"}`
+  const draftKey = postDraftKey(post?.id)
   const hasContent = contentHtml.replace(/<[^>]*>/g, "").trim().length > 0
   const canPublish = Boolean(title.trim() && slug && excerpt.trim() && hasContent && selectedCategories.size)
 
@@ -55,7 +56,7 @@ export function PostForm({ post, categories, tags, images, action, createCategor
   }
 
   useEffect(() => {
-    if (post) window.localStorage.removeItem("portfolio-post-draft:new")
+    if (post) window.localStorage.removeItem(NEW_POST_DRAFT_KEY)
     const stored = window.localStorage.getItem(draftKey)
     if (!stored) return
     const timer = window.setTimeout(() => {
@@ -72,13 +73,19 @@ export function PostForm({ post, categories, tags, images, action, createCategor
     return () => window.clearTimeout(timer)
   }, [draftKey, post])
 
+  // Gravação imediata do rascunho. Além do debounce do efeito abaixo, o
+  // formulário descarrega na hora ao enviar: sem isso, publicar menos de
+  // 500 ms depois da última edição guardaria um slug desatualizado — e é
+  // esse slug que identifica qual rascunho descartar após a publicação.
+  const salvarRascunho = useCallback(() => {
+    window.localStorage.setItem(draftKey, JSON.stringify({ version: post?.version, title, slug, excerpt, cover, contentHtml, contentJson, categoryIds: [...selectedCategories], tagIds: [...selectedTags] }))
+  }, [cover, contentHtml, contentJson, draftKey, excerpt, post?.version, selectedCategories, selectedTags, slug, title])
+
   useEffect(() => {
     if (!dirty) return
-    const timer = window.setTimeout(() => {
-      window.localStorage.setItem(draftKey, JSON.stringify({ version: post?.version, title, slug, excerpt, cover, contentHtml, contentJson, categoryIds: [...selectedCategories], tagIds: [...selectedTags] }))
-    }, 500)
+    const timer = window.setTimeout(salvarRascunho, 500)
     return () => window.clearTimeout(timer)
-  }, [cover, contentHtml, contentJson, dirty, draftKey, excerpt, post?.version, selectedCategories, selectedTags, slug, title])
+  }, [dirty, salvarRascunho])
 
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => { if (dirty) event.preventDefault() }
@@ -121,7 +128,7 @@ export function PostForm({ post, categories, tags, images, action, createCategor
     })
   }
 
-  return <form action={formAction} className="mt-6 grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_18rem]">
+  return <form action={formAction} onSubmit={() => { if (dirty) salvarRascunho() }} className="mt-6 grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_18rem]">
     <input type="hidden" name="version" value={post?.version ?? ""} />
     <input type="hidden" name="slug" value={slug} />
     <input type="hidden" name="coverImageUrl" value={cover} />

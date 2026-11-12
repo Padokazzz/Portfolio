@@ -50,7 +50,12 @@ export async function createPostAction(_: PostFormState, data: FormData): Promis
   try { post = await (publish ? createAndPublishAdminPost(input) : createAdminPost(input)) } catch (cause) { return failure(cause) }
   revalidatePath("/_control/painel/posts")
   refreshPublicBlog()
-  redirect(publish ? "/_control/painel/posts" : `/_control/painel/posts/${post.id}`)
+  // `?criado=<slug>` é o sinal de que a criação deu certo: como redirect()
+  // lança exceção, o cliente nunca recebe um success com o qual limpasse o
+  // rascunho local do post novo. O slug identifica qual rascunho descartar —
+  // sem ele, um Back ao painel apagaria um rascunho novo e inacabado.
+  // Salvar rascunho cai na página de edição, que já descarta a chave "new".
+  redirect(publish ? `/_control/painel/posts?criado=${encodeURIComponent(input.slug)}` : `/_control/painel/posts/${post.id}`)
 }
 export async function updatePostAction(id: string, _: PostFormState, data: FormData): Promise<PostFormState> {
   await requireAdmin()
