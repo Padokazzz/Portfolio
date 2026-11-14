@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { CodefyCta } from "@/components/sections/codefy-cta"
 import { ContactCta } from "@/components/sections/contact-cta"
 import { FeaturedProjects } from "@/components/sections/featured-projects"
 import { ExperienceSummary } from "@/components/sections/experience-summary"
@@ -28,6 +29,7 @@ export default function Home() {
       <TechStack />
       <ExperienceSummary />
       <FeaturedProjects />
+      <CodefyCta />
       <HomeBlog />
       <ContactCta />
     </>
