@@ -1,3 +1,5 @@
+import { buildCodefyUrl } from "@/lib/the-codefy"
+
 export type ProjectLink = {
   label: string
   href: string
@@ -210,7 +212,7 @@ export const FEATURED_PROJECTS: PortfolioProject[] = [
     links: [
       {
         label: "Website",
-        href: "https://thecodefy.com/",
+        href: buildCodefyUrl("projetos"),
       },
     ],
   },
