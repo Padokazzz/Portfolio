@@ -1,5 +1,8 @@
+import { ArrowUpRight } from "lucide-react"
+
 import { Reveal } from "@/components/motion/reveal"
 import { PROFESSIONAL_EXPERIENCES } from "@/constants/experience"
+import { buildCodefyUrl, CODEFY_LINK_PROPS } from "@/lib/the-codefy"
 
 /**
  * Linha do tempo vertical: trilho a esquerda com indicador violeta
@@ -65,6 +68,24 @@ export function ExperienceSummary() {
                         <p className="text-sm leading-6 text-muted-foreground">
                           {experience.summary}
                         </p>
+
+                        {/* O array é `as const` com formatos distintos: `in`
+                            estreita o tipo para a entrada que declara
+                            `website` — aqui, a atuação autônoma na Codefy. */}
+                        {"website" in experience && (
+                          <a
+                            href={buildCodefyUrl(
+                              "experiencia",
+                              experience.website,
+                            )}
+                            {...CODEFY_LINK_PROPS}
+                            className="mt-1 inline-flex w-fit items-center gap-1 rounded-md text-sm text-[#a78bfa] transition hover:text-[#c4b5fd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            Conheça a The Codefy
+                            <ArrowUpRight aria-hidden="true" className="size-3.5" />
+                            <span className="sr-only"> (abre em nova aba)</span>
+                          </a>
+                        )}
                       </div>
                     </div>
 
