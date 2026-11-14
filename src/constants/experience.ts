@@ -33,6 +33,7 @@ export const PROFESSIONAL_EXPERIENCES = [
     duration: "1 ano",
     summary:
       "Atuacao autonoma e remota em aplicacoes web modernas, interfaces responsivas e integracoes.",
+    website: "https://www.thecodefy.com",
     responsibilities: [
       "Aplicacoes web com React, TypeScript e JavaScript.",
       "Interfaces responsivas, componentes reutilizaveis e boas praticas de frontend.",

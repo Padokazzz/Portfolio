@@ -2,6 +2,7 @@ import Link from "next/link"
 
 import { CookiePreferencesButton } from "@/components/consent/cookie-preferences-button"
 import { Container } from "@/components/layout/container"
+import { buildCodefyUrl, CODEFY_LINK_PROPS } from "@/lib/the-codefy"
 
 const STACKS = [
   {
@@ -55,6 +56,14 @@ export function Footer() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href={buildCodefyUrl("footer")}
+              {...CODEFY_LINK_PROPS}
+              className="transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              The Codefy
+              <span className="sr-only"> (abre em nova aba)</span>
+            </a>
           </nav>
 
           <nav

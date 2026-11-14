@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation"
 
 import { Container } from "@/components/layout/container"
 import { BLOG_NAV_LINKS, NAV_LINKS } from "@/constants/routes"
+import { buildCodefyUrl, CODEFY_LINK_PROPS } from "@/lib/the-codefy"
 
 function BlogMenuSearch() {
   const searchParams = useSearchParams()
@@ -46,6 +47,18 @@ export function Navbar() {
                 </Link>
               </li>
             ))}
+            {/* Link discreto para o estúdio: fora do NAV_LINKS para não
+                disputar espaço com a navegação principal. */}
+            <li className="hidden sm:block">
+              <a
+                href={buildCodefyUrl("header")}
+                {...CODEFY_LINK_PROPS}
+                className="rounded-md px-3 py-2 text-sm text-muted-foreground transition duration-300 hover:bg-white/[0.04] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                The Codefy
+                <span className="sr-only"> (abre em nova aba)</span>
+              </a>
+            </li>
             {isBlog && <li>
               <Link href="/" className="rounded-md border border-sky-300/20 bg-sky-400/[0.06] px-3 py-2 text-sm text-sky-100 transition hover:border-sky-300/35 hover:bg-sky-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 Portfólio
@@ -90,6 +103,17 @@ export function Navbar() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <a
+                    href={buildCodefyUrl("header")}
+                    {...CODEFY_LINK_PROPS}
+                    onClick={() => setMobileOpen(false)}
+                    className="block rounded-md px-3 py-2.5 text-sm text-muted-foreground transition hover:bg-white/[0.04] hover:text-foreground"
+                  >
+                    The Codefy
+                    <span className="sr-only"> (abre em nova aba)</span>
+                  </a>
+                </li>
                 {isBlog && (
                   <li>
                     <Link
