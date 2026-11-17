@@ -5,6 +5,7 @@ import { ArrowRight, Clock3, Mail, Share2 } from "lucide-react"
 
 import { Container } from "@/components/layout/container"
 import { AuthorCard } from "@/components/blog/author-card"
+import { TheCodefyCard } from "@/components/blog/the-codefy-card"
 import { AdSlot } from "@/components/monetization/ad-slot"
 import { AffiliateDisclosure } from "@/components/monetization/affiliate-disclosure"
 import { CommercialCta } from "@/components/monetization/commercial-cta"
@@ -284,6 +285,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </Link>
               </article>)}</div>
             </section>}
+
+            <TheCodefyCard />
 
             <Link href="/blog" className="inline-flex items-center gap-1.5 rounded-lg border border-yellow-300/20 bg-yellow-300/[.035] px-3 py-2 text-xs font-medium text-yellow-100/80 transition hover:border-yellow-300/35 hover:bg-yellow-300/[.07] hover:text-yellow-100">Todos os artigos <ArrowRight className="size-3.5" /></Link>
           </aside>

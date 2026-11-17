@@ -18,6 +18,7 @@ export type CodefyCampaign =
   | "footer"
   | "experiencia"
   | "projetos"
+  | "blog-sidebar"
 
 /**
  * Monta a URL da The Codefy aplicando os parâmetros UTM.
