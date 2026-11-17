@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { ArrowRight, Clock3, Mail, Share2 } from "lucide-react"
 
 import { Container } from "@/components/layout/container"
+import { AuthorCard } from "@/components/blog/author-card"
 import { AdSlot } from "@/components/monetization/ad-slot"
 import { AffiliateDisclosure } from "@/components/monetization/affiliate-disclosure"
 import { CommercialCta } from "@/components/monetization/commercial-cta"
@@ -263,6 +264,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </footer>
 
           <aside className="min-w-0 space-y-5 lg:col-start-2 lg:row-start-1 lg:row-span-4" aria-label="Artigos relacionados">
+            <AuthorCard className="max-w-xl lg:max-w-none" />
+
             {related.length > 0 && <section className="relative overflow-hidden rounded-xl border border-blue-300/15 bg-gradient-to-br from-blue-500/[.055] to-cyan-400/[.02] p-4 before:absolute before:inset-y-0 before:left-0 before:w-0.5 before:bg-gradient-to-b before:from-cyan-300/80 before:via-blue-400/60 before:to-transparent" aria-labelledby="related-heading">
               <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-sky-300">Recomendados</p>
               <h2 id="related-heading" className="mt-1 text-base font-semibold">Continue explorando</h2>
