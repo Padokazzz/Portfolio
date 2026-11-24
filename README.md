@@ -115,11 +115,18 @@ O projeto possui uma estrutura opcional para integrações de análise e publici
 
 Variáveis documentadas no `.env.example`:
 
-- `NEXT_PUBLIC_ADSENSE_CLIENT_ID`: identificador da conta AdSense.
-- `NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE`: identificador do bloco de anúncio.
-- `NEXT_PUBLIC_GA_MEASUREMENT_ID`: identificador de medição do Google Analytics 4.
+- `NEXT_PUBLIC_ADSENSE_CLIENT_ID` — ID real da conta AdSense (`ca-pub-...`),
+  somente apos a aprovacao do site. O script so e carregado com consentimento
+  da categoria "Publicidade".
+- `NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE` — ID do bloco de anuncio dos artigos,
+  criado no painel do AdSense.
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` — Measurement ID do GA4 (`G-...`). A tag so
+  e carregada com consentimento da categoria "Analise".
 
-As integrações não devem ser consideradas ativas apenas por existirem no código. É necessário configurar identificadores válidos e cumprir as etapas de aprovação e consentimento aplicáveis.
+O script do AdSense é carregado pelo bloco manual de artigos com conteúdo,
+quando o ID da conta e o bloco estão configurados e há consentimento de
+publicidade. Mantenha os Anúncios automáticos desativados para este domínio no
+painel do AdSense. `public/ads.txt` deve conter a linha oficial da conta.
 
 ### Consentimento
 
