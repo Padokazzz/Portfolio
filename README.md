@@ -1,3 +1,8 @@
+> **Meu site pessoal e hub profissional** · [Acessar leonardopadilha.com](https://www.leonardopadilha.com)
+>
+> Aplicação desenvolvida para apresentar projetos, experiências, artigos técnicos e experimentos. O foco é transformar o portfólio em um produto de conteúdo, com páginas estruturadas, navegação responsiva, SEO e qualidade validada por lint, build e testes end-to-end.
+>
+> **Stack:** Next.js · React · TypeScript · Tailwind CSS · Playwright
 # Portfolio
 
 Portfolio profissional desenvolvido como um produto digital: limpo, performatico, acessivel e orientado a conteudo.
