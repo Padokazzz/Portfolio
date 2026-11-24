@@ -104,15 +104,14 @@ terceiros e carregada enquanto as variaveis estiverem vazias:
   somente apos a aprovacao do site. O script so e carregado com consentimento
   da categoria "Publicidade".
 - `NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE` — ID do bloco de anuncio dos artigos,
-  criado no painel do AdSense. Nao e usado quando os anuncios sao automaticos.
+  criado no painel do AdSense.
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` — Measurement ID do GA4 (`G-...`). A tag so
   e carregada com consentimento da categoria "Analise".
 
-Anuncios automaticos: `src/components/monetization/adsense-loader.tsx` injeta o
-script oficial uma unica vez (via `src/lib/monetization/adsense.ts`), apenas
-com ID valido e consentimento de "Publicidade" — mesma regra do GA4. Páginas
-excluidas da publicidade devem ser marcadas no painel do AdSense.
-`public/ads.txt` deve conter a linha oficial da conta.
+O script do AdSense é carregado pelo bloco manual de artigos com conteúdo,
+quando o ID da conta e o bloco estão configurados e há consentimento de
+publicidade. Mantenha os Anúncios automáticos desativados para este domínio no
+painel do AdSense. `public/ads.txt` deve conter a linha oficial da conta.
 
 ### Consentimento
 
